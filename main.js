@@ -81,6 +81,59 @@ window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeCheckoutModal();
 });
 
+/* =========== Stripe Customer Portal (email lookup) =========== */
+function openBillingModal(){
+  const m = document.getElementById('billingModal');
+  if (!m) return;
+  const note = document.getElementById('billingNote');
+  if (note) note.textContent = '';
+  const email = document.getElementById('bill-email');
+  if (email) email.value = '';
+  m.classList.add('show');
+  m.setAttribute('aria-hidden', 'false');
+  setTimeout(() => { try { email && email.focus(); } catch(e){} }, 0);
+}
+
+function closeBillingModal(){
+  const m = document.getElementById('billingModal');
+  if (!m) return;
+  m.classList.remove('show');
+  m.setAttribute('aria-hidden', 'true');
+}
+
+document.querySelectorAll('[data-billing-close="1"]').forEach(el => el.addEventListener('click', closeBillingModal));
+
+const manageBtn = document.getElementById('manageBillingBtn');
+if (manageBtn) manageBtn.addEventListener('click', openBillingModal);
+
+const billingForm = document.getElementById('billingForm');
+if (billingForm){
+  billingForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const note = document.getElementById('billingNote');
+    const btn = document.getElementById('billingSubmit');
+    const email = document.getElementById('bill-email')?.value?.trim();
+    if (!email) { if (note) note.textContent = 'Please enter your email.'; return; }
+
+    if (btn) btn.disabled = true;
+    if (note) note.textContent = 'Opening billing portal…';
+
+    try{
+      const res = await fetch('/api/create-portal-session', {
+        method: 'POST',
+        headers: {'content-type':'application/json'},
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Failed to open portal.');
+      window.location.href = data.url;
+    } catch(err){
+      if (note) note.textContent = (err && err.message) ? err.message : 'Failed to open portal.';
+      if (btn) btn.disabled = false;
+    }
+  });
+}
+
 async function startEmbeddedCheckout(plan){
   if (!window.Stripe) throw new Error('Stripe.js failed to load');
   const pk = window.WIN_STRIPE_PUBLISHABLE_KEY;

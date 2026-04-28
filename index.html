@@ -354,6 +354,9 @@
           </div>
           <p class="trust">We respond to every inquiry within 24 hours. No sales pressure, just an honest conversation about your goals.</p>
           <div class="sla"><span class="pulse" aria-hidden="true"></span>Currently replying within <b>6 hours</b></div>
+          <div style="margin-top:14px">
+            <button class="btn btn-secondary" type="button" id="manageBillingBtn">Manage billing</button>
+          </div>
         </aside>
         <div class="contact-footer">
           <div>© 2026 Waldron Innovation Network · <a href="./privacy.html">Privacy</a></div>
@@ -391,6 +394,26 @@
     </div>
     <div class="modal-sub muted" id="checkoutSub">Secure checkout powered by Stripe.</div>
     <div id="embeddedCheckout"></div>
+  </div>
+</div>
+
+<!-- Stripe Customer Portal lookup -->
+<div class="modal" id="billingModal" aria-hidden="true">
+  <div class="modal-backdrop" data-billing-close="1"></div>
+  <div class="modal-card" role="dialog" aria-modal="true" aria-label="Manage billing">
+    <div class="modal-head">
+      <b>Manage billing</b>
+      <button class="modal-x" type="button" data-billing-close="1" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-sub muted">Enter the email you used at checkout to view invoices and subscriptions.</div>
+    <form id="billingForm" class="form" style="margin-top:12px" novalidate>
+      <div class="field full">
+        <label for="bill-email">Email</label>
+        <input id="bill-email" name="email" type="email" autocomplete="email" required placeholder="you@company.com">
+      </div>
+      <button class="btn btn-primary" type="submit" id="billingSubmit">Continue</button>
+      <div class="auth-note" id="billingNote" role="status" aria-live="polite" style="margin-top:10px"></div>
+    </form>
   </div>
 </div>
 
