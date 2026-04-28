@@ -1,6 +1,6 @@
 /* =========== Page controller =========== */
 const pages = Array.from(document.querySelectorAll('.page'));
-const names = ['Home','Services','Pricing','Contact'];
+const names = ['Home','Services','About','Testimonials','Pricing','Contact'];
 let current = 0;
 let busy = false;
 const pgBtns = document.querySelectorAll('.pg-btn');
