@@ -7,9 +7,9 @@
   "theme_color": "#0A1628",
   "icons": [
     {
-      "src": "./favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
+      "src": "./win-logo.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
     }
   ]
 }
