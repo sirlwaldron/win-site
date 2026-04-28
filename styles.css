@@ -509,10 +509,17 @@ h1.hero-title{font-size:clamp(44px, 6vw, 72px);line-height:1.02;font-weight:800;
 .modal-backdrop{position:fixed;inset:0;background:rgba(10,22,40,.55);z-index:50}
 .modal-card{
   position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);
-  width:min(520px, calc(100vw - 32px));
+  width:min(720px, calc(100vw - 32px));
   background:#fff;border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow-lift);
   padding:18px;z-index:60;
+  max-height:calc(100vh - 32px);
+  overflow:auto;
+  -webkit-overflow-scrolling:touch;
 }
+
+/* Embedded Stripe Checkout: ensure it can scroll */
+#embeddedCheckout{min-height:420px}
+#embeddedCheckout iframe{width:100% !important}
 .modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .modal-x{background:transparent;border:0;font-size:16px;cursor:pointer;color:var(--muted)}
 .modal-x:hover{color:var(--ink)}
