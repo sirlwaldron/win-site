@@ -207,9 +207,7 @@ h1.hero-title{font-size:clamp(44px, 6vw, 72px);line-height:1.02;font-weight:800;
 .services-head p{margin-top:18px;font-size:18px;line-height:1.6}
 
 /* Slightly tighter page headings for standalone pages */
-#p-about .services-head,
 #p-testimonials .services-head{margin-bottom:34px}
-#p-about .services-head p,
 #p-testimonials .services-head p{font-size:16px;max-width:760px;margin-left:auto;margin-right:auto}
 .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 .s-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:36px 32px 40px;transition:all .25s ease;position:relative;display:flex;flex-direction:column;gap:18px}
