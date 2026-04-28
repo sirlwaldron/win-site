@@ -71,6 +71,11 @@ function closeCheckoutModal(){
   if (!m) return;
   m.classList.remove('show');
   m.setAttribute('aria-hidden', 'true');
+  try {
+    if (embeddedCheckoutInstance && typeof embeddedCheckoutInstance.destroy === 'function') {
+      embeddedCheckoutInstance.destroy();
+    }
+  } catch(e){}
   const mount = document.getElementById('embeddedCheckout');
   if (mount) mount.innerHTML = '';
   embeddedCheckoutInstance = null;
@@ -138,6 +143,14 @@ async function startEmbeddedCheckout(plan){
   if (!window.Stripe) throw new Error('Stripe.js failed to load');
   const pk = window.WIN_STRIPE_PUBLISHABLE_KEY;
   if (!pk) throw new Error('Missing Stripe publishable key (WIN_STRIPE_PUBLISHABLE_KEY)');
+
+  // Only one instance allowed. Tear down any previous instance.
+  try {
+    if (embeddedCheckoutInstance && typeof embeddedCheckoutInstance.destroy === 'function') {
+      embeddedCheckoutInstance.destroy();
+    }
+  } catch(e){}
+  embeddedCheckoutInstance = null;
 
   const stripe = window.Stripe(pk);
   const mount = document.getElementById('embeddedCheckout');
