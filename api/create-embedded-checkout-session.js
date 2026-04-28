@@ -41,7 +41,7 @@ module.exports = async function handler(req, res) {
     const isSubscription = String(plan).startsWith('Care');
 
     const session = await stripe.checkout.sessions.create({
-      ui_mode: 'embedded',
+      ui_mode: 'embedded_page',
       mode: isSubscription ? 'subscription' : 'payment',
       line_items: [{ price: priceId, quantity: 1 }],
       return_url: `${appUrl}/?checkout=complete&session_id={CHECKOUT_SESSION_ID}`,
