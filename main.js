@@ -50,6 +50,63 @@ try {
 } catch(e){}
 document.getElementById('pgPrev').disabled = true;
 
+/* =========== Embedded Stripe Checkout =========== */
+let embeddedCheckoutInstance = null;
+
+function openCheckoutModal(title){
+  const m = document.getElementById('checkoutModal');
+  if (!m) return;
+  if (title) {
+    const t = document.getElementById('checkoutTitle');
+    if (t) t.textContent = title;
+  }
+  const sub = document.getElementById('checkoutSub');
+  if (sub) sub.textContent = 'Secure checkout powered by Stripe.';
+  m.classList.add('show');
+  m.setAttribute('aria-hidden', 'false');
+}
+
+function closeCheckoutModal(){
+  const m = document.getElementById('checkoutModal');
+  if (!m) return;
+  m.classList.remove('show');
+  m.setAttribute('aria-hidden', 'true');
+  const mount = document.getElementById('embeddedCheckout');
+  if (mount) mount.innerHTML = '';
+  embeddedCheckoutInstance = null;
+}
+
+document.querySelectorAll('[data-checkout-close="1"]').forEach(el => el.addEventListener('click', closeCheckoutModal));
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeCheckoutModal();
+});
+
+async function startEmbeddedCheckout(plan){
+  if (!window.Stripe) throw new Error('Stripe.js failed to load');
+  const pk = window.WIN_STRIPE_PUBLISHABLE_KEY;
+  if (!pk) throw new Error('Missing Stripe publishable key (WIN_STRIPE_PUBLISHABLE_KEY)');
+
+  const stripe = window.Stripe(pk);
+  const mount = document.getElementById('embeddedCheckout');
+  if (!mount) throw new Error('Missing embedded checkout mount node');
+  mount.innerHTML = '';
+
+  embeddedCheckoutInstance = await stripe.initEmbeddedCheckout({
+    fetchClientSecret: async () => {
+      const res = await fetch('/api/create-embedded-checkout-session', {
+        method: 'POST',
+        headers: {'content-type':'application/json'},
+        body: JSON.stringify({ plan }),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      const data = await res.json();
+      return data.clientSecret;
+    }
+  });
+
+  embeddedCheckoutInstance.mount('#embeddedCheckout');
+}
+
 /* =========== Triggers =========== */
 pgBtns.forEach(b => b.addEventListener('click', () => goTo(parseInt(b.dataset.idx,10))));
 document.getElementById('pgPrev').addEventListener('click', () => goTo(current-1));
@@ -58,6 +115,14 @@ document.getElementById('pgNext').addEventListener('click', () => goTo(current+1
 document.querySelectorAll('[data-goto]').forEach(el => {
   el.addEventListener('click', () => {
     const plan = el.dataset.plan;
+    if (plan && el.classList.contains('p-cta')){
+      openCheckoutModal(`Checkout · ${plan}`);
+      startEmbeddedCheckout(plan).catch(err => {
+        const sub = document.getElementById('checkoutSub');
+        if (sub) sub.textContent = (err && err.message) ? err.message : 'Checkout failed to start.';
+      });
+      return;
+    }
     if (plan){
       const map = {
         'Starter': 'Starter - $599',

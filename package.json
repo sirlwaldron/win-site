@@ -1,0 +1,7 @@
+{
+  "name": "win-site",
+  "private": true,
+  "dependencies": {
+    "stripe": "^22.1.0"
+  }
+}
