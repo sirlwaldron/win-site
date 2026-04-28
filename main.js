@@ -192,9 +192,9 @@ document.querySelectorAll('[data-goto]').forEach(el => {
     if (plan){
       const map = {
         'Starter': 'Starter - $599',
+        'BackendStarter': 'Backend Starter - $899',
         'Growth': 'Growth - $1,199',
-        'Pro': 'Pro - $1,999',
-        'Elite': 'Elite - $3,499',
+        'BackendGrowth': 'Backend Growth - $1,799',
         'Care': 'Care Plan (existing client)',
       };
       setTimeout(() => {
