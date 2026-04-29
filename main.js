@@ -217,7 +217,7 @@ window.addEventListener('keydown', e => {
 // Scrolling should only scroll within the active page.
 
 /* =========== Contact form =========== */
-const CONTACT_EMAIL_TO = 'hello@waldroninnovation.network';
+const CONTACT_EMAIL_TO = 'Lucas@waldronnetwork.com';
 // Optional: set to a real endpoint later (Formspree/Netlify/etc). Leave empty to use mailto fallback.
 const CONTACT_FORM_ENDPOINT = '';
 
