@@ -351,29 +351,36 @@ window.addEventListener('message', e => {
 });
 try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e){}
 
-/* =========== Wireframe Globe (canvas) =========== */
+/* =========== Dotted Earth globe (canvas 2D) ===========
+   Land is a dot lattice sampled from a 0.5° land mask (Natural Earth 50m, public domain),
+   run-length encoded in globe-land.js. The sphere (ocean shading, day/night terminator,
+   atmosphere rim + halo) is pre-rendered once per resize; each frame only draws the dots,
+   graticule, arcs and cities. */
 (function initGlobe(){
   const canvas = document.getElementById('globeCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   let W = 0, H = 0, R = 0, cx = 0, cy = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
-  let active = true;
+  let pageActive = true, inView = true, tabVisible = !document.hidden;
+  let active = false;
   let rafId = null;
   let spawnInterval = null;
 
   // Camera orientation
   const TILT = 0.36; // ~21 deg
-  let yaw = 0; // auto-rotate
+  let yaw = 1.25;    // starts centered near the Americas (Cleveland hub); auto-rotates west->east
 
-  // Colors (on white): use brand navy/blue
+  // Sun direction in camera space (x right, y up, z toward viewer): upper-left, in front.
+  const SUN = (() => { const v=[-0.62, 0.38, 0.69], n=Math.hypot(v[0],v[1],v[2]); return [v[0]/n, v[1]/n, v[2]/n]; })();
+
+  // Brand palette
+  const NAVY = [10, 22, 40];
+  const BLUE = [30, 111, 255];
   const COL = {
-    grid: 'rgba(10, 22, 40, 0.08)',
-    gridStrong: 'rgba(10, 22, 40, 0.18)',
-    land: 'rgba(10, 22, 40, 0.22)',
-    landStrong: 'rgba(10, 22, 40, 0.35)',
+    grid: 'rgba(10, 22, 40, 0.07)',
+    gridStrong: 'rgba(10, 22, 40, 0.14)',
     arc: 'rgba(30, 111, 255, 1)',
     arcGlow: 'rgba(30, 111, 255, 0.35)',
-    city: '#1E6FFF',
     label: 'rgba(10, 22, 40, 0.85)',
     labelDim: 'rgba(10, 22, 40, 0.45)',
   };
@@ -398,63 +405,117 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
     {n:'Sydney', lat:-33.9, lon:151.2, s:0.95},
   ];
 
-  // Continent outlines, hand-simplified polygons in [lon, lat] pairs.
-  // Each polygon is a closed ring; we subdivide edges so they curve with the sphere.
-  const continents = [
-    // ---- North America (mainland + a bit of Alaska)
-    [[-168,66],[-162,70],[-156,71],[-140,70],[-128,70],[-115,72],[-105,73],[-95,74],[-85,73],[-75,72],
-     [-68,66],[-60,60],[-56,52],[-60,46],[-66,45],[-70,42],[-74,40],[-76,37],[-76,34],[-81,31],[-82,27],
-     [-80,25],[-84,24],[-88,30],[-93,29],[-97,26],[-99,22],[-106,23],[-110,24],[-115,30],[-118,33],
-     [-122,37],[-124,42],[-124,48],[-130,54],[-135,58],[-142,60],[-150,60],[-156,60],[-162,60],[-166,62]],
-    // ---- Greenland
-    [[-55,60],[-50,62],[-44,60],[-40,63],[-35,67],[-30,70],[-22,72],[-20,77],[-28,82],[-40,83],
-     [-55,83],[-65,81],[-70,76],[-70,70],[-62,64]],
-    // ---- Central America / Mexico tail (kept separate for clarity)
-    [[-97,17],[-93,16],[-88,16],[-83,15],[-78,9],[-80,8],[-83,8],[-88,12],[-92,14],[-97,15]],
-    // ---- South America
-    [[-81,12],[-76,11],[-72,12],[-64,10],[-60,8],[-52,5],[-48,0],[-42,-2],[-38,-7],[-35,-10],
-     [-38,-15],[-40,-22],[-44,-26],[-48,-30],[-54,-34],[-58,-38],[-62,-40],[-66,-43],[-70,-50],
-     [-72,-54],[-68,-54],[-67,-46],[-72,-40],[-73,-35],[-72,-30],[-71,-24],[-70,-18],[-75,-14],
-     [-79,-8],[-80,-4],[-78,2],[-77,6],[-81,8]],
-    // ---- Africa
-    [[-17,21],[-12,28],[-8,32],[-4,35],[3,36],[10,34],[15,32],[20,31],[25,31],[32,31],[34,28],
-     [38,20],[40,12],[42,10],[45,10],[48,12],[51,11],[51,6],[48,2],[45,-2],[42,-7],[40,-12],
-     [39,-17],[36,-22],[34,-26],[32,-29],[28,-33],[22,-34],[18,-34],[15,-30],[13,-25],[12,-18],
-     [9,-10],[8,-4],[10,1],[8,5],[3,6],[-3,6],[-8,5],[-12,8],[-16,13],[-17,17]],
-    // ---- Europe (includes UK/Ireland roughly)
-    [[-10,35],[-9,39],[-10,43],[-5,44],[-2,43],[0,47],[-4,51],[-6,55],[-10,58],[-5,58],[-2,57],
-     [3,59],[7,62],[11,64],[15,67],[22,70],[30,70],[40,68],[50,69],[60,70],[66,68],[60,60],
-     [52,55],[42,48],[35,44],[30,41],[23,40],[18,40],[12,36],[8,44],[3,43],[-2,36]],
-    // ---- Asia (big, includes India + SE tip + Kamchatka)
-    [[30,70],[50,72],[75,74],[100,78],[130,75],[145,72],[160,68],[170,66],[180,65],
-     [175,60],[170,58],[160,55],[155,50],[148,45],[145,42],[140,40],[135,35],[130,33],[123,30],
-     [118,22],[114,18],[108,16],[105,10],[103,5],[100,3],[98,2],[100,8],[96,16],[94,22],[88,22],
-     [82,20],[78,15],[74,10],[73,18],[72,22],[68,24],[64,25],[58,25],[55,30],[53,36],[50,40],
-     [44,42],[40,44],[34,42],[32,46],[34,52],[40,58],[48,62],[55,66],[60,68]],
-    // ---- Indian subcontinent (fill belly)
-    [[70,24],[72,20],[74,15],[76,10],[80,8],[84,11],[88,20],[88,25],[82,23],[77,22],[72,24]],
-    // ---- SE Asia / Indonesia cluster (as simple islands)
-    [[95,6],[100,4],[105,2],[112,1],[118,0],[125,-1],[132,-3],[138,-4],[140,-8],[132,-8],
-     [125,-9],[118,-9],[110,-8],[102,-6],[96,-3]],
-    // ---- Japan (a lozenge)
-    [[130,33],[134,34],[138,36],[141,40],[145,44],[141,41],[137,35],[133,33]],
-    // ---- Philippines (blob)
-    [[119,6],[121,8],[123,12],[125,15],[123,18],[121,16],[120,12],[119,9]],
-    // ---- Australia
-    [[114,-22],[122,-18],[130,-12],[137,-12],[142,-10],[146,-18],[150,-24],[153,-28],[150,-34],
-     [146,-38],[140,-38],[132,-34],[125,-33],[118,-34],[114,-28]],
-    // ---- New Zealand (two small islands merged)
-    [[172,-34],[174,-36],[176,-38],[177,-42],[173,-43],[170,-42],[168,-46],[170,-47],[173,-45],
-     [175,-41],[174,-38],[172,-36]],
-    // ---- Madagascar
-    [[43,-13],[46,-16],[48,-20],[49,-23],[47,-25],[44,-23],[43,-18]],
-    // ---- UK + Ireland (separate so it reads)
-    [[-10,52],[-8,55],[-5,58],[-2,58],[1,56],[2,53],[0,51],[-4,50],[-8,50]],
-    // ---- Iceland
-    [[-24,64],[-20,66],[-15,66],[-14,64],[-18,63],[-22,63]],
-  ];
+  /* ---- Land mask: decode run-length bitmap (alternating sea/land runs, varint, base64) ---- */
+  let mask = null, MW = 0, MH = 0;
+  function decodeMask(){
+    const L = window.WIN_LAND;
+    if (!L) return false;
+    MW = L.w; MH = L.h;
+    const bin = atob(L.rle);
+    mask = new Uint8Array(MW * MH);
+    let pos = 0, i = 0, v = 0;
+    while (i < bin.length && pos < mask.length){
+      let n = 0, shift = 0, b;
+      do { b = bin.charCodeAt(i++); n |= (b & 127) << shift; shift += 7; } while (b & 128);
+      if (v) mask.fill(1, pos, Math.min(mask.length, pos + n));
+      pos += n; v ^= 1;
+    }
+    return true;
+  }
+  function isLand(lat, lon){
+    let x = Math.floor((lon + 180) / 360 * MW) % MW; if (x < 0) x += MW;
+    let y = Math.floor((90 - lat) / 180 * MH); y = y < 0 ? 0 : y >= MH ? MH - 1 : y;
+    return mask[y * MW + x] === 1;
+  }
 
-  // Great-circle arc: slerp between two unit vectors
+  // Land dots: latitude rows with equal arc spacing (hex-ish stagger), kept only where land.
+  let dots = null, nDots = 0;
+  function buildDots(spacingPx){
+    if (!mask && !decodeMask()) { dots = new Float32Array(0); nDots = 0; return; }
+    const step = spacingPx / R;               // radians between dots
+    const rows = Math.round(Math.PI / step);
+    const out = [];
+    for (let r = 0; r <= rows; r++){
+      const phi = -Math.PI/2 + (r / rows) * Math.PI;
+      const lat = phi * 180 / Math.PI;
+      const cphi = Math.cos(phi);
+      const cnt = Math.max(1, Math.round(2 * Math.PI * cphi / step));
+      const off = (r & 1) ? 0.5 : 0;
+      for (let k = 0; k < cnt; k++){
+        const lon = ((k + off) / cnt) * 360 - 180;
+        if (!isLand(lat, lon)) continue;
+        const th = lon * Math.PI / 180;
+        out.push(cphi * Math.sin(th), Math.sin(phi), cphi * Math.cos(th));
+      }
+    }
+    dots = new Float32Array(out);
+    nDots = dots.length / 3;
+  }
+
+  /* ---- Pre-rendered sphere: ocean shading, terminator, atmosphere ---- */
+  let sphere = null;
+  const smooth = (a, b, x) => { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+  function buildSphere(){
+    // Smooth gradients, so shade at half device resolution (4x fewer pixels) and upscale; a crisp rim stroke is drawn per frame.
+    const SC = 0.5;
+    const S = Math.max(2, Math.round(W * DPR * SC));
+    const c = document.createElement('canvas');
+    c.width = c.height = S;
+    const g = c.getContext('2d');
+    const img = g.createImageData(S, S);
+    const d = img.data;
+    const half = S / 2, Rp = R * DPR * SC, haloR = Math.min(half, Rp * 1.14);
+    // Day -> twilight -> night ocean colours (kept in the site's cool blue/navy family)
+    const DAY = [228, 238, 254], TWI = [204, 219, 247], NIGHT = [112, 136, 190];
+    for (let py = 0; py < S; py++){
+      for (let px = 0; px < S; px++){
+        const x = (px + 0.5 - half) / Rp, y = (half - (py + 0.5)) / Rp;
+        const r2 = x*x + y*y, r = Math.sqrt(r2);
+        const o = (py * S + px) * 4;
+        if (r > haloR / Rp) continue;
+        if (r <= 1.0 + 1/Rp){
+          const nz = Math.sqrt(Math.max(0, 1 - r2));
+          const lam = x*SUN[0] + y*SUN[1] + nz*SUN[2];
+          const day = smooth(-0.18, 0.42, lam);
+          const twi = Math.exp(-Math.pow((lam - 0.02) / 0.16, 2));
+          let cr = NIGHT[0] + (DAY[0]-NIGHT[0])*day, cg = NIGHT[1] + (DAY[1]-NIGHT[1])*day, cb = NIGHT[2] + (DAY[2]-NIGHT[2])*day;
+          // warm-free twilight band: a slightly more saturated blue along the terminator
+          cr += (TWI[0]-cr)*twi*0.55; cg += (TWI[1]-cg)*twi*0.55; cb += (TWI[2]-cb)*twi*0.55;
+          // soft sun glint on the ocean
+          const rx = 2*lam*x - SUN[0], ry = 2*lam*y - SUN[1], rz = 2*lam*nz - SUN[2];
+          const spec = Math.pow(Math.max(0, rz), 60) * 0.55 * day;
+          cr += (255-cr)*spec; cg += (255-cg)*spec; cb += (255-cb)*spec;
+          // atmosphere: fresnel rim in brand blue, stronger on the lit side
+          const fres = Math.pow(1 - nz, 2.6);
+          const rim = fres * (0.18 + 0.5 * day);
+          cr += (BLUE[0]-cr)*rim*0.8; cg += (BLUE[1]-cg)*rim*0.8; cb += (BLUE[2]-cb)*rim*0.8;
+          // edge anti-aliasing
+          const cov = Math.max(0, Math.min(1, (1 - r) * Rp + 0.5));
+          d[o] = cr; d[o+1] = cg; d[o+2] = cb; d[o+3] = 255 * cov;
+          if (cov < 1){ // blend halo underneath at the edge
+            const hh = 0.20 * (0.35 + 0.65 * day);
+            const ha = hh * (1 - cov);
+            const a = d[o+3]/255 + ha * (1 - d[o+3]/255);
+            d[o] = (cr*cov + BLUE[0]*ha*(1-cov)) / (cov + ha*(1-cov));
+            d[o+1] = (cg*cov + BLUE[1]*ha*(1-cov)) / (cov + ha*(1-cov));
+            d[o+2] = (cb*cov + BLUE[2]*ha*(1-cov)) / (cov + ha*(1-cov));
+            d[o+3] = 255 * a;
+          }
+        } else {
+          // outer halo
+          const t = (r - 1) / (haloR / Rp - 1);
+          const lam = x*SUN[0] + y*SUN[1];
+          const lit = smooth(-0.6, 0.7, lam / r);
+          const a = 0.22 * Math.pow(1 - t, 2.6) * (0.3 + 0.7 * lit);
+          d[o] = BLUE[0]; d[o+1] = BLUE[1]; d[o+2] = BLUE[2]; d[o+3] = 255 * a;
+        }
+      }
+    }
+    g.putImageData(img, 0, 0);
+    sphere = c;
+  }
+
+  /* ---- Math helpers ---- */
   function slerp(a, b, t){
     const dot = Math.max(-1, Math.min(1, a[0]*b[0]+a[1]*b[1]+a[2]*b[2]));
     const om = Math.acos(dot);
@@ -467,15 +528,14 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
     const phi = lat*Math.PI/180, th = lon*Math.PI/180;
     return [Math.cos(phi)*Math.sin(th), Math.sin(phi), Math.cos(phi)*Math.cos(th)];
   }
+  let cosY = 1, sinY = 0, cosT = Math.cos(TILT), sinT = Math.sin(TILT);
+  function setCamera(){ cosY = Math.cos(yaw); sinY = Math.sin(yaw); }
   function projectUnit(u){
     // Apply yaw around Y, then tilt around X
-    const cy_ = Math.cos(yaw), sy_ = Math.sin(yaw);
-    let x = u[0]*cy_ + u[2]*sy_;
-    let y = u[1];
-    let z = -u[0]*sy_ + u[2]*cy_;
-    const cosT = Math.cos(TILT), sinT = Math.sin(TILT);
-    const y2 = y*cosT - z*sinT;
-    const z2 = y*sinT + z*cosT;
+    const x = u[0]*cosY + u[2]*sinY;
+    const z = -u[0]*sinY + u[2]*cosY;
+    const y2 = u[1]*cosT - z*sinT;
+    const z2 = u[1]*sinT + z*cosT;
     return {x: cx + x*R, y: cy - y2*R, z: z2};
   }
 
@@ -495,55 +555,33 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
     });
     if (arcs.length > 8) arcs.shift();
   }
-  // Initial arcs
   // Respect prefers-reduced-motion: draw a single static frame (no rotation or flying arcs).
   const reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  if (!reduceMotion){
-    for (let i=0;i<4;i++) setTimeout(spawnArc, i*400);
-    spawnInterval = setInterval(spawnArc, 900);
-  }
 
+  let needsBuild = true;
   function resize(){
+    DPR = Math.min(window.devicePixelRatio || 1, 2);
     const rect = canvas.getBoundingClientRect();
     W = rect.width; H = rect.height;
-    canvas.width = W * DPR; canvas.height = H * DPR;
+    if (!W || !H) return;
+    canvas.width = Math.round(W * DPR); canvas.height = Math.round(H * DPR);
     ctx.setTransform(DPR,0,0,DPR,0,0);
     cx = W/2; cy = H/2;
     R = Math.min(W, H) * 0.44;
+    needsBuild = true;
   }
   window.addEventListener('resize', () => { resize(); if (reduceMotion) drawScene(); });
   resize();
 
-  function drawBackdrop(){
-    // No background; just clear canvas so page shows through
-    ctx.clearRect(0,0,W,H);
-  }
-
   function drawGrid(){
     ctx.save();
     ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI*2); ctx.clip();
-
+    ctx.lineWidth = 0.6;
     // Parallels
-    for (let lat = -75; lat <= 75; lat += 15){
+    for (let lat = -60; lat <= 60; lat += 30){
       ctx.beginPath();
       let started = false;
-      for (let lon = -180; lon <= 180; lon += 4){
-        const p = projectUnit(latLonToUnit(lat, lon));
-        if (p.z > -0.02){
-          if (!started){ ctx.moveTo(p.x, p.y); started = true; }
-          else ctx.lineTo(p.x, p.y);
-        } else { started = false; }
-      }
-      ctx.strokeStyle = (lat === 0) ? COL.gridStrong : COL.grid;
-      ctx.lineWidth = (lat === 0) ? 0.9 : 0.6;
-      ctx.stroke();
-    }
-
-    // Meridians
-    for (let lon = -180; lon < 180; lon += 15){
-      ctx.beginPath();
-      let started = false;
-      for (let lat = -85; lat <= 85; lat += 4){
+      for (let lon = -180; lon <= 180; lon += 6){
         const p = projectUnit(latLonToUnit(lat, lon));
         if (p.z > -0.02){
           if (!started){ ctx.moveTo(p.x, p.y); started = true; }
@@ -551,96 +589,69 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
         } else { started = false; }
       }
       ctx.strokeStyle = COL.grid;
-      ctx.lineWidth = 0.6;
       ctx.stroke();
     }
-    ctx.restore();
-  }
-
-  function densifyEdge(a, b, step = 3){
-    const out = [a];
-    const dlon = b[0] - a[0];
-    const dlat = b[1] - a[1];
-    const dist = Math.hypot(dlon, dlat);
-    const n = Math.max(1, Math.ceil(dist/step));
-    for (let i=1;i<=n;i++){
-      const t = i/n;
-      out.push([a[0]+dlon*t, a[1]+dlat*t]);
+    ctx.beginPath();
+    let started = false;
+    for (let lon = -180; lon <= 180; lon += 6){
+      const p = projectUnit(latLonToUnit(0, lon));
+      if (p.z > -0.02){ if (!started){ ctx.moveTo(p.x, p.y); started = true; } else ctx.lineTo(p.x, p.y); } else started = false;
     }
-    return out;
-  }
-  function densifyRing(ring){
-    const out = [];
-    for (let i=0;i<ring.length;i++){
-      const a = ring[i], b = ring[(i+1)%ring.length];
-      const seg = densifyEdge(a, b, 2.5);
-      for (let k=0;k<seg.length-1;k++) out.push(seg[k]);
-    }
-    return out;
-  }
-  const continentsDense = continents.map(densifyRing);
-
-  function drawLand(){
-    ctx.save();
-    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI*2); ctx.clip();
-
-    ctx.fillStyle = 'rgba(10,22,40,0.14)';
-    ctx.strokeStyle = 'rgba(10,22,40,0.55)';
-    ctx.lineWidth = 0.8;
-    ctx.lineJoin = 'round';
-    ctx.lineCap = 'round';
-
-    for (const ring of continentsDense){
-      const segments = [];
-      let seg = null;
-      for (const [lon, lat] of ring){
+    ctx.strokeStyle = COL.gridStrong; ctx.stroke();
+    // Meridians
+    ctx.strokeStyle = COL.grid;
+    ctx.beginPath();
+    for (let lon = -180; lon < 180; lon += 30){
+      started = false;
+      for (let lat = -84; lat <= 84; lat += 6){
         const p = projectUnit(latLonToUnit(lat, lon));
-        if (p.z > 0.02){
-          if (!seg){ seg = []; segments.push(seg); }
-          seg.push(p);
-        } else {
-          seg = null;
-        }
-      }
-      if (segments.length === 0) continue;
-
-      if (segments.length === 1 && segments[0].length >= ring.length - 2){
-        const s = segments[0];
-        ctx.beginPath();
-        ctx.moveTo(s[0].x, s[0].y);
-        for (let i=1;i<s.length;i++) ctx.lineTo(s[i].x, s[i].y);
-        ctx.closePath();
-        ctx.fill();
-        ctx.stroke();
-      } else {
-        ctx.beginPath();
-        for (const s of segments){
-          if (s.length < 2) continue;
-          ctx.moveTo(s[0].x, s[0].y);
-          for (let i=1;i<s.length;i++) ctx.lineTo(s[i].x, s[i].y);
-        }
-        ctx.fill();
-        for (const s of segments){
-          if (s.length < 2) continue;
-          ctx.beginPath();
-          ctx.moveTo(s[0].x, s[0].y);
-          for (let i=1;i<s.length;i++) ctx.lineTo(s[i].x, s[i].y);
-          ctx.stroke();
-        }
+        if (p.z > -0.02){
+          if (!started){ ctx.moveTo(p.x, p.y); started = true; }
+          else ctx.lineTo(p.x, p.y);
+        } else { started = false; }
       }
     }
+    ctx.stroke();
     ctx.restore();
   }
 
-  function drawOuterRim(){
-    ctx.beginPath(); ctx.arc(cx, cy, R+1, 0, Math.PI*2);
-    ctx.strokeStyle = 'rgba(10,22,40,0.25)';
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    ctx.beginPath(); ctx.arc(cx, cy, R+4, 0, Math.PI*2);
-    ctx.strokeStyle = 'rgba(10,22,40,0.08)';
-    ctx.lineWidth = 1;
-    ctx.stroke();
+  // Land dots: depth-based size and opacity, lit by the sun; night-side dots glow blue like city lights.
+  const NB = 8; // opacity buckets (one path + fill per bucket)
+  const dayPaths = new Array(NB), nightPaths = new Array(NB);
+  function drawLand(){
+    if (!dots) return;
+    const baseR = Math.max(0.9, R / 190);
+    for (let i = 0; i < NB; i++){ dayPaths[i] = new Path2D(); nightPaths[i] = new Path2D(); }
+    for (let i = 0; i < nDots; i++){
+      const ux = dots[i*3], uy = dots[i*3+1], uz = dots[i*3+2];
+      const z = -ux*sinY + uz*cosY;
+      const z2 = uy*sinT + z*cosT;
+      if (z2 <= 0.01) continue;
+      const x = ux*cosY + uz*sinY;
+      const y2 = uy*cosT - z*sinT;
+      const lam = x*SUN[0] + y2*SUN[1] + z2*SUN[2];
+      const day = smooth(-0.12, 0.38, lam);
+      // limb falloff: dots shrink and fade toward the horizon (depth cue)
+      const depth = Math.pow(z2, 0.55);
+      const rad = baseR * (0.45 + 0.75 * depth);
+      const px = cx + x*R, py = cy - y2*R;
+      if (day > 0.5){
+        const a = Math.min(NB-1, Math.floor(((day - 0.5) * 2 * 0.35 + 0.65 * depth * day) * NB));
+        const path = dayPaths[Math.max(0, a)];
+        path.moveTo(px + rad, py); path.arc(px, py, rad, 0, Math.PI*2);
+      } else {
+        const a = Math.min(NB-1, Math.floor(depth * (0.45 + 0.55 * day * 2) * NB));
+        const path = nightPaths[Math.max(0, a)];
+        path.moveTo(px + rad, py); path.arc(px, py, rad, 0, Math.PI*2);
+      }
+    }
+    for (let i = 0; i < NB; i++){
+      const f = (i + 0.5) / NB;
+      ctx.fillStyle = `rgba(${NAVY[0]},${NAVY[1]},${NAVY[2]},${(0.22 + 0.68 * f).toFixed(3)})`;
+      ctx.fill(dayPaths[i]);
+      ctx.fillStyle = `rgba(206,226,255,${(0.18 + 0.6 * f).toFixed(3)})`;
+      ctx.fill(nightPaths[i]);
+    }
   }
 
   function drawCities(){
@@ -653,14 +664,16 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
       ctx.beginPath(); ctx.arc(p.x, p.y, 4.5, 0, Math.PI*2); ctx.fill();
       ctx.fillStyle = `rgba(10,22,40,${alpha.toFixed(3)})`;
       ctx.beginPath(); ctx.arc(p.x, p.y, 1.8*c.s, 0, Math.PI*2); ctx.fill();
-      if (p.z > 0.2 && c.s >= 0.9){
+      if (p.z > 0.2 && c.s >= (R < 150 ? 1.1 : 0.9)){ // fewer labels on small screens
+        ctx.strokeStyle = 'rgba(255,255,255,0.75)'; ctx.lineWidth = 2.5; ctx.lineJoin = 'round';
+        ctx.strokeText(c.n, p.x + 6, p.y - 4);
         ctx.fillStyle = p.z > 0.6 ? COL.label : COL.labelDim;
         ctx.fillText(c.n, p.x + 6, p.y - 4);
       }
     }
     const hp = projectUnit(latLonToUnit(hub.lat, hub.lon));
     if (hp.z > 0){
-      const pulse = 0.5 + 0.5*Math.sin(performance.now()/500);
+      const pulse = reduceMotion ? 0.5 : 0.5 + 0.5*Math.sin(performance.now()/500);
       ctx.fillStyle = `rgba(30,111,255,${(0.15 + pulse*0.2).toFixed(3)})`;
       ctx.beginPath(); ctx.arc(hp.x, hp.y, 6 + pulse*4, 0, Math.PI*2); ctx.fill();
       ctx.strokeStyle = '#1E6FFF';
@@ -721,32 +734,47 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
     }
   }
 
-  let last = performance.now();
-  function frame(now){
-    if (!active) return;
-    const dt = (now - last)/1000; last = now;
-    if (!reduceMotion) yaw += dt * 0.08;
-    drawScene(now);
-    if (!reduceMotion) rafId = requestAnimationFrame(frame);
-    else rafId = null;
-  }
   function drawScene(now){
-    drawBackdrop();
+    if (!W || !H) return;
+    if (needsBuild){
+      buildSphere();
+      buildDots(Math.max(4.4, R / 42));
+      needsBuild = false;
+    }
+    setCamera();
+    ctx.clearRect(0,0,W,H);
+    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(sphere, 0, 0, W, H);
+    // crisp limb
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI*2);
+    ctx.strokeStyle = 'rgba(26, 98, 232, 0.28)'; ctx.lineWidth = 1; ctx.stroke();
     drawGrid();
     drawLand();
-    drawOuterRim();
     drawArcs(now || performance.now());
     drawCities();
   }
-  rafId = requestAnimationFrame(frame);
 
-  function setActive(next){
-    const n = !!next;
-    if (n === active) return;
-    active = n;
+  let last = performance.now();
+  function frame(now){
+    rafId = null;
+    if (!active) return;
+    const dt = Math.min(0.1, (now - last)/1000); last = now;
+    if (!reduceMotion) yaw += dt * 0.08;
+    drawScene(now);
+    if (!reduceMotion) rafId = requestAnimationFrame(frame);
+  }
+
+  // Run only while Home is showing, the globe is in the viewport, and the tab is visible.
+  function update(){
+    const next = pageActive && inView && tabVisible;
+    if (next === active) return;
+    active = next;
     if (active){
       last = performance.now();
-      if (!spawnInterval && !reduceMotion) spawnInterval = setInterval(spawnArc, 900);
+      if (!reduceMotion && !spawnInterval){
+        if (!arcs.length) for (let i=0;i<4;i++) setTimeout(spawnArc, i*400);
+        spawnInterval = setInterval(spawnArc, 900);
+      }
       if (!rafId) rafId = requestAnimationFrame(frame);
     } else {
       if (rafId) cancelAnimationFrame(rafId);
@@ -755,11 +783,16 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
       spawnInterval = null;
     }
   }
+  function setActive(on){ pageActive = !!on; update(); }
 
-  document.addEventListener('visibilitychange', () => {
-    if (document.hidden) setActive(false);
-    else setActive(current === 0);
-  });
+  document.addEventListener('visibilitychange', () => { tabVisible = !document.hidden; update(); });
+  if ('IntersectionObserver' in window){
+    inView = false;
+    new IntersectionObserver((entries) => {
+      for (const e of entries) inView = e.isIntersecting;
+      update();
+    }).observe(canvas);
+  }
 
   globeControls = { setActive };
   setActive(current === 0);
