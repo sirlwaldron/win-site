@@ -228,7 +228,7 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
         body: fd
       });
       if (!res.ok) throw new Error('Bad response');
-      showSuccess(`<b>Thanks - message sent.</b>We’ll be in touch within 24 hours.`);
+      showSuccess(`<b>Thanks - message sent.</b>We’ll be in touch within 6 hours.`);
       return;
     } catch(err){
       // Fall back to mailto if endpoint fails (useful during early setup).
