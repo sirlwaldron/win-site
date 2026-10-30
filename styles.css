@@ -203,6 +203,20 @@ h1.hero-title{font-size:clamp(44px, 6vw, 72px);line-height:1.02;font-weight:800;
 .globe-corner.br{right:8px;bottom:8px;text-align:right}
 .globe-corner b{color:var(--accent);font-weight:600}
 
+/* Quiet trust line under the CTAs (real facts only) */
+.hero-trust{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:4px 18px;font-size:13px;line-height:1.5;color:var(--muted-2);max-width:520px}
+.hero-trust li{white-space:nowrap;display:inline-flex;align-items:center;gap:7px}
+.hero-trust li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent-strong);opacity:.55}
+
+/* Soft glow behind the globe */
+.globe-stage::before{
+  content:"";position:absolute;inset:-14%;z-index:0;pointer-events:none;border-radius:50%;
+  background:radial-gradient(closest-side, rgba(26,98,232,.20), rgba(26,98,232,.07) 55%, rgba(26,98,232,0) 100%);
+  animation:globeGlow 7s ease-in-out infinite alternate;
+}
+.globe-stage canvas{z-index:1}
+@keyframes globeGlow{from{opacity:.75;transform:scale(.97)}to{opacity:1;transform:scale(1.03)}}
+
 /* ================= SERVICES ================= */
 .services-head{max-width:740px;margin:0 auto 64px;text-align:center}
 .services-head h2{font-size:clamp(40px,4.6vw,60px);line-height:1.05;font-weight:800;letter-spacing:-.03em}
@@ -465,8 +479,13 @@ h1.hero-title{font-size:clamp(44px, 6vw, 72px);line-height:1.02;font-weight:800;
 /* Responsive */
 @media (max-width: 980px){
   .wrap{padding:0 24px}
-  .page-inner{align-items:flex-start;padding:96px 0 80px}
-  .brand-stripe{padding:16px 24px;gap:12px}
+  .page-inner{align-items:flex-start;padding:calc(96px + env(safe-area-inset-top, 0px)) 0 80px;min-height:100vh;min-height:100dvh}
+  .brand-stripe{
+    padding:calc(14px + env(safe-area-inset-top, 0px)) max(24px, env(safe-area-inset-right, 0px)) 14px max(24px, env(safe-area-inset-left, 0px));gap:12px;
+    background:rgba(255,255,255,.92);border-bottom:1px solid var(--line-2);
+    -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  }
+  .brand-stripe.on-dark{background:rgba(10,22,40,.88);border-bottom-color:rgba(255,255,255,.08)}
   .brand{min-width:0}
   .brand-name{font-size:13px;line-height:1.2}
   .brand-meta{display:none}
@@ -502,7 +521,8 @@ h1.hero-title{font-size:clamp(44px, 6vw, 72px);line-height:1.02;font-weight:800;
   .pg-btn .pg-num{width:auto;font-size:10px}
   .pager-controls{display:none}
   .step-overlay{display:none}
-  h1.hero-title{font-size:clamp(40px, 12vw, 54px);line-height:1.06}
+  h1.hero-title{font-size:clamp(34px, 8.6vw, 52px);line-height:1.08;text-wrap:balance}
+  .hero-trust{font-size:12.5px;margin-top:16px}
   .hero-sub{font-size:17px;line-height:1.55;margin-top:22px}
   .hero-ctas{margin-top:30px;gap:10px}
   .btn{padding:14px 18px}
@@ -573,15 +593,15 @@ h1.hero-title{font-size:clamp(44px, 6vw, 72px);line-height:1.02;font-weight:800;
 }
 
 @media (max-width: 420px){
-  .brand-stripe{padding:12px 16px;gap:8px}
+  .brand-stripe{padding:calc(10px + env(safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right, 0px)) 10px max(16px, env(safe-area-inset-left, 0px));gap:8px}
   .brand-name{font-size:12px}
   .brand-mark{width:24px;height:24px;flex-shrink:0}
   .brand-mark svg,.brand-mark img{display:block;width:100%;height:100%}
   .brand-action{padding:7px 9px;font-size:9.5px}
   .wrap{padding:0 20px}
-  .page-inner{padding-top:88px}
+  .page-inner{padding-top:calc(84px + env(safe-area-inset-top, 0px))}
   .hero-kicker{font-size:10px;padding:6px 10px;white-space:normal}
-  h1.hero-title{font-size:40px}
+  h1.hero-title{font-size:clamp(30px, 8.8vw, 36px)}
   .hero-sub{font-size:16px}
   .hero-ctas .btn{width:100%;justify-content:center}
   .globe-stage{max-width:270px}
@@ -729,6 +749,7 @@ h3.t-label{font-weight:400;line-height:inherit;letter-spacing:.14em}
   *,*::before,*::after{animation-duration:.01ms !important;animation-delay:0s !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;transition-delay:0s !important;scroll-behavior:auto !important}
   .quote{opacity:1;transform:none}
   .hero-title .mark::after{transform:scaleX(1)}
+  .globe-stage::before{animation:none}
 }
 
 /* Contrast: slightly deeper blue where white text sits on the accent, and for small accent text on light backgrounds. */
