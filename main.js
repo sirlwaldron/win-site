@@ -368,7 +368,8 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
 
   // Camera orientation
   const TILT = 0.36; // ~21 deg
-  let yaw = 1.25;    // starts centered near the Americas (Cleveland hub); auto-rotates west->east
+  const START_YAW = 1.25;
+  let yaw = START_YAW;    // starts centered near the Americas (Cleveland hub); auto-rotates west->east
 
   // Sun direction in camera space (x right, y up, z toward viewer): upper-left, in front.
   const SUN = (() => { const v=[-0.62, 0.38, 0.69], n=Math.hypot(v[0],v[1],v[2]); return [v[0]/n, v[1]/n, v[2]/n]; })();
@@ -654,6 +655,63 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
     }
   }
 
+
+  /* ---- Ring text: the brand line wrapped around the globe on a parallel, rotating with the Earth ----
+     Each glyph is placed on the sphere (lat/lon), projected with the same camera as the land dots, and drawn with an
+     affine transform so it follows the surface (foreshortened toward the limb). Far-side glyphs are skipped.
+     Wide globes carry one line; narrow ones stack the phrase on two parallels so the whole line stays readable. */
+  const RING_PHRASE = 'WALDRON INNOVATION NETWORK \u00B7 ONLINE IN 50+ COUNTRIES';
+  let ring = null;
+  function buildRing(){
+    const size = Math.max(8.5, Math.min(11, R * 0.082));
+    const font = '600 ' + size.toFixed(1) + 'px "JetBrains Mono", ui-monospace, monospace';
+    const stacked = R < 150;
+    const defs = stacked
+      ? [{t:'WALDRON INNOVATION NETWORK \u00B7', lat:-3,  acc:false}, {t:'ONLINE IN 50+ COUNTRIES', lat:-13, acc:true}]
+      : [{t:RING_PHRASE, lat:-9, acc:false}];
+    const rows = defs.map(d => {
+      const lat = d.lat * Math.PI / 180, cl = Math.cos(lat);
+      const natural = (size * 0.6 + 0.8) / (R * cl);          // radians per glyph so glyphs do not touch
+      const step = Math.max(natural, 1.85 / 53);              // keep the full phrase within ~105 degrees where room allows
+      const text = d.t.length;
+      const copies = text * step * 2 <= 2 * Math.PI * 0.92 ? 2 : 1;
+      return {t:d.t, lat, cl, sl:Math.sin(lat), cl2:Math.cos(lat + 0.012), sl2:Math.sin(lat + 0.012), step, copies, acc:d.acc,
+              // centre the first copy on the meridian facing the camera at start (static / reduced-motion frame reads in full)
+              th0: -START_YAW - (text - 1) * step / 2};
+    });
+    ring = {font, rows};
+  }
+  function drawRingText(){
+    if (!ring) return;
+    const d = 0.012;
+    ctx.save();
+    ctx.font = ring.font; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.lineJoin = 'round'; ctx.lineWidth = 3.2; ctx.strokeStyle = 'rgba(255,255,255,0.85)';
+    for (const row of ring.rows){
+      const len = row.t.length;
+      for (let c = 0; c < row.copies; c++){
+        for (let k = 0; k < len; k++){
+          const ch = row.t.charAt(k);
+          if (ch === ' ') continue;
+          const th = row.th0 + c * Math.PI + k * row.step, s = Math.sin(th), co = Math.cos(th);
+          const p0 = projectUnit([s*row.cl, row.sl, co*row.cl]);
+          if (p0.z < 0.1) continue;                            // far side: hidden
+          const pE = projectUnit([Math.sin(th + d)*row.cl, row.sl, Math.cos(th + d)*row.cl]);
+          const pN = projectUnit([s*row.cl2, row.sl2, co*row.cl2]);
+          const ex = (pE.x - p0.x) / (R * row.cl * d), ey = (pE.y - p0.y) / (R * row.cl * d);  // along the parallel
+          const nx = (pN.x - p0.x) / (R * d),          ny = (pN.y - p0.y) / (R * d);           // toward north
+          ctx.setTransform(DPR*ex, DPR*ey, -DPR*nx, -DPR*ny, DPR*p0.x, DPR*p0.y);
+          ctx.globalAlpha = smooth(0.1, 0.5, p0.z) * 0.92;
+          const accent = row.acc || (row.t === RING_PHRASE && k >= RING_PHRASE.indexOf('ONLINE'));
+          ctx.strokeText(ch, 0, 0);
+          ctx.fillStyle = accent ? '#1a62e8' : '#0a1628';
+          ctx.fillText(ch, 0, 0);
+        }
+      }
+    }
+    ctx.restore();
+  }
+
   function drawCities(){
     ctx.font = '500 10px "JetBrains Mono", ui-monospace, monospace';
     for (const c of cities){
@@ -739,6 +797,7 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
     if (needsBuild){
       buildSphere();
       buildDots(Math.max(4.4, R / 42));
+      buildRing();
       needsBuild = false;
     }
     setCamera();
@@ -751,6 +810,7 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
     drawGrid();
     drawLand();
     drawArcs(now || performance.now());
+    drawRingText();
     drawCities();
   }
 
