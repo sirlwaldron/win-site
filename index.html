@@ -29,7 +29,9 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
@@ -37,35 +39,35 @@
 <div class="app">
 
 <!-- Brand stripe -->
-<div class="brand-stripe" id="brandStripe">
+<header class="brand-stripe" id="brandStripe">
   <div class="brand">
     <span class="brand-mark" aria-hidden="true">
       <img src="./win-logo.png" alt="" width="28" height="28">
     </span>
     <span class="brand-name">Waldron <span>Innovation</span> Network</span>
   </div>
-  <div class="brand-meta"><span class="pulse" aria-hidden="true"></span>7 years · 140+ sites · Zero ghosted clients</div>
-  <div class="brand-actions" aria-label="Account">
+  <div class="brand-meta"><span class="pulse" aria-hidden="true"></span>Custom sites · Straight pricing · Human support</div>
+  <div class="brand-actions" role="group" aria-label="Quick actions">
     <button class="brand-action btnlike desktop-quote-action" type="button" data-goto="4">Get a quote</button>
     <button class="brand-action mobile-menu-action" type="button" id="mobileMenuBtn" aria-controls="pager" aria-expanded="false">Menu</button>
   </div>
-</div>
+</header>
 
 <!-- Section indicator -->
 <nav class="pager" id="pager" aria-label="Sections">
   <div class="pg-frame">
-    <button class="pg-btn active" data-idx="0"><span class="pg-num">01</span><span class="pg-label">Home</span><span class="pg-bar"></span></button>
-    <button class="pg-btn" data-idx="1"><span class="pg-num">02</span><span class="pg-label">Services</span><span class="pg-bar"></span></button>
-    <button class="pg-btn" data-idx="2"><span class="pg-num">03</span><span class="pg-label">Testimonials</span><span class="pg-bar"></span></button>
-    <button class="pg-btn" data-idx="3"><span class="pg-num">04</span><span class="pg-label">Pricing</span><span class="pg-bar"></span></button>
-    <button class="pg-btn" data-idx="4"><span class="pg-num">05</span><span class="pg-label">Contact</span><span class="pg-bar"></span></button>
+    <button class="pg-btn active" type="button" data-idx="0" aria-current="true"><span class="pg-num">01</span><span class="pg-label">Home</span><span class="pg-bar"></span></button>
+    <button class="pg-btn" type="button" data-idx="1"><span class="pg-num">02</span><span class="pg-label">Services</span><span class="pg-bar"></span></button>
+    <button class="pg-btn" type="button" data-idx="2"><span class="pg-num">03</span><span class="pg-label">Testimonials</span><span class="pg-bar"></span></button>
+    <button class="pg-btn" type="button" data-idx="3"><span class="pg-num">04</span><span class="pg-label">Pricing</span><span class="pg-bar"></span></button>
+    <button class="pg-btn" type="button" data-idx="4"><span class="pg-num">05</span><span class="pg-label">Contact</span><span class="pg-bar"></span></button>
   </div>
   <div class="pager-controls">
-    <button id="pgPrev" aria-label="Previous section">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l6 6M5 12l6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <button id="pgPrev" type="button" aria-label="Previous section">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M19 12H5M5 12l6 6M5 12l6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
-    <button id="pgNext" aria-label="Next section">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M19 12l-6 6M19 12l-6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <button id="pgNext" type="button" aria-label="Next section">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M19 12l-6 6M19 12l-6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </div>
 </nav>
@@ -76,18 +78,18 @@
     <small>Section</small>
     <div class="big" id="stepBig">01</div>
   </div>
-  <div style="opacity:.5">of 05 · <span id="stepName">Home</span></div>
+  <div style="opacity:.75">of 05 · <span id="stepName">Home</span></div>
 </div>
 
 
-
+<main id="main">
 <!-- PAGE 1: HOME -->
-<section class="page active" id="p-home" data-screen-label="01 Home" data-chrome="light">
+<section class="page active" id="p-home" tabindex="-1" data-screen-label="01 Home" data-chrome="light">
   <div class="page-inner">
     <div class="wrap">
       <div class="hero-grid">
         <div>
-          <div class="hero-kicker"><span class="pulse" aria-hidden="true"></span>Est. 2019 · 140+ sites · Zero ghosted clients</div>
+          <div class="hero-kicker"><span class="pulse" aria-hidden="true"></span>Est. 2019 · Custom websites for small business</div>
           <h1 class="hero-title">Websites Built to<br>Drive Real<br><span class="mark">Revenue</span>.</h1>
           <p class="hero-sub">Waldron Innovation Network turns your traffic into calls, forms, and sales. Fast, clear sites with no off-the-shelf templates, straight pricing, and a team that answers after launch.</p>
           <div class="hero-ctas">
@@ -103,11 +105,11 @@
 
         <!-- WIREFRAME GLOBE (canvas) -->
         <div class="globe-stage">
-          <div class="globe-badge"><span class="dot" aria-hidden="true"></span>Network · projects shipped</div>
+          <div class="globe-badge"><span class="dot" aria-hidden="true"></span>Waldron Innovation Network</div>
           <div class="globe-corner tr"><b>LIVE</b> 24.7 <br>NETWORK_LAYER</div>
           <div class="globe-corner bl">LAT 41.4°N<br>LON 81.8°W</div>
           <div class="globe-corner br">WIN · v.2026<br><b>AUTO-ROTATE</b></div>
-          <canvas id="globeCanvas"></canvas>
+          <canvas id="globeCanvas" role="img" aria-label="Decorative rotating wireframe globe"></canvas>
         </div>
       </div>
     </div>
@@ -115,7 +117,7 @@
 </section>
 
 <!-- PAGE 2: SERVICES -->
-<section class="page next" id="p-services" data-screen-label="02 Services" data-chrome="light">
+<section class="page next" id="p-services" tabindex="-1" data-screen-label="02 Services" data-chrome="light">
   <div class="page-inner">
     <div class="wrap">
       <div class="services-head">
@@ -126,28 +128,28 @@
       <div class="services-grid">
         <article class="s-card">
           <div class="s-num">01</div>
-          <div class="s-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M7 14h5"/></svg></div>
+          <div class="s-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18M7 14h5"/></svg></div>
           <h3>Custom Website Design</h3>
           <p>We design clean, professional websites tailored to your brand. No templates. No cookie-cutter layouts. Every pixel earned.</p>
           <div class="chips"><span class="chip">Brand-first</span><span class="chip">Responsive</span><span class="chip">Accessible</span></div>
         </article>
         <article class="s-card">
           <div class="s-num">02</div>
-          <div class="s-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 4 4 5-6"/><circle cx="19" cy="9" r="1.2" fill="currentColor"/></svg></div>
+          <div class="s-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 4 4 5-6"/><circle cx="19" cy="9" r="1.2" fill="currentColor"/></svg></div>
           <h3>Lead Generation Optimization</h3>
           <p>Every page is designed with one goal: turning visitors into leads or customers through smart layout and clear calls to action.</p>
           <div class="chips"><span class="chip">CRO</span><span class="chip">Funnel design</span><span class="chip">Conversion-first</span></div>
         </article>
         <article class="s-card">
           <div class="s-num">03</div>
-          <div class="s-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></div>
+          <div class="s-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></div>
           <h3>Ongoing Support &amp; Updates</h3>
           <p>We don't disappear after launch. Ongoing maintenance, updates, and performance monitoring keep your site running at its best.</p>
           <div class="chips"><span class="chip">Monitoring</span><span class="chip">Content edits</span><span class="chip">Security</span></div>
         </article>
       </div>
 
-      <div class="cred-wrap" aria-label="How we work and proof">
+      <div class="cred-wrap" role="group" aria-label="How we work and use cases">
         <div class="cred-block">
           <div class="eyebrow" style="justify-content:center">Process</div>
           <h3 class="cred-title">How it works, from checkout to launch</h3>
@@ -176,13 +178,12 @@
         </div>
       </div>
 
-      <!-- Proof section removed -->
     </div>
   </div>
 </section>
 
 <!-- PAGE 3: TESTIMONIALS -->
-<section class="page next" id="p-testimonials" data-screen-label="03 Testimonials" data-chrome="light">
+<section class="page next" id="p-testimonials" tabindex="-1" data-screen-label="03 Testimonials" data-chrome="light">
   <div class="page-inner">
     <div class="wrap">
       <div class="services-head">
@@ -191,14 +192,14 @@
         <p>Real outcomes, clear communication, and websites that turn into calls and bookings.</p>
       </div>
 
-      <div class="t-metrics narrow" aria-label="Client outcomes">
-        <div class="t-metric"><b>5.0 average</b><span>Client satisfaction</span></div>
+      <div class="t-metrics narrow" role="group" aria-label="Highlights">
+        <div class="t-metric"><b>Custom-built</b><span>No templates</span></div>
         <div class="t-metric"><b>On-time launches</b><span>Clear scope + timeline</span></div>
         <div class="t-metric"><b>Fast support</b><span>Replies within 6 hours</span></div>
       </div>
 
-      <div class="t-label" id="t-sites-label">Sites we’ve built</div>
-      <div class="t-sites" aria-labelledby="t-sites-label">
+      <h3 class="t-label" id="t-sites-label">Sites we’ve built</h3>
+      <div class="t-sites" role="group" aria-labelledby="t-sites-label">
         <figure class="quote site-quote" style="--delay:0ms">
           <div class="q-shot">
             <img src="/work/room09.webp" alt="Homepage screenshot of ROOM 09, a recording studio website built by WIN, with a mixing console layout, VU meters and a “Book a session” button" width="1200" height="900" loading="lazy" decoding="async" onerror="this.classList.add('is-missing')">
@@ -235,72 +236,12 @@
           <figcaption><span class="avatar">FR</span><div><b>FRAME</b><span>Independent Cinema</span></div></figcaption>
         </figure>
       </div>
-
-      <div class="t-label t-label-more">More client feedback</div>
-      <div class="t-grid narrow" aria-label="Client testimonials">
-        <figure class="quote featured" style="--delay:0ms">
-          <div class="q-top">
-            <div class="stars" aria-label="5 out of 5 stars">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-            </div>
-            <span class="q-pill">Communication</span>
-          </div>
-          <blockquote>“Honestly, the weekly check-ins are what sold me. I always knew where we were, what was next, and what they needed from me. The site went live when they said it would, and we booked three new jobs in the first week.”</blockquote>
-          <figcaption><span class="avatar">JR</span><div><b>Jordan Reed</b><span>Reed Home Services</span></div></figcaption>
-        </figure>
-        <figure class="quote" style="--delay:70ms">
-          <div class="q-top">
-            <div class="stars" aria-label="5 out of 5 stars">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-            </div>
-            <span class="q-pill">Conversions</span>
-          </div>
-          <blockquote>“Our old site was not terrible, it just was not doing anything. People landed on it and bounced. WIN dug into why, redid the copy, and cleaned up the booking form. We are getting actual inquiries now instead of crickets.”</blockquote>
-          <figcaption><span class="avatar">MP</span><div><b>Monica Patel</b><span>Patel Wellness Studio</span></div></figcaption>
-        </figure>
-        <figure class="quote" style="--delay:140ms">
-          <div class="q-top">
-            <div class="stars" aria-label="5 out of 5 stars">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-            </div>
-            <span class="q-pill">Reliability</span>
-          </div>
-          <blockquote>“I have been burned before by people who disappear halfway through. WIN answered emails, hit deadlines, and walked me through everything at handoff. As a one-man shop, I cannot chase people down, so that mattered.”</blockquote>
-          <figcaption><span class="avatar">CH</span><div><b>Chris Hall</b><span>Hall Contracting</span></div></figcaption>
-        </figure>
-        <figure class="quote" style="--delay:210ms">
-          <div class="q-top">
-            <div class="stars" aria-label="5 out of 5 stars">
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
-            </div>
-            <span class="q-pill">Speed</span>
-          </div>
-          <blockquote>“Page speed went from embarrassing to actually fast. The calls to action make sense now, the contact form works on mobile (it did not before), and our sales team finally stopped apologizing for the website on calls.”</blockquote>
-          <figcaption><span class="avatar">LN</span><div><b>Lena Nguyen</b><span>Northline B2B Services</span></div></figcaption>
-        </figure>
-      </div>
     </div>
   </div>
 </section>
 
 <!-- PAGE 4: PRICING -->
-<section class="page next" id="p-pricing" data-screen-label="04 Pricing" data-chrome="light">
+<section class="page next" id="p-pricing" tabindex="-1" data-screen-label="04 Pricing" data-chrome="light">
   <div class="page-inner">
     <div class="wrap">
       <div class="pricing-head">
@@ -315,17 +256,17 @@
           <div class="p-price"><span class="amt">$599</span><span class="unit">one-time</span></div>
           <p class="p-tagline">A clean, professional presence for new businesses that need to get online fast.</p>
           <ul class="p-features">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Up to 4 pages</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Mobile responsive design</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>1 lead form (email notifications to your existing inbox)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Domain connection / DNS setup + SSL (HTTPS)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Basic favicon + social share image</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Basic on-page SEO (meta tags, alt text, sitemap)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Up to 5 stock images (Unsplash/Pexels)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Client provides final copy + images (copywriting available as add-on)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>30 days of post-launch bug fixes</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>1 revision round (up to 5 change requests, submitted within 7 days of preview)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Timeline: 1 to 2 weeks</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Up to 4 pages</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Mobile responsive design</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>1 lead form (email notifications to your existing inbox)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Domain connection / DNS setup + SSL (HTTPS)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Basic favicon + social share image</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Basic on-page SEO (meta tags, alt text, sitemap)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Up to 5 stock images (Unsplash/Pexels)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Client provides final copy + images (copywriting available as add-on)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>30 days of post-launch bug fixes</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>1 revision round (up to 5 change requests, submitted within 7 days of preview)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Timeline: 1 to 2 weeks</li>
           </ul>
           <button class="p-cta" data-goto="4" data-plan="Starter">Get Started</button>
         </div>
@@ -337,19 +278,19 @@
           <div class="p-price"><span class="amt">$1,199</span><span class="unit">one-time</span></div>
           <p class="p-tagline">For businesses that need their site to actually generate leads, not just exist.</p>
           <ul class="p-features">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Up to 6 pages</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Mobile responsive design</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Up to 2 lead forms (email notifications to your existing inbox)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Light keyword targeting (5–10 priority keywords) + content structure guidance</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Basic schema markup / structured data</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Google Analytics + Search Console setup</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Optimized for speed (Core Web Vitals / PageSpeed best practices)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Up to 10 stock images (Unsplash/Pexels)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Client provides final copy + images (copywriting available as add-on)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Blog available as add-on</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>60 days of post-launch bug fixes</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>2 revision rounds</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Timeline: 2 to 3 weeks</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Up to 6 pages</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Mobile responsive design</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Up to 2 lead forms (email notifications to your existing inbox)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Light keyword targeting (5–10 priority keywords) + content structure guidance</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Basic schema markup / structured data</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Google Analytics + Search Console setup</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Optimized for speed (Core Web Vitals / PageSpeed best practices)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Up to 10 stock images (Unsplash/Pexels)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Client provides final copy + images (copywriting available as add-on)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Blog available as add-on</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>60 days of post-launch bug fixes</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>2 revision rounds</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Timeline: 2 to 3 weeks</li>
           </ul>
           <button class="p-cta" data-goto="4" data-plan="Growth">Get Started</button>
         </div>
@@ -360,14 +301,14 @@
           <div class="p-price"><span class="amt">$1,799</span><span class="unit">one-time</span></div>
           <p class="p-tagline">A full website build <b>plus</b> the backend systems: payments, webhooks, and integrations.</p>
           <ul class="p-features">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Everything in Growth (up to 6 pages + up to 2 lead forms)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Stripe embedded checkout (one-time + subscriptions)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Manage billing button (Stripe Customer Portal via email lookup)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Webhooks (up to 3 events) + basic failure logging</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Up to 2 standard integrations (Zapier or native connectors)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Deploy + environment variable setup (payments, webhooks, forms)</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Test transactions + end-to-end checkout testing</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>60 days of post-launch bug fixes</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Everything in Growth (up to 6 pages + up to 2 lead forms)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Stripe embedded checkout (one-time + subscriptions)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Manage billing button (Stripe Customer Portal via email lookup)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Webhooks (up to 3 events) + basic failure logging</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Up to 2 standard integrations (Zapier or native connectors)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Deploy + environment variable setup (payments, webhooks, forms)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Test transactions + end-to-end checkout testing</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>60 days of post-launch bug fixes</li>
           </ul>
           <button class="p-cta" data-goto="4" data-plan="BackendGrowth">Get Started</button>
         </div>
@@ -385,10 +326,10 @@
             <div class="p-name">“Hands-Off” Hosting</div>
             <div class="p-price"><span class="amt">$30</span><span class="unit">/month</span></div>
             <ul class="p-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Just keeping the lights on (no edits included)</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Hosting + SSL renewal</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Domain renewal included</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Uptime monitoring</li>
+              <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Just keeping the lights on (no edits included)</li>
+              <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Hosting + SSL renewal</li>
+              <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Domain renewal included</li>
+              <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Uptime monitoring</li>
             </ul>
             <button class="p-cta" data-goto="4" data-plan="HostingHandsOff">Subscribe</button>
           </div>
@@ -397,9 +338,9 @@
             <div class="p-name">Small Business</div>
             <div class="p-price"><span class="amt">$50</span><span class="unit">/month</span></div>
             <ul class="p-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Hosting + SSL</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>1 hour of monthly edits</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Security updates + uptime monitoring</li>
+              <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Hosting + SSL</li>
+              <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>1 hour of monthly edits</li>
+              <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Security updates + uptime monitoring</li>
             </ul>
             <button class="p-cta" data-goto="4" data-plan="HostingSmallBusiness">Subscribe</button>
           </div>
@@ -408,10 +349,10 @@
             <div class="p-name">E-commerce / High Traffic</div>
             <div class="p-price"><span class="amt">$150</span><span class="unit">/month</span></div>
             <ul class="p-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Hosting tuned for traffic + checkout</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Performance monitoring</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Monthly SEO reports</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>10 hours of monthly edits</li>
+              <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Hosting tuned for traffic + checkout</li>
+              <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Performance monitoring</li>
+              <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Monthly SEO reports</li>
+              <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>10 hours of monthly edits</li>
             </ul>
             <button class="p-cta" data-goto="4" data-plan="HostingEcommerce">Subscribe</button>
           </div>
@@ -423,7 +364,7 @@
         <p>Logo design or brand identity work, professional photography or stock image licensing beyond basic use, ongoing content creation or blog posts, paid ad campaign management. These are available as add-ons - just ask.</p>
       </div>
 
-      <div class="faq" aria-label="Good to know">
+      <div class="faq" role="group" aria-label="Good to know">
         <h3>Good to Know</h3>
         <details>
           <summary>What counts as a "revision round"?</summary>
@@ -445,15 +386,13 @@
           <summary>Do you offer rush delivery?</summary>
           <p>Yes. Rush fee is 25% of the package price for timelines under the standard window.</p>
         </details>
-        <!-- SEO + browser support FAQs removed -->
-        <!-- Training FAQ removed -->
       </div>
     </div>
   </div>
 </section>
 
 <!-- PAGE 5: CONTACT -->
-<section class="page next" id="p-contact" data-screen-label="05 Contact" data-chrome="dark">
+<section class="page next" id="p-contact" tabindex="-1" data-screen-label="05 Contact" data-chrome="dark">
   <div class="page-inner">
     <div class="wrap">
       <div class="contact-grid">
@@ -464,10 +403,10 @@
             <p>Tell us about your business and we'll get back to you within 6 hours. No obligation - just a conversation.</p>
           </div>
           <form class="form" id="contactForm" novalidate>
-            <div class="field"><label for="f-name">Full Name</label><input id="f-name" name="name" type="text" required placeholder="Jane Doe"></div>
-            <div class="field"><label for="f-biz">Business Name</label><input id="f-biz" name="biz" type="text" required placeholder="Acme &amp; Co."></div>
-            <div class="field"><label for="f-email">Email Address</label><input id="f-email" name="email" type="email" required placeholder="Your email address"></div>
-            <div class="field"><label for="f-phone">Phone Number<span class="opt">(optional)</span></label><input id="f-phone" name="phone" type="tel" placeholder="(555) 123-4567"></div>
+            <div class="field"><label for="f-name">Full Name</label><input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Jane Doe"></div>
+            <div class="field"><label for="f-biz">Business Name</label><input id="f-biz" name="biz" type="text" autocomplete="organization" required placeholder="Acme &amp; Co."></div>
+            <div class="field"><label for="f-email">Email Address</label><input id="f-email" name="email" type="email" autocomplete="email" required placeholder="Your email address"></div>
+            <div class="field"><label for="f-phone">Phone Number<span class="opt">(optional)</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="(555) 123-4567"></div>
             <div class="field full">
               <label for="f-plan">Which plan interests you?</label>
               <select id="f-plan" name="plan">
@@ -483,8 +422,8 @@
             <div class="field full"><label for="f-msg">Tell us about your project</label><textarea id="f-msg" name="message" placeholder="What are you building? What are your goals?"></textarea></div>
             <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label>Leave this field empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
             <button type="submit" class="submit">Send Message</button>
-            <div class="form-success" id="formSuccess">
-              <div class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></div>
+            <div class="form-success" id="formSuccess" role="status">
+              <div class="check"><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></div>
               <div><b>Thanks - message received.</b>We'll be in touch within 6 hours.</div>
             </div>
           </form>
@@ -497,7 +436,7 @@
           </div>
           <div class="email-block" style="margin-top:12px">
             <small>Book a 30-min call</small>
-            <a href="https://calendly.com/waldronhq/30min" target="_blank" rel="noreferrer">Pick a time →</a>
+            <a href="https://calendly.com/waldronhq/30min" target="_blank" rel="noreferrer">Pick a time<span class="sr-only"> (opens in a new tab)</span> →</a>
           </div>
           <p class="trust">We respond to every inquiry within 6 hours. No sales pressure, just an honest conversation about your goals.</p>
           <p class="trust pay-note">Ready to start? Choose a plan on the Pricing page. Payment is made upfront through secure Stripe checkout when you choose your plan.</p>
@@ -511,6 +450,8 @@
     </div>
   </div>
 </section>
+
+</main>
 
 <!-- Tweaks -->
 <div class="tweaks-panel" id="tweaks">
