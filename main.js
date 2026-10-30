@@ -15,6 +15,13 @@ function setMobileMenuOpen(open){
   if (mobileMenuBtn) mobileMenuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
 }
 
+// Keep off-screen pages out of the tab order and the accessibility tree.
+function syncInert(idx){
+  const focusInHidden = pages.some((p,i) => i !== idx && p.contains(document.activeElement));
+  pages.forEach((p,i) => { p.inert = i !== idx; });
+  if (focusInHidden) pages[idx].focus({preventScroll:true});
+}
+
 function applyChromeForPage(idx){
   const dark = pages[idx].dataset.chrome === 'dark';
   document.body.classList.toggle('on-dark', dark);
@@ -32,7 +39,11 @@ function goTo(idx){
     else p.classList.add('next');
   });
   current = idx;
-  pgBtns.forEach((b,i) => b.classList.toggle('active', i===idx));
+  syncInert(idx);
+  pgBtns.forEach((b,i) => {
+    b.classList.toggle('active', i===idx);
+    if (i===idx) b.setAttribute('aria-current','true'); else b.removeAttribute('aria-current');
+  });
   stepBig.textContent = String(idx+1).padStart(2,'0');
   stepName.textContent = names[idx];
   applyChromeForPage(idx);
@@ -50,6 +61,7 @@ pages.forEach((p,i)=> {
   if (i===0) return;
   p.classList.add('next');
 });
+syncInert(0);
 try {
   const saved = parseInt(localStorage.getItem('win.page') || '0', 10);
   if (!isNaN(saved) && saved > 0 && saved < pages.length) goTo(saved);
@@ -484,8 +496,12 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
     if (arcs.length > 8) arcs.shift();
   }
   // Initial arcs
-  for (let i=0;i<4;i++) setTimeout(spawnArc, i*400);
-  spawnInterval = setInterval(spawnArc, 900);
+  // Respect prefers-reduced-motion: draw a single static frame (no rotation or flying arcs).
+  const reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  if (!reduceMotion){
+    for (let i=0;i<4;i++) setTimeout(spawnArc, i*400);
+    spawnInterval = setInterval(spawnArc, 900);
+  }
 
   function resize(){
     const rect = canvas.getBoundingClientRect();
@@ -495,7 +511,7 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
     cx = W/2; cy = H/2;
     R = Math.min(W, H) * 0.44;
   }
-  window.addEventListener('resize', resize);
+  window.addEventListener('resize', () => { resize(); if (reduceMotion) drawScene(); });
   resize();
 
   function drawBackdrop(){
@@ -709,14 +725,18 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
   function frame(now){
     if (!active) return;
     const dt = (now - last)/1000; last = now;
-    yaw += dt * 0.08;
+    if (!reduceMotion) yaw += dt * 0.08;
+    drawScene(now);
+    if (!reduceMotion) rafId = requestAnimationFrame(frame);
+    else rafId = null;
+  }
+  function drawScene(now){
     drawBackdrop();
     drawGrid();
     drawLand();
     drawOuterRim();
-    drawArcs(now);
+    drawArcs(now || performance.now());
     drawCities();
-    rafId = requestAnimationFrame(frame);
   }
   rafId = requestAnimationFrame(frame);
 
@@ -726,7 +746,7 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
     active = n;
     if (active){
       last = performance.now();
-      if (!spawnInterval) spawnInterval = setInterval(spawnArc, 900);
+      if (!spawnInterval && !reduceMotion) spawnInterval = setInterval(spawnArc, 900);
       if (!rafId) rafId = requestAnimationFrame(frame);
     } else {
       if (rafId) cancelAnimationFrame(rafId);
