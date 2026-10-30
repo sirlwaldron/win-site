@@ -182,8 +182,8 @@ window.addEventListener('keydown', e => {
 
 /* =========== Contact form =========== */
 const CONTACT_EMAIL_TO = 'waldronhq@gmail.com';
-// Optional: set to a real endpoint later (Formspree/Netlify/etc). Leave empty to use mailto fallback.
-const CONTACT_FORM_ENDPOINT = '';
+// Formspree endpoint. If empty, the form falls back to a mailto link.
+const CONTACT_FORM_ENDPOINT = 'https://formspree.io/f/xaeebgpy';
 
 function escapeText(s){ return String(s ?? '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
 function buildEmailBody(data){
@@ -206,8 +206,32 @@ function showSuccess(messageHtml){
 
 document.getElementById('contactEmail').setAttribute('href', `mailto:${CONTACT_EMAIL_TO}`);
 
+function showFormError(form, messageHtml){
+  let node = document.getElementById('formError');
+  if (!node){
+    node = document.createElement('div');
+    node.id = 'formError';
+    node.setAttribute('role', 'alert');
+    node.style.cssText = 'grid-column:1/-1;margin-top:4px;padding:14px 16px;border-radius:10px;font-size:14px;line-height:1.5;color:#fff;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.5)';
+    const btn = form.querySelector('.submit');
+    btn.insertAdjacentElement('afterend', node);
+  }
+  node.innerHTML = messageHtml;
+  node.style.display = '';
+}
+function clearFormError(){
+  const node = document.getElementById('formError');
+  if (node) node.style.display = 'none';
+}
+function mailtoFallbackLink(data){
+  const subject = encodeURIComponent(`New website inquiry: ${data.biz || data.name || 'WIN'}`);
+  const body = encodeURIComponent(buildEmailBody(data));
+  return `mailto:${CONTACT_EMAIL_TO}?subject=${subject}&body=${body}`;
+}
+
 document.getElementById('contactForm').addEventListener('submit', async (e) => {
   e.preventDefault();
+  const form = e.currentTarget;
   const req = ['f-name','f-biz','f-email'];
   let ok = true;
   req.forEach(id => {
@@ -217,30 +241,46 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
   });
   if (!ok) return;
 
-  const fd = new FormData(e.currentTarget);
+  const fd = new FormData(form);
   const data = Object.fromEntries(fd.entries());
+  clearFormError();
 
   // Prefer a real endpoint if configured.
   if (CONTACT_FORM_ENDPOINT){
+    const btn = form.querySelector('.submit');
+    const btnLabel = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    btn.style.opacity = '.7';
+    btn.style.cursor = 'not-allowed';
+
+    // Formspree special fields
+    fd.set('_subject', 'New WaldronHQ inquiry');
+    const email = (data.email || '').trim();
+    if (email) fd.set('_replyto', email);
+    // _gotcha honeypot is included from the hidden form field (left empty by real users).
+
     try{
       const res = await fetch(CONTACT_FORM_ENDPOINT, {
         method: 'POST',
         headers: {'Accept':'application/json'},
         body: fd
       });
-      if (!res.ok) throw new Error('Bad response');
+      if (!res.ok) throw new Error('Bad response: ' + res.status);
       showSuccess(`<b>Thanks - message sent.</b>We’ll be in touch within 6 hours.`);
-      return;
     } catch(err){
-      // Fall back to mailto if endpoint fails (useful during early setup).
+      showFormError(form, `<b>Sorry - your message didn’t go through.</b> Please try again, or email us directly at <a href="${mailtoFallbackLink(data).replace(/"/g,'&quot;')}" style="color:var(--accent);font-weight:700">${escapeText(CONTACT_EMAIL_TO)}</a>.`);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = btnLabel;
+      btn.style.opacity = '';
+      btn.style.cursor = '';
     }
+    return;
   }
 
-  const subject = encodeURIComponent(`New website inquiry: ${data.biz || data.name || 'WIN'}`);
-  const body = encodeURIComponent(buildEmailBody(data));
-  const mailto = `mailto:${encodeURIComponent(CONTACT_EMAIL_TO)}?subject=${subject}&body=${body}`;
-  // Open mail client with prefilled message (works without hosting).
-  window.location.href = mailto;
+  // No endpoint configured: mailto fallback.
+  window.location.href = mailtoFallbackLink(data);
   showSuccess(`<b>Almost done.</b>Your email app should open with a prefilled message. If it didn’t, email us at <a href="mailto:${escapeText(CONTACT_EMAIL_TO)}" style="color:var(--accent);font-weight:700">${escapeText(CONTACT_EMAIL_TO)}</a>.`);
 });
 
