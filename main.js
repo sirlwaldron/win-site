@@ -1,24 +1,55 @@
-/* =========== Page controller =========== */
+/* =========== Site controller ===========
+   One-page site with five sections (home, services, testimonials, pricing, contact).
+   Sections are addressable by hash (#pricing) and work with the browser Back button. */
+const STRIPE_PUBLISHABLE_KEY = 'pk_live_51TRFGw2KV2wDniiLUGyRNOGh4WgTJS7Rm0oJSZnJJXmpS96esQNoxfDkdcIyUPPR4GVlFWLq74rJpwCuOwXAacCT00t3lXrUtk'; // publishable key: safe to ship
+const CONTACT_EMAIL_TO = 'waldronhq@gmail.com';
+const CONTACT_FORM_ENDPOINT = 'https://formspree.io/f/xaeebgpy';
+
+const SLUGS = ['home','services','testimonials','pricing','contact'];
+const PLAN_NAMES = {
+  Starter: 'Starter Build',
+  Growth: 'Growth Build',
+  BackendGrowth: 'Systems Build',
+  HostingHandsOff: 'Hands-Off Hosting',
+  HostingSmallBusiness: 'Small Business Hosting',
+  HostingEcommerce: 'E-commerce / High Traffic Hosting',
+};
+
 const pages = Array.from(document.querySelectorAll('.page'));
-const names = ['Home','Services','Testimonials','Pricing','Contact'];
-let current = 0;
-let busy = false;
 const pgBtns = document.querySelectorAll('.pg-btn');
 const stepBig = document.getElementById('stepBig');
-const stepName = document.getElementById('stepName');
 const brandStripe = document.getElementById('brandStripe');
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const pgPrev = document.getElementById('pgPrev');
+const pgNext = document.getElementById('pgNext');
+let current = 0;
+let busy = false;
 let globeControls = null;
+
+// Fonts: loaded without blocking first paint (kept free of inline handlers so the CSP can forbid them).
+const fontsCss = document.getElementById('fontsCss');
+if (fontsCss) fontsCss.media = 'all';
+
+// Screenshots that fail to load fall back to the empty frame.
+document.querySelectorAll('.q-shot img').forEach(img => {
+  const miss = () => img.classList.add('is-missing');
+  img.addEventListener('error', miss);
+  if (img.complete && img.currentSrc && img.naturalWidth === 0) miss();
+});
+
+// Older versions remembered the last section in localStorage; clean that up.
+try { localStorage.removeItem('win.page'); } catch(e){}
 
 function setMobileMenuOpen(open){
   document.body.classList.toggle('mobile-menu-open', !!open);
   if (mobileMenuBtn) mobileMenuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
 }
+const menuIsOpen = () => document.body.classList.contains('mobile-menu-open');
 
-// Keep off-screen pages out of the tab order and the accessibility tree.
+// Keep off-screen sections out of the tab order and the accessibility tree.
 function syncInert(idx){
   const focusInHidden = pages.some((p,i) => i !== idx && p.contains(document.activeElement));
-  pages.forEach((p,i) => { p.inert = i !== idx; });
+  pages.forEach((p,i) => { p.inert = i !== idx; p.tabIndex = i === idx ? 0 : -1; });
   if (focusInHidden) pages[idx].focus({preventScroll:true});
 }
 
@@ -28,9 +59,15 @@ function applyChromeForPage(idx){
   brandStripe.classList.toggle('on-dark', dark);
 }
 
-function goTo(idx){
+function idxFromHash(){
+  return SLUGS.indexOf(location.hash.replace(/^#/, '').toLowerCase());
+}
+
+function goTo(idx, opts){
+  opts = opts || {};
   idx = Math.max(0, Math.min(pages.length-1, idx));
-  if (idx === current || busy) return;
+  if (idx === current) return;
+  if (busy && !opts.fromHash) return;
   busy = true;
   pages.forEach((p,i) => {
     p.classList.remove('active','prev','next');
@@ -42,101 +79,172 @@ function goTo(idx){
   syncInert(idx);
   pgBtns.forEach((b,i) => {
     b.classList.toggle('active', i===idx);
-    if (i===idx) b.setAttribute('aria-current','true'); else b.removeAttribute('aria-current');
+    if (i===idx) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current');
   });
   stepBig.textContent = String(idx+1).padStart(2,'0');
-  stepName.textContent = names[idx];
   applyChromeForPage(idx);
-  // Pause heavy animations when not on Home
-  if (globeControls) globeControls.setActive(idx === 0);
-  document.getElementById('pgPrev').disabled = idx === 0;
-  document.getElementById('pgNext').disabled = idx === pages.length-1;
-  // persist
-  try { localStorage.setItem('win.page', String(idx)); } catch(e){}
+  if (globeControls) globeControls.setActive(idx === 0);   // pause the globe when it is off screen
+  pgPrev.disabled = idx === 0;
+  pgNext.disabled = idx === pages.length-1;
+  document.title = idx === 0 ? DEFAULT_TITLE : `${pages[idx].getAttribute('aria-label')} | Waldron Innovation Network`;
+  if (!opts.fromHash && !opts.initial) history.pushState(null, '', '#' + SLUGS[idx]);
+  // Move focus to the new section so the keyboard can scroll it and screen readers announce it.
+  if (!opts.initial) pages[idx].focus({preventScroll:true});
   setTimeout(() => busy = false, 320);
 }
+const DEFAULT_TITLE = document.title;
 
 // Init state
-pages.forEach((p,i)=> {
-  if (i===0) return;
-  p.classList.add('next');
-});
+pages.forEach((p,i) => { if (i !== 0) p.classList.add('next'); });
 syncInert(0);
-try {
-  const saved = parseInt(localStorage.getItem('win.page') || '0', 10);
-  if (!isNaN(saved) && saved > 0 && saved < pages.length) goTo(saved);
-} catch(e){}
-document.getElementById('pgPrev').disabled = true;
+pgPrev.disabled = true;
+{
+  const i0 = idxFromHash();
+  if (i0 > 0) goTo(i0, {initial:true});
+}
+window.addEventListener('popstate', () => {
+  const i = idxFromHash();
+  if (i >= 0) goTo(i, {fromHash:true});
+  else if (!location.hash) goTo(0, {fromHash:true});
+});
 
 /* =========== Embedded Stripe Checkout =========== */
+const checkoutModal = document.getElementById('checkoutModal');
+const checkoutCard = checkoutModal.querySelector('.modal-card');
+const checkoutTitle = document.getElementById('checkoutTitle');
+const checkoutSub = document.getElementById('checkoutSub');
+const checkoutBody = document.getElementById('checkoutBody');
+const checkoutDone = document.getElementById('checkoutDone');
+const embeddedMount = document.getElementById('embeddedCheckout');
+const backgroundEls = [document.querySelector('.skip-link'), document.querySelector('.app')].filter(Boolean);
 let embeddedCheckoutInstance = null;
+let checkoutToken = 0;           // bumps on every open/close so late async work can tell it is stale
+let checkoutOpener = null;
+let stripeLoading = null;
+const checkoutIsOpen = () => checkoutModal.classList.contains('show');
+
+// Stripe.js is only fetched when someone starts checkout.
+function loadStripe(){
+  if (window.Stripe) return Promise.resolve(window.Stripe);
+  if (stripeLoading) return stripeLoading;
+  stripeLoading = new Promise((resolve, reject) => {
+    const s = document.createElement('script');
+    s.src = 'https://js.stripe.com/v3/';
+    s.async = true;
+    s.onload = () => window.Stripe ? resolve(window.Stripe) : reject(new Error('Stripe.js failed to load'));
+    s.onerror = () => { stripeLoading = null; reject(new Error('Stripe.js failed to load')); };
+    document.head.appendChild(s);
+  });
+  return stripeLoading;
+}
+
+function destroyEmbedded(){
+  try { if (embeddedCheckoutInstance && embeddedCheckoutInstance.destroy) embeddedCheckoutInstance.destroy(); } catch(e){}
+  embeddedCheckoutInstance = null;
+  embeddedMount.innerHTML = '';
+}
 
 function openCheckoutModal(title){
-  const m = document.getElementById('checkoutModal');
-  if (!m) return;
-  if (title) {
-    const t = document.getElementById('checkoutTitle');
-    if (t) t.textContent = title;
-  }
-  const sub = document.getElementById('checkoutSub');
-  if (sub) sub.textContent = 'Secure checkout powered by Stripe.';
-  m.classList.add('show');
-  m.setAttribute('aria-hidden', 'false');
+  checkoutToken++;
+  checkoutOpener = document.activeElement;
+  checkoutTitle.textContent = title || 'Checkout';
+  checkoutSub.textContent = 'Secure checkout powered by Stripe.';
+  checkoutSub.hidden = false;
+  checkoutBody.hidden = false;
+  checkoutDone.hidden = true;
+  checkoutModal.classList.add('show');
+  checkoutModal.setAttribute('aria-hidden', 'false');
+  backgroundEls.forEach(el => { el.inert = true; });
+  setMobileMenuOpen(false);
+  checkoutCard.focus({preventScroll:true});
 }
 
 function closeCheckoutModal(){
-  const m = document.getElementById('checkoutModal');
-  if (!m) return;
-  m.classList.remove('show');
-  m.setAttribute('aria-hidden', 'true');
+  if (!checkoutIsOpen()) return;
+  checkoutToken++;
+  checkoutModal.classList.remove('show');
+  checkoutModal.setAttribute('aria-hidden', 'true');
+  destroyEmbedded();
+  backgroundEls.forEach(el => { el.inert = false; });
+  const back = checkoutOpener && document.contains(checkoutOpener) ? checkoutOpener : pages[current];
+  checkoutOpener = null;
+  if (back && back.focus) back.focus({preventScroll:true});
+}
+
+function showCheckoutDone(){
+  destroyEmbedded();
+  checkoutTitle.textContent = 'Checkout complete';
+  checkoutBody.hidden = true;
+  checkoutDone.hidden = false;
+  checkoutCard.focus({preventScroll:true});
+}
+
+function showCheckoutError(message){
+  checkoutSub.textContent = '';
+  checkoutSub.append(message + ' ');
+  const a = document.createElement('a');
+  a.href = 'mailto:' + CONTACT_EMAIL_TO;
+  a.textContent = CONTACT_EMAIL_TO;
+  checkoutSub.append(a);
+}
+
+async function startEmbeddedCheckout(plan){
+  const token = checkoutToken;
+  const stale = () => token !== checkoutToken;
+  checkoutSub.textContent = 'Loading secure checkout…';
+  // Ask for the session while Stripe.js downloads.
+  const secretPromise = fetch('/api/create-embedded-checkout-session', {
+    method: 'POST',
+    headers: {'content-type':'application/json'},
+    body: JSON.stringify({ plan }),
+  }).then(async res => {
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok || !data.clientSecret) throw new Error('session');
+    return data.clientSecret;
+  });
+  secretPromise.catch(() => {});   // handled below; avoids an unhandled-rejection warning if the modal closed first
   try {
-    if (embeddedCheckoutInstance && typeof embeddedCheckoutInstance.destroy === 'function') {
-      embeddedCheckoutInstance.destroy();
-    }
-  } catch(e){}
-  const mount = document.getElementById('embeddedCheckout');
-  if (mount) mount.innerHTML = '';
-  embeddedCheckoutInstance = null;
+    const Stripe = await loadStripe();
+    if (stale()) return;
+    destroyEmbedded();
+    const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+    const instance = await stripe.initEmbeddedCheckout({
+      fetchClientSecret: () => secretPromise,
+      onComplete: () => { if (!stale()) showCheckoutDone(); },
+    });
+    if (stale()) { try { instance.destroy(); } catch(e){} return; }
+    embeddedCheckoutInstance = instance;
+    instance.mount('#embeddedCheckout');
+    checkoutSub.hidden = true;
+  } catch (err) {
+    if (!stale()) showCheckoutError('Checkout is unavailable right now. Please email');
+  }
 }
 
 document.querySelectorAll('[data-checkout-close="1"]').forEach(el => el.addEventListener('click', closeCheckoutModal));
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeCheckoutModal();
+
+// Keep keyboard focus inside the dialog while it is open.
+checkoutModal.addEventListener('keydown', e => {
+  if (e.key !== 'Tab') return;
+  const f = Array.from(checkoutCard.querySelectorAll('button:not([hidden]), a[href], iframe, [tabindex="0"]'))
+    .filter(el => !el.closest('[hidden]') && el.offsetParent !== null);
+  if (!f.length) { e.preventDefault(); checkoutCard.focus(); return; }
+  const first = f[0], last = f[f.length-1];
+  if (e.shiftKey && (document.activeElement === first || document.activeElement === checkoutCard)) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
+document.addEventListener('focusin', e => {
+  if (checkoutIsOpen() && !checkoutModal.contains(e.target)) checkoutCard.focus({preventScroll:true});
 });
 
-async function startEmbeddedCheckout(plan){
-  if (!window.Stripe) throw new Error('Stripe.js failed to load');
-  const pk = window.WIN_STRIPE_PUBLISHABLE_KEY;
-  if (!pk) throw new Error('Missing Stripe publishable key (WIN_STRIPE_PUBLISHABLE_KEY)');
-
-  // Only one instance allowed. Tear down any previous instance.
-  try {
-    if (embeddedCheckoutInstance && typeof embeddedCheckoutInstance.destroy === 'function') {
-      embeddedCheckoutInstance.destroy();
-    }
-  } catch(e){}
-  embeddedCheckoutInstance = null;
-
-  const stripe = window.Stripe(pk);
-  const mount = document.getElementById('embeddedCheckout');
-  if (!mount) throw new Error('Missing embedded checkout mount node');
-  mount.innerHTML = '';
-
-  embeddedCheckoutInstance = await stripe.initEmbeddedCheckout({
-    fetchClientSecret: async () => {
-      const res = await fetch('/api/create-embedded-checkout-session', {
-        method: 'POST',
-        headers: {'content-type':'application/json'},
-        body: JSON.stringify({ plan }),
-      });
-      if (!res.ok) throw new Error('Checkout is unavailable right now. Please email waldronhq@gmail.com');
-      const data = await res.json();
-      if (!data.clientSecret) throw new Error('Checkout is unavailable right now. Please email waldronhq@gmail.com');
-      return data.clientSecret;
-    }
-  });
-
-  embeddedCheckoutInstance.mount('#embeddedCheckout');
+// Returning from a redirect-based payment method (bank, wallet) lands on /?checkout=complete&session_id=...
+{
+  const q = new URLSearchParams(location.search);
+  if (q.get('checkout') === 'complete' && /^cs_/.test(q.get('session_id') || '')) {
+    openCheckoutModal('Checkout complete');
+    showCheckoutDone();
+    history.replaceState(null, '', location.pathname + location.hash);
+  }
 }
 
 /* =========== Triggers =========== */
@@ -144,60 +252,65 @@ pgBtns.forEach(b => b.addEventListener('click', () => {
   goTo(parseInt(b.dataset.idx,10));
   setMobileMenuOpen(false);
 }));
-document.getElementById('pgPrev').addEventListener('click', () => goTo(current-1));
-document.getElementById('pgNext').addEventListener('click', () => goTo(current+1));
+pgPrev.addEventListener('click', () => goTo(current-1));
+pgNext.addEventListener('click', () => goTo(current+1));
 if (mobileMenuBtn) {
-  mobileMenuBtn.addEventListener('click', () => {
-    setMobileMenuOpen(!document.body.classList.contains('mobile-menu-open'));
-  });
+  mobileMenuBtn.addEventListener('click', () => setMobileMenuOpen(!menuIsOpen()));
 }
+// Tap or click outside the menu to close it.
+document.addEventListener('click', e => {
+  if (menuIsOpen() && !e.target.closest('#pager, #mobileMenuBtn')) setMobileMenuOpen(false);
+});
 
 document.querySelectorAll('[data-goto]').forEach(el => {
   el.addEventListener('click', () => {
     const plan = el.dataset.plan;
-    if (plan && el.classList.contains('p-cta')){
-      setMobileMenuOpen(false);
-      openCheckoutModal(`Checkout · ${plan}`);
-      startEmbeddedCheckout(plan).catch(err => {
-        const sub = document.getElementById('checkoutSub');
-        if (sub) sub.textContent = (err && err.message) ? err.message : 'Checkout failed to start.';
-      });
+    if (plan && el.classList.contains('p-cta') && PLAN_NAMES[plan]) {
+      openCheckoutModal('Checkout: ' + PLAN_NAMES[plan]);
+      startEmbeddedCheckout(plan);
       return;
-    }
-    if (plan){
-      const map = {
-        'Starter': 'Starter - $599',
-        'Growth': 'Growth - $1,199',
-        'BackendGrowth': 'Systems Build - $1,799',
-        'Care': 'Care Plan (existing client)',
-      };
-      setTimeout(() => {
-        const sel = document.getElementById('f-plan');
-        if (sel && map[plan]) sel.value = map[plan];
-      }, 500);
     }
     goTo(parseInt(el.dataset.goto, 10));
   });
 });
 
-/* =========== Keyboard =========== */
-window.addEventListener('keydown', e => {
-  if (e.key === 'Escape') setMobileMenuOpen(false);
-  if (e.target.matches('input,textarea,select')) return;
-  if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === 'ArrowRight') { e.preventDefault(); goTo(current+1); }
-  else if (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'ArrowLeft') { e.preventDefault(); goTo(current-1); }
-  else if (/^[1-4]$/.test(e.key)) goTo(parseInt(e.key,10)-1);
+// Skip link: jump to the active section.
+document.querySelector('.skip-link')?.addEventListener('click', e => {
+  e.preventDefault();
+  pages[current].focus();
 });
 
-// Note: we intentionally do NOT change pages on scroll/swipe.
-// Scrolling should only scroll within the active page.
+/* =========== Keyboard =========== */
+// Scrolling keys (arrows up/down, Page Up/Down, Space) are left alone so long sections scroll natively.
+// 1-5 jump to a section; Left/Right step through sections.
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    if (checkoutIsOpen()) { closeCheckoutModal(); return; }
+    if (menuIsOpen()) { setMobileMenuOpen(false); mobileMenuBtn && mobileMenuBtn.focus(); }
+    return;
+  }
+  if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
+  if (checkoutIsOpen()) return;
+  const t = e.target;
+  if (t.closest && t.closest('input,textarea,select,[contenteditable="true"]')) return;
+  if (/^[1-5]$/.test(e.key)) { goTo(parseInt(e.key,10)-1); return; }
+  if ((e.key === 'ArrowRight' || e.key === 'ArrowLeft') && !(t.closest && t.closest('.pricing-grid,.care-grid'))) {
+    e.preventDefault();
+    goTo(current + (e.key === 'ArrowRight' ? 1 : -1));
+  }
+});
+
+// Note: we intentionally do NOT change sections on scroll or swipe. Scrolling only scrolls the active section.
 
 /* =========== Contact form =========== */
-const CONTACT_EMAIL_TO = 'waldronhq@gmail.com';
-// Formspree endpoint. If empty, the form falls back to a mailto link.
-const CONTACT_FORM_ENDPOINT = 'https://formspree.io/f/xaeebgpy';
+const contactForm = document.getElementById('contactForm');
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const REQUIRED = [
+  {id:'f-name',  empty:'Please enter your name.'},
+  {id:'f-biz',   empty:'Please enter your business name.'},
+  {id:'f-email', empty:'Please enter your email address.', invalid:'Enter a valid email address, like you@example.com.'},
+];
 
-function escapeText(s){ return String(s ?? '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])); }
 function buildEmailBody(data){
   return [
     `Name: ${data.name || ''}`,
@@ -209,147 +322,107 @@ function buildEmailBody(data){
     (data.message || '').trim()
   ].join('\n');
 }
-function showSuccess(messageHtml){
-  document.querySelectorAll('.form > .field, .form > .submit').forEach(el => el.style.display='none');
-  const node = document.getElementById('formSuccess');
-  if (messageHtml) node.querySelector('div:last-child').innerHTML = messageHtml;
-  node.classList.add('show');
+function mailtoLink(data){
+  const subject = encodeURIComponent(`New website inquiry: ${data.biz || data.name || 'WIN'}`);
+  return `mailto:${CONTACT_EMAIL_TO}?subject=${subject}&body=${encodeURIComponent(buildEmailBody(data))}`;
 }
 
-document.getElementById('contactEmail').setAttribute('href', `mailto:${CONTACT_EMAIL_TO}`);
-
-function showFormError(form, messageHtml){
+function setFieldError(id, message){
+  const el = document.getElementById(id);
+  const field = el.closest('.field');
+  let err = field.querySelector('.field-error');
+  if (message) {
+    if (!err) {
+      err = document.createElement('p');
+      err.className = 'field-error';
+      err.id = id + '-err';
+      field.appendChild(err);
+    }
+    err.textContent = message;
+    el.setAttribute('aria-invalid', 'true');
+    el.setAttribute('aria-describedby', err.id);
+  } else {
+    if (err) err.remove();
+    el.removeAttribute('aria-invalid');
+    el.removeAttribute('aria-describedby');
+  }
+}
+function validateField(r){
+  const v = document.getElementById(r.id).value.trim();
+  let msg = '';
+  if (!v) msg = r.empty;
+  else if (r.id === 'f-email' && !EMAIL_RE.test(v)) msg = r.invalid;
+  setFieldError(r.id, msg);
+  return !msg;
+}
+function formAlert(message, mailtoData){
   let node = document.getElementById('formError');
-  if (!node){
+  if (!node) {
     node = document.createElement('div');
     node.id = 'formError';
+    node.className = 'form-error';
     node.setAttribute('role', 'alert');
-    node.style.cssText = 'grid-column:1/-1;margin-top:4px;padding:14px 16px;border-radius:10px;font-size:14px;line-height:1.5;color:#fff;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.5)';
-    const btn = form.querySelector('.submit');
-    btn.insertAdjacentElement('afterend', node);
+    contactForm.querySelector('.submit').insertAdjacentElement('afterend', node);
   }
-  node.innerHTML = messageHtml;
-  node.style.display = '';
+  node.textContent = '';
+  node.hidden = !message;
+  if (!message) return;
+  const b = document.createElement('b');
+  b.textContent = message;
+  node.append(b);
+  if (mailtoData) {
+    node.append(' Please try again, or email us directly at ');
+    const a = document.createElement('a');
+    a.href = mailtoLink(mailtoData);
+    a.textContent = CONTACT_EMAIL_TO;
+    node.append(a, '.');
+  }
 }
-function clearFormError(){
-  const node = document.getElementById('formError');
-  if (node) node.style.display = 'none';
-}
-function mailtoFallbackLink(data){
-  const subject = encodeURIComponent(`New website inquiry: ${data.biz || data.name || 'WIN'}`);
-  const body = encodeURIComponent(buildEmailBody(data));
-  return `mailto:${CONTACT_EMAIL_TO}?subject=${subject}&body=${body}`;
+function showSuccess(){
+  contactForm.querySelectorAll(':scope > .field, :scope > .hp, :scope > .submit, #formError').forEach(el => { el.hidden = true; });
+  const node = document.getElementById('formSuccess');
+  node.querySelector('div:last-child').innerHTML = '<b>Thanks, message sent.</b>We’ll be in touch within 6 hours.';
+  node.classList.add('show');
+  node.setAttribute('tabindex', '-1');
+  node.focus();
 }
 
-document.getElementById('contactForm').addEventListener('submit', async (e) => {
+REQUIRED.forEach(r => {
+  const el = document.getElementById(r.id);
+  el.addEventListener('input', () => { if (el.getAttribute('aria-invalid') === 'true') validateField(r); });
+  el.addEventListener('blur', () => { if (el.value.trim()) validateField(r); });
+});
+
+contactForm.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const form = e.currentTarget;
-  const req = ['f-name','f-biz','f-email'];
-  let ok = true;
-  req.forEach(id => {
-    const el = document.getElementById(id);
-    if (!el.value.trim()) { el.style.borderColor = '#ef4444'; ok=false; }
-    else el.style.borderColor = '';
-  });
-  if (!ok) return;
-
-  const fd = new FormData(form);
-  const data = Object.fromEntries(fd.entries());
-  clearFormError();
-
-  // Prefer a real endpoint if configured.
-  if (CONTACT_FORM_ENDPOINT){
-    const btn = form.querySelector('.submit');
-    const btnLabel = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
-    btn.style.opacity = '.7';
-    btn.style.cursor = 'not-allowed';
-
-    // Formspree special fields
-    fd.set('_subject', 'New WaldronHQ inquiry');
-    const email = (data.email || '').trim();
-    if (email) fd.set('_replyto', email);
-    // _gotcha honeypot is included from the hidden form field (left empty by real users).
-
-    try{
-      const res = await fetch(CONTACT_FORM_ENDPOINT, {
-        method: 'POST',
-        headers: {'Accept':'application/json'},
-        body: fd
-      });
-      if (!res.ok) throw new Error('Bad response: ' + res.status);
-      showSuccess(`<b>Thanks - message sent.</b>We’ll be in touch within 6 hours.`);
-    } catch(err){
-      showFormError(form, `<b>Sorry - your message didn’t go through.</b> Please try again, or email us directly at <a href="${mailtoFallbackLink(data).replace(/"/g,'&quot;')}" style="color:var(--accent);font-weight:700">${escapeText(CONTACT_EMAIL_TO)}</a>.`);
-    } finally {
-      btn.disabled = false;
-      btn.textContent = btnLabel;
-      btn.style.opacity = '';
-      btn.style.cursor = '';
-    }
+  formAlert('');
+  const results = REQUIRED.map(r => [r, validateField(r)]);
+  const firstBad = results.find(([, ok]) => !ok);
+  if (firstBad) {
+    formAlert('Please fix the highlighted fields.');
+    document.getElementById(firstBad[0].id).focus();
     return;
   }
-
-  // No endpoint configured: mailto fallback.
-  window.location.href = mailtoFallbackLink(data);
-  showSuccess(`<b>Almost done.</b>Your email app should open with a prefilled message. If it didn’t, email us at <a href="mailto:${escapeText(CONTACT_EMAIL_TO)}" style="color:var(--accent);font-weight:700">${escapeText(CONTACT_EMAIL_TO)}</a>.`);
-});
-
-/* =========== Tweaks =========== */
-const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "accent": "#1E6FFF",
-  "navy": "#0A1628",
-  "transition": "unique"
-}/*EDITMODE-END*/;
-let tweaks = {...TWEAK_DEFAULTS};
-const tweaksPanel = document.getElementById('tweaks');
-
-function applyTweaks(){
-  document.documentElement.style.setProperty('--accent', tweaks.accent);
-  document.documentElement.style.setProperty('--accent-soft', tweaks.accent + '14');
-  document.documentElement.style.setProperty('--navy', tweaks.navy);
-  document.documentElement.style.setProperty('--ink', tweaks.navy);
-  document.getElementById('tw-accent').value = tweaks.accent;
-  document.getElementById('tw-navy').value = tweaks.navy;
-  document.getElementById('tw-transition').value = tweaks.transition;
-
-  // Transition style override
-  const styleNode = document.getElementById('tw-transition-style') || (() => {
-    const s = document.createElement('style'); s.id = 'tw-transition-style'; document.head.appendChild(s); return s;
-  })();
-  if (tweaks.transition === 'fade'){
-    styleNode.textContent = `
-      .page{transition:opacity .5s ease !important;clip-path:none !important;transform:none !important;filter:none !important}
-      .page.prev,.page.next{opacity:0 !important;transform:none !important;clip-path:none !important;filter:none !important}
-      .page.active{opacity:1 !important;clip-path:none !important;transform:none !important;filter:none !important}`;
-  } else if (tweaks.transition === 'slide'){
-    styleNode.textContent = `
-      .page{transition:transform .6s cubic-bezier(.76,0,.24,1), opacity .3s ease !important;clip-path:none !important;filter:none !important}
-      .page.prev{transform:translateY(-100%) !important;opacity:0 !important}
-      .page.next{transform:translateY(100%) !important;opacity:0 !important}
-      .page.active{transform:translateY(0) !important;opacity:1 !important}`;
-  } else {
-    styleNode.textContent = '';
+  const fd = new FormData(contactForm);
+  const data = Object.fromEntries(fd.entries());
+  const btn = contactForm.querySelector('.submit');
+  const btnLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  fd.set('_subject', 'New WaldronHQ inquiry');
+  fd.set('_replyto', (data.email || '').trim());
+  // The _gotcha honeypot is included from the hidden field (left empty by real users).
+  try {
+    const res = await fetch(CONTACT_FORM_ENDPOINT, { method:'POST', headers:{'Accept':'application/json'}, body: fd });
+    if (!res.ok) throw new Error('Bad response: ' + res.status);
+    showSuccess();
+  } catch(err) {
+    formAlert('Sorry, your message didn’t go through.', data);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = btnLabel;
   }
-}
-applyTweaks();
-
-function setKey(key, val){
-  tweaks[key] = val;
-  applyTweaks();
-  try { window.parent.postMessage({type:'__edit_mode_set_keys', edits:{[key]:val}}, '*'); } catch(e){}
-}
-document.getElementById('tw-accent').addEventListener('input', e => setKey('accent', e.target.value));
-document.getElementById('tw-navy').addEventListener('input', e => setKey('navy', e.target.value));
-document.getElementById('tw-transition').addEventListener('change', e => setKey('transition', e.target.value));
-
-window.addEventListener('message', e => {
-  const d = e.data || {};
-  if (d.type === '__activate_edit_mode') tweaksPanel.classList.add('show');
-  if (d.type === '__deactivate_edit_mode') tweaksPanel.classList.remove('show');
 });
-try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e){}
 
 /* =========== Dotted Earth globe (canvas 2D) ===========
    Land is a dot lattice sampled from a 0.5° land mask (Natural Earth 50m, public domain),

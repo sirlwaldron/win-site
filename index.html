@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <title>Waldron Innovation Network | Websites That Win You Business</title>
+  <title>Waldron Innovation Network | Websites Built to Drive Real Revenue</title>
   <meta name="description" content="Custom small-business websites built to turn visitors into leads and revenue. Clear pricing, fast turnaround, and support that stays after launch.">
-  <meta property="og:title" content="Waldron Innovation Network | Websites That Win You Business">
+  <meta property="og:title" content="Waldron Innovation Network | Websites Built to Drive Real Revenue">
   <meta property="og:description" content="Custom sites for small business: more leads, more revenue, less guesswork. Design, build, and support from a team that doesn’t disappear.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Waldron Innovation Network">
@@ -14,27 +14,28 @@
   <meta property="og:image:type" content="image/png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="Waldron Innovation Network: Websites That Win You Business">
+  <meta property="og:image:alt" content="Waldron Innovation Network: Websites Built to Drive Real Revenue">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Waldron Innovation Network | Websites That Win You Business">
+  <meta name="twitter:title" content="Waldron Innovation Network | Websites Built to Drive Real Revenue">
   <meta name="twitter:description" content="Custom sites for small business: more leads, more revenue, less guesswork. Design, build, and support from a team that doesn’t disappear.">
   <meta name="twitter:image" content="https://waldronhq.com/og-image.png">
-  <meta name="twitter:image:alt" content="Waldron Innovation Network: Websites That Win You Business">
+  <meta name="twitter:image:alt" content="Waldron Innovation Network: Websites Built to Drive Real Revenue">
   <link rel="canonical" href="https://waldronhq.com/">
 
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
-  <link rel="icon" href="./win-logo.png" type="image/png">
-  <link rel="apple-touch-icon" href="./win-logo.png">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/win-logo-180.png">
   <link rel="manifest" href="./site.webmanifest">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" media="print" onload="this.media='all'">
+  <link rel="stylesheet" id="fontsCss" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" media="print">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <div class="app">
 
@@ -42,7 +43,7 @@
 <header class="brand-stripe" id="brandStripe">
   <div class="brand">
     <span class="brand-mark" aria-hidden="true">
-      <img src="./win-logo.png" alt="" width="28" height="28">
+      <img src="./win-logo-96.png" alt="" width="28" height="28">
     </span>
     <span class="brand-name">Waldron <span>Innovation</span> Network</span>
   </div>
@@ -56,7 +57,7 @@
 <!-- Section indicator -->
 <nav class="pager" id="pager" aria-label="Sections">
   <div class="pg-frame">
-    <button class="pg-btn active" type="button" data-idx="0" aria-current="true"><span class="pg-num">01</span><span class="pg-label">Home</span><span class="pg-bar"></span></button>
+    <button class="pg-btn active" type="button" data-idx="0" aria-current="page"><span class="pg-num">01</span><span class="pg-label">Home</span><span class="pg-bar"></span></button>
     <button class="pg-btn" type="button" data-idx="1"><span class="pg-num">02</span><span class="pg-label">Services</span><span class="pg-bar"></span></button>
     <button class="pg-btn" type="button" data-idx="2"><span class="pg-num">03</span><span class="pg-label">Testimonials</span><span class="pg-bar"></span></button>
     <button class="pg-btn" type="button" data-idx="3"><span class="pg-num">04</span><span class="pg-label">Pricing</span><span class="pg-bar"></span></button>
@@ -66,32 +67,23 @@
     <button id="pgPrev" type="button" aria-label="Previous section">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M19 12H5M5 12l6 6M5 12l6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
+    <span class="pg-count" aria-hidden="true"><b id="stepBig">01</b> / 05</span>
     <button id="pgNext" type="button" aria-label="Next section">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M5 12h14M19 12l-6 6M19 12l-6-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </div>
 </nav>
 
-<!-- Step counter -->
-<div class="step-overlay" aria-hidden="true">
-  <div>
-    <small>Section</small>
-    <div class="big" id="stepBig">01</div>
-  </div>
-  <div>of 05 · <span id="stepName">Home</span></div>
-</div>
-
-
 <main id="main">
 <!-- PAGE 1: HOME -->
-<section class="page active" id="p-home" tabindex="-1" data-screen-label="01 Home" data-chrome="light">
+<section class="page active" id="p-home" tabindex="-1" role="region" aria-label="Home" data-chrome="light">
   <div class="page-inner">
     <div class="hero-clouds" aria-hidden="true"><i class="cloud c1"></i><i class="cloud c2"></i><i class="cloud c3"></i><i class="cloud c4"></i></div>
     <div class="wrap">
       <div class="hero-grid">
         <div>
           <div class="hero-kicker"><span class="pulse" aria-hidden="true"></span>Est. 2019 · Custom websites for small business</div>
-          <h1 class="hero-title">Websites Built to<br>Drive Real<br><span class="mark">Revenue</span>.</h1>
+          <h1 class="hero-title">Websites Built to<br>Drive Real<br><span class="mark">Revenue</span><span class="dot">.</span></h1>
           <p class="hero-sub">Waldron Innovation Network turns your traffic into calls, forms, and sales. Fast, clear sites with no off-the-shelf templates, straight pricing, and a team that answers after launch.</p>
           <div class="hero-ctas">
             <button class="btn btn-primary" data-goto="4">Get a free quote <span class="arrow" aria-hidden="true">→</span></button>
@@ -107,9 +99,9 @@
 
         <!-- DOTTED EARTH GLOBE (canvas) -->
         <div class="globe-stage">
-          <div class="globe-corner tr"><b>LIVE</b> 24.7 <br>NETWORK_LAYER</div>
+          <div class="globe-corner tr"><b>WIN</b> NETWORK<br>ILLUSTRATIVE VIEW</div>
           <div class="globe-corner bl">LAT 41.4°N<br>LON 81.8°W</div>
-          <div class="globe-corner br">WIN · v.2026<br><b>AUTO-ROTATE</b></div>
+          <div class="globe-corner br">EST. 2019<br><b>AUTO-ROTATE</b></div>
           <canvas id="globeCanvas" role="img" aria-label="Rotating globe of the Earth reading Waldron Innovation Network, online in 50+ countries, with connection arcs radiating from Cleveland"></canvas>
           <p class="sr-only">Waldron Innovation Network · Online in 50+ countries</p>
         </div>
@@ -119,13 +111,13 @@
 </section>
 
 <!-- PAGE 2: SERVICES -->
-<section class="page next" id="p-services" tabindex="-1" data-screen-label="02 Services" data-chrome="light">
+<section class="page next" id="p-services" tabindex="-1" role="region" aria-label="Services" data-chrome="light">
   <div class="page-inner">
     <div class="wrap">
       <div class="services-head">
-        <div class="eyebrow" style="justify-content:center">What We Do</div>
+        <div class="eyebrow eyebrow-center">What We Do</div>
         <h2>Everything small businesses need<br>to show up and convert.</h2>
-        <p>We don't sell templates or hand you a file and vanish. We design, build, and stand behind every site, focused on one thing: turning your visitors into customers.</p>
+        <p>We don’t sell templates or hand you a file and vanish. We design, build, and stand behind every site, focused on one thing: turning your visitors into customers.</p>
       </div>
       <div class="services-grid">
         <article class="s-card">
@@ -146,14 +138,14 @@
           <div class="s-num">03</div>
           <div class="s-icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></div>
           <h3>Ongoing Support &amp; Updates</h3>
-          <p>We don't disappear after launch. Ongoing maintenance, updates, and performance monitoring keep your site running at its best.</p>
+          <p>We don’t disappear after launch. Ongoing maintenance, updates, and performance monitoring keep your site running at its best.</p>
           <div class="chips"><span class="chip">Monitoring</span><span class="chip">Content edits</span><span class="chip">Security</span></div>
         </article>
       </div>
 
       <div class="cred-wrap" role="group" aria-label="How we work and use cases">
         <div class="cred-block">
-          <div class="eyebrow" style="justify-content:center">Process</div>
+          <div class="eyebrow eyebrow-center">Process</div>
           <h3 class="cred-title">How it works, from checkout to launch</h3>
           <ol class="process">
             <li><b>Checkout</b><span>Choose a plan and pay upfront through secure Stripe checkout. Not sure which plan fits? Message us first.</span></li>
@@ -161,12 +153,12 @@
             <li><b>Design</b><span>We draft your layout + key sections and send a preview for feedback.</span></li>
             <li><b>Build</b><span>We develop the site, wire up forms, and connect your domain + analytics.</span></li>
             <li><b>Launch</b><span>Final QA pass, deployment, and a clean handoff with what you need.</span></li>
-            <li><b>Support</b><span>Post-launch fixes + optional care plan if you want ongoing help.</span></li>
+            <li><b>Support</b><span>Post-launch fixes + an optional hosting plan if you want ongoing help.</span></li>
           </ol>
         </div>
 
         <div class="cred-block">
-          <div class="eyebrow" style="justify-content:center">Use cases</div>
+          <div class="eyebrow eyebrow-center">Use cases</div>
           <h3 class="cred-title">Built for service businesses that need calls and leads</h3>
           <div class="industry">
             <span class="tag">Contractors &amp; trades</span>
@@ -185,54 +177,54 @@
 </section>
 
 <!-- PAGE 3: TESTIMONIALS -->
-<section class="page next" id="p-testimonials" tabindex="-1" data-screen-label="03 Testimonials" data-chrome="light">
+<section class="page next" id="p-testimonials" tabindex="-1" role="region" aria-label="Testimonials" data-chrome="light">
   <div class="page-inner">
     <div class="wrap">
       <div class="services-head">
-        <div class="eyebrow" style="justify-content:center">Testimonials</div>
+        <div class="eyebrow eyebrow-center">Testimonials</div>
         <h2>What clients say.</h2>
-        <p>Real outcomes, clear communication, and websites that turn into calls and bookings.</p>
+        <p>Clear communication and websites built to turn visitors into calls and bookings.</p>
       </div>
 
       <div class="t-metrics narrow" role="group" aria-label="Highlights">
         <div class="t-metric"><b>Custom-built</b><span>No templates</span></div>
-        <div class="t-metric"><b>On-time launches</b><span>Clear scope + timeline</span></div>
+        <div class="t-metric"><b>Clear timelines</b><span>Scope agreed up front</span></div>
         <div class="t-metric"><b>Fast support</b><span>Replies within 6 hours</span></div>
       </div>
 
       <h3 class="t-label" id="t-sites-label">Sites we’ve built</h3>
       <div class="t-sites" role="group" aria-labelledby="t-sites-label">
-        <figure class="quote site-quote" style="--delay:0ms">
+        <figure class="quote site-quote">
           <div class="q-shot">
-            <img src="/work/room09.webp" alt="Homepage screenshot of ROOM 09, a recording studio website built by WIN, with a mixing console layout, VU meters and a “Book a session” button" width="1200" height="900" loading="lazy" decoding="async" onerror="this.classList.add('is-missing')">
+            <img src="/work/room09.webp" srcset="/work/room09-640.webp 640w, /work/room09.webp 1200w" sizes="(max-width: 640px) calc(100vw - 80px), (max-width: 980px) 340px, 300px" alt="Homepage screenshot of ROOM 09, a recording studio website built by WIN, with a mixing console layout, VU meters and a “Book a session” button" width="1200" height="900" loading="lazy" decoding="async">
           </div>
           <blockquote>“Most studio websites look the same. This one actually feels like walking into our control room. The mixing console layout gives it personality, and booking a session is easy to find.”</blockquote>
           <figcaption><span class="avatar">R9</span><div><b>ROOM 09</b><span>Recording Studio</span></div></figcaption>
         </figure>
-        <figure class="quote site-quote" style="--delay:70ms">
+        <figure class="quote site-quote">
           <div class="q-shot">
-            <img src="/work/common-ground.webp" alt="Homepage screenshot of Common Ground, a landscape design studio website built by WIN, with a garden plan as the hero and the headline “Room to grow.”" width="1200" height="900" loading="lazy" decoding="async" onerror="this.classList.add('is-missing')">
+            <img src="/work/common-ground.webp" srcset="/work/common-ground-640.webp 640w, /work/common-ground.webp 1200w" sizes="(max-width: 640px) calc(100vw - 80px), (max-width: 980px) 340px, 300px" alt="Homepage screenshot of Common Ground, a landscape design studio website built by WIN, with a garden plan as the hero and the headline “Room to grow.”" width="1200" height="900" loading="lazy" decoding="async">
           </div>
           <blockquote>“The garden plan becoming the centerpiece of the homepage is such a thoughtful touch. It shows what we do before visitors even read the headline. Creative, calm, and professional.”</blockquote>
           <figcaption><span class="avatar">CG</span><div><b>COMMON GROUND</b><span>Landscape Design Studio</span></div></figcaption>
         </figure>
-        <figure class="quote site-quote" style="--delay:140ms">
+        <figure class="quote site-quote">
           <div class="q-shot">
-            <img src="/work/scoop-club.webp" alt="Homepage screenshot of Scoop Club, a gelato shop website built by WIN, with oversized gelato cones on a bold blue background and a receipt-style menu" width="1200" height="900" loading="lazy" decoding="async" onerror="this.classList.add('is-missing')">
+            <img src="/work/scoop-club.webp" srcset="/work/scoop-club-640.webp 640w, /work/scoop-club.webp 1200w" sizes="(max-width: 640px) calc(100vw - 80px), (max-width: 980px) 340px, 300px" alt="Homepage screenshot of Scoop Club, a gelato shop website built by WIN, with oversized gelato cones on a bold blue background and a receipt-style menu" width="1200" height="900" loading="lazy" decoding="async">
           </div>
           <blockquote>“The oversized gelato and bold colors capture the energy we wanted for our shop. We especially love the receipt-style menu. It makes the practical information feel like part of the design.”</blockquote>
           <figcaption><span class="avatar">SC</span><div><b>SCOOP CLUB</b><span>Gelato Shop</span></div></figcaption>
         </figure>
-        <figure class="quote site-quote" style="--delay:210ms">
+        <figure class="quote site-quote">
           <div class="q-shot">
-            <img src="/work/off-grid.webp" alt="Homepage screenshot of Off Grid, a bicycle repair workshop website built by WIN, with exploded bike components on a yellow background and a route-style navigation" width="1200" height="900" loading="lazy" decoding="async" onerror="this.classList.add('is-missing')">
+            <img src="/work/off-grid.webp" srcset="/work/off-grid-640.webp 640w, /work/off-grid.webp 1200w" sizes="(max-width: 640px) calc(100vw - 80px), (max-width: 980px) 340px, 300px" alt="Homepage screenshot of Off Grid, a bicycle repair workshop website built by WIN, with exploded bike components on a yellow background and a route-style navigation" width="1200" height="900" loading="lazy" decoding="async">
           </div>
           <blockquote>“The exploded bike components put our craft front and center. The navigation feels like following a cycling route, which is a great detail. It gives the workshop a strong identity without burying our services.”</blockquote>
           <figcaption><span class="avatar">OG</span><div><b>OFF GRID</b><span>Bicycle Repair Workshop</span></div></figcaption>
         </figure>
-        <figure class="quote site-quote" style="--delay:280ms">
+        <figure class="quote site-quote">
           <div class="q-shot">
-            <img src="/work/frame.webp" alt="Homepage screenshot of Frame, an independent cinema website built by WIN, with large serif typography, film imagery, and showtimes and tickets" width="1200" height="900" loading="lazy" decoding="async" onerror="this.classList.add('is-missing')">
+            <img src="/work/frame.webp" srcset="/work/frame-640.webp 640w, /work/frame.webp 1200w" sizes="(max-width: 640px) calc(100vw - 80px), (max-width: 980px) 340px, 300px" alt="Homepage screenshot of Frame, an independent cinema website built by WIN, with large serif typography, film imagery, and showtimes and tickets" width="1200" height="900" loading="lazy" decoding="async">
           </div>
           <blockquote>“This feels like an independent cinema, right down to the typography and framing. The imagery makes a statement, while showtimes and tickets are still easy to spot. It has the character we wanted.”</blockquote>
           <figcaption><span class="avatar">FR</span><div><b>FRAME</b><span>Independent Cinema</span></div></figcaption>
@@ -243,17 +235,17 @@
 </section>
 
 <!-- PAGE 4: PRICING -->
-<section class="page next" id="p-pricing" tabindex="-1" data-screen-label="04 Pricing" data-chrome="light">
+<section class="page next" id="p-pricing" tabindex="-1" role="region" aria-label="Pricing" data-chrome="light">
   <div class="page-inner">
     <div class="wrap">
       <div class="pricing-head">
-        <div class="eyebrow" style="justify-content:center">Simple, Transparent Pricing</div>
+        <div class="eyebrow eyebrow-center">Simple, Transparent Pricing</div>
         <h2>No hidden fees.<br>No surprises. Just results.</h2>
         <p>Builds are a one-time price. Hosting plans are optional and bundle hosting, SSL, and domain renewal while the plan is active. If you skip hosting, you own and pay for those accounts yourself. Any paid third-party tool is billed at cost, and we tell you before you buy it.</p>
       </div>
       <div class="pricing-grid">
         <div class="p-card">
-          <div class="p-tier">Starter</div>
+          <div class="p-tier">Get online</div>
           <div class="p-name">Starter</div>
           <div class="p-price"><span class="amt">$599</span><span class="unit">one-time</span></div>
           <p class="p-tagline">A clean, professional presence for new businesses that need to get online fast.</p>
@@ -275,7 +267,7 @@
 
         <div class="p-card featured">
           <span class="p-badge">Most Popular</span>
-          <div class="p-tier">Growth</div>
+          <div class="p-tier">Generate leads</div>
           <div class="p-name">Growth</div>
           <div class="p-price"><span class="amt">$1,199</span><span class="unit">one-time</span></div>
           <p class="p-tagline">For businesses that need their site to actually generate leads, not just exist.</p>
@@ -305,7 +297,7 @@
           <ul class="p-features">
             <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Everything in Growth (up to 6 pages + up to 2 lead forms)</li>
             <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Stripe embedded checkout (one-time + subscriptions)</li>
-            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Manage billing button (Stripe Customer Portal via email lookup)</li>
+            <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Billing portal link emailed on request</li>
             <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Webhooks (up to 3 events) + basic failure logging</li>
             <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Up to 2 standard integrations (Zapier or native connectors)</li>
             <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Deploy + environment variable setup (payments, webhooks, forms)</li>
@@ -314,11 +306,11 @@
           </ul>
           <button class="p-cta" data-goto="4" data-plan="BackendGrowth">Get Started</button>
         </div>
-        <!-- Pro + Elite removed for now -->
       </div>
+      <p class="swipe-hint" aria-hidden="true">Swipe to compare all plans →</p>
 
       <div class="pricing-muted pricing-note">
-        <p><b>Stripe fees (Systems Build):</b> Your store runs on your own Stripe account. Stripe's processing fees come out of your sales and go to Stripe, not us. Stripe's standard rate is currently 2.9% + 30¢ per domestic card payment, and Stripe can change it. Zapier or other paid integration plans are billed to you at cost.</p>
+        <p><b>Stripe fees (Systems Build):</b> Your store runs on your own Stripe account. Stripe’s processing fees come out of your sales and go to Stripe, not us. Stripe’s standard rate is currently 2.9% + 30¢ per domestic card payment, and Stripe can change it. Zapier or other paid integration plans are billed to you at cost.</p>
       </div>
 
       <div class="care-wrap">
@@ -335,9 +327,9 @@
           </ul>
           <p class="fine">Domain renewal is included for standard .com, .net, and .org domains. Premium or unusual domain types are billed at cost, and we tell you first. Domain renewal, DNS, and SSL stop when your plan ends or goes unpaid.</p>
         </div>
-        <div class="care-grid" aria-label="Hosting and maintenance plans">
+        <div class="care-grid" role="group" aria-label="Hosting and maintenance plans">
           <div class="p-card care">
-            <div class="p-tier">“Hands-Off” Hosting</div>
+            <div class="p-tier">Hosting only</div>
             <div class="p-name">“Hands-Off” Hosting</div>
             <div class="p-price"><span class="amt">$30</span><span class="unit">/month</span></div>
             <p class="p-tagline">Just keeping the lights on.</p>
@@ -350,7 +342,7 @@
             <button class="p-cta" data-goto="4" data-plan="HostingHandsOff">Subscribe</button>
           </div>
           <div class="p-card care">
-            <div class="p-tier">Small Business</div>
+            <div class="p-tier">Hosting + edits</div>
             <div class="p-name">Small Business</div>
             <div class="p-price"><span class="amt">$50</span><span class="unit">/month</span></div>
             <ul class="p-features">
@@ -362,7 +354,7 @@
             <button class="p-cta" data-goto="4" data-plan="HostingSmallBusiness">Subscribe</button>
           </div>
           <div class="p-card care">
-            <div class="p-tier">E-commerce / High Traffic</div>
+            <div class="p-tier">Hosting + SEO</div>
             <div class="p-name">E-commerce / High Traffic</div>
             <div class="p-price"><span class="amt">$150</span><span class="unit">/month</span></div>
             <ul class="p-features">
@@ -375,6 +367,7 @@
             <button class="p-cta" data-goto="4" data-plan="HostingEcommerce">Subscribe</button>
           </div>
         </div>
+        <p class="swipe-hint" aria-hidden="true">Swipe to compare all plans →</p>
         <p class="care-foot"><b>Cancel anytime with 30 days’ notice.</b> Notice must be in writing, and billing continues through the notice period. Amounts billed during the notice period aren’t refunded.</p>
       </div>
 
@@ -391,7 +384,7 @@
             <tr role="row"><th scope="row" role="rowheader">Edits and new work</th><td role="cell" data-label="You host with us">Plan hours, then $50/hr</td><td role="cell" data-label="You host yourself">$50/hr</td></tr>
           </tbody>
         </table>
-        <p>If you don't host with us, we hand off the site at launch. You own the hosting and domain accounts and pay them directly. Tell us before the build starts so we scope it correctly.</p>
+        <p>If you don’t host with us, we hand off the site at launch. You own the hosting and domain accounts and pay them directly. Tell us before the build starts so we scope it correctly.</p>
       </div>
 
       <div class="pricing-muted info-block">
@@ -400,8 +393,8 @@
         <ul class="info-list">
           <li><b>Optional.</b> Your site works fine without it.</li>
           <li><b>We set it up.</b> We connect your domain, add the email records, and create your first mailboxes. Setup is a one-time fee, quoted before we start.</li>
-          <li><b>You own the account.</b> It is in your name and billed to you by Google. We never resell or mark up Google's price.</li>
-          <li><b>Google's price:</b> About <b>$7 per user per month</b> on an annual plan, or <b>$8.40 per user per month</b> month-to-month (Business Starter). Google sets these prices and can change them. Taxes may apply. See Google's current pricing at workspace.google.com.</li>
+          <li><b>You own the account.</b> It is in your name and billed to you by Google. We never resell or mark up Google’s price.</li>
+          <li><b>Google’s price:</b> About <b>$7 per user per month</b> on an annual plan, or <b>$8.40 per user per month</b> month-to-month (Business Starter). Google sets these prices and can change them. Taxes may apply. See Google’s current pricing at workspace.google.com.</li>
           <li><b>Access.</b> We ask to be added as an admin only during setup, and you can remove us anytime.</li>
           <li>Hosting plans do not include any email service. The lead-form notifications in your build go to the inbox you already use.</li>
         </ul>
@@ -411,7 +404,7 @@
         <h3>Edits, New Work, and Add-ons</h3>
         <h4>Edit hours</h4>
         <ul class="info-list">
-          <li>Plan hours are used month by month. <b>Unused hours don't roll over.</b></li>
+          <li>Plan hours are used month by month. <b>Unused hours don’t roll over.</b></li>
           <li>Hours beyond your plan, and edits on a no-edit plan, are billed at <b>$50/hr</b>. We quote anything over an hour before we start.</li>
         </ul>
         <div class="info-cols">
@@ -431,11 +424,11 @@
             <li>New features, forms, integrations, or checkout changes</li>
             <li>Blog setup or ongoing content writing</li>
             <li>Logo and brand identity work, photography, ad campaign management</li>
-            <li>Anything that wasn't in your original package</li>
+            <li>Anything that wasn’t in your original package</li>
           </ul>
           </div>
         </div>
-        <p><b>Bug fixes vs. edits.</b> Something we built that doesn't work as described is a bug. Bugs in the post-launch window (30 days on Starter, 60 on Growth and Systems Build) are fixed free. After that, bug fixes may be quoted separately.</p>
+        <p><b>Bug fixes vs. edits.</b> Something we built that doesn’t work as described is a bug. Bugs in the post-launch window (30 days on Starter, 60 on Growth and Systems Build) are fixed free. After that, bug fixes may be quoted separately.</p>
         <p><b>Third-party paid add-ons</b> are billed at cost to you with no markup, and we ask first. This covers premium plugins and paid integration plans (e.g. Zapier), stock images beyond the free libraries, paid fonts, Google Workspace, and domain types beyond standard .com/.net/.org.</p>
         <p><b>Rush delivery:</b> 25% of the package price for timelines under the standard window.</p>
       </div>
@@ -445,7 +438,7 @@
         <ul class="info-list">
           <li><b>Cancel a hosting plan:</b> 30 days’ written notice. Billing continues through the notice period, and amounts billed during the notice period aren’t refunded.</li>
           <li><b>Handoff:</b> when you cancel, we hand off your site files and point your domain wherever you want it, at no charge. Your domain is already in your name, so there is nothing to “get back.” Domain renewal, DNS, and SSL stop when your plan ends or goes unpaid, so after handoff you renew the domain with your registrar.</li>
-          <li><b>Mid-project cancellation:</b> you get a partial refund of any prepaid amount for work we haven't yet performed. Work already completed is non-refundable.</li>
+          <li><b>Mid-project cancellation:</b> you get a partial refund of any prepaid amount for work we haven’t yet performed. Work already completed is non-refundable.</li>
         </ul>
         <div class="info-cols">
           <div>
@@ -471,16 +464,16 @@
       <div class="faq" role="group" aria-label="Good to know">
         <h3>Good to Know</h3>
         <details>
-          <summary>What counts as a "revision round"?</summary>
-          <p>One revision round is one batch of change requests submitted together after reviewing a completed design or build stage. Individual edits within that batch don't count separately. Revisions sent piecemeal over multiple days count as separate rounds.</p>
+          <summary>What counts as a “revision round”?</summary>
+          <p>One revision round is one batch of change requests submitted together after reviewing a completed design or build stage. Individual edits within that batch don’t count separately. Revisions sent piecemeal over multiple days count as separate rounds.</p>
         </details>
         <details>
           <summary>When do I pay?</summary>
-          <p>Upfront through secure Stripe checkout. Pick your plan in the pricing section above and click <b>Get Started</b> (builds) or <b>Subscribe</b> (hosting plans). Build packages are a one-time payment. Hosting plans bill monthly through the same checkout. Not sure which one fits? Message us first and we'll sort it out before you pay.</p>
+          <p>Upfront through secure Stripe checkout. Pick your plan in the pricing section above and click <b>Get Started</b> (builds) or <b>Subscribe</b> (hosting plans). Build packages are a one-time payment. Hosting plans bill monthly through the same checkout. Not sure which one fits? Message us first and we’ll sort it out before you pay.</p>
         </details>
         <details>
           <summary>Do I have to host with you?</summary>
-          <p>No. If you'd rather host it yourself, we hand off the project at launch. Let us know up front so we can scope it. You'll own your hosting and domain accounts and pay for them directly.</p>
+          <p>No. If you’d rather host it yourself, we hand off the project at launch. Let us know up front so we can scope it. You’ll own your hosting and domain accounts and pay for them directly.</p>
         </details>
         <details>
           <summary>Who pays for the domain?</summary>
@@ -488,30 +481,30 @@
         </details>
         <details>
           <summary>Is business email included?</summary>
-          <p>No. Google Workspace is optional. We set it up, and Google bills you directly, at about $7 per user per month (annual) or $8.40 per user per month (month-to-month).</p>
+          <p>No. Google Workspace is optional. We set it up (a one-time setup fee, quoted before we start), and Google bills you directly, at about $7 per user per month (annual) or $8.40 per user per month (month-to-month).</p>
         </details>
         <details>
           <summary>Do my unused edit hours carry over?</summary>
           <p>No. Hours reset each month. Extra work is $50/hr.</p>
         </details>
         <details>
-          <summary>Who pays Stripe's fees on my online store?</summary>
+          <summary>Who pays Stripe’s fees on my online store?</summary>
           <p>You do. Stripe takes its processing fee from each sale on your own Stripe account.</p>
         </details>
         <details>
           <summary>What if I need to cancel mid-project?</summary>
-          <p>You'll receive a partial refund of any prepaid amount for work we haven't yet performed. Work completed up to the date of cancellation is non-refundable.</p>
+          <p>You’ll receive a partial refund of any prepaid amount for work we haven’t yet performed. Work completed up to the date of cancellation is non-refundable.</p>
         </details>
         <details>
           <summary>What if I cancel hosting?</summary>
-          <p>Send 30 days' written notice. Billing continues through the notice period, and amounts billed during the notice period aren't refunded. We then hand off your site files and point your domain wherever you want it, at no charge. Domain renewal, DNS, and SSL stop when your plan ends, so after handoff you renew the domain with your registrar.</p>
+          <p>Send 30 days’ written notice. Billing continues through the notice period, and amounts billed during the notice period aren’t refunded. We then hand off your site files and point your domain wherever you want it, at no charge. Domain renewal, DNS, and SSL stop when your plan ends, so after handoff you renew the domain with your registrar.</p>
         </details>
         <details>
           <summary>Do you offer rush delivery?</summary>
           <p>Yes. Rush fee is 25% of the package price for timelines under the standard window.</p>
         </details>
         <details>
-          <summary>What's not included in any package?</summary>
+          <summary>What’s not included in any package?</summary>
           <p>Logo design or brand identity work, professional photography or stock image licensing beyond basic use, ongoing content creation or blog posts, paid ad campaign management. These are available as add-ons. Just ask.</p>
         </details>
       </div>
@@ -520,15 +513,15 @@
 </section>
 
 <!-- PAGE 5: CONTACT -->
-<section class="page next" id="p-contact" tabindex="-1" data-screen-label="05 Contact" data-chrome="dark">
+<section class="page next" id="p-contact" tabindex="-1" role="region" aria-label="Contact" data-chrome="dark">
   <div class="page-inner">
     <div class="wrap">
       <div class="contact-grid">
         <div>
           <div class="contact-head">
             <div class="eyebrow">Contact</div>
-            <h2>Let's Build<br>Something.</h2>
-            <p>Tell us about your business and we'll get back to you within 6 hours. No obligation - just a conversation.</p>
+            <h2>Let’s Build<br>Something.</h2>
+            <p>Tell us about your business and we’ll get back to you within 6 hours. No obligation, just a conversation.</p>
           </div>
           <form class="form" id="contactForm" novalidate>
             <div class="field"><label for="f-name">Full Name</label><input id="f-name" name="name" type="text" autocomplete="name" required placeholder="Jane Doe"></div>
@@ -539,20 +532,20 @@
               <label for="f-plan">Which plan interests you?</label>
               <select id="f-plan" name="plan">
                 <option>Not sure yet</option>
-                <option>Starter - $599</option>
-                <option>Growth - $1,199</option>
-                <option>Systems Build - $1,799</option>
-                <option>“Hands-Off” Hosting - $30/mo</option>
-                <option>Small Business Hosting - $50/mo</option>
-                <option>E-commerce / High Traffic - $150/mo</option>
+                <option>Starter ($599)</option>
+                <option>Growth ($1,199)</option>
+                <option>Systems Build ($1,799)</option>
+                <option>“Hands-Off” Hosting ($30/mo)</option>
+                <option>Small Business Hosting ($50/mo)</option>
+                <option>E-commerce / High Traffic ($150/mo)</option>
               </select>
             </div>
             <div class="field full"><label for="f-msg">Tell us about your project</label><textarea id="f-msg" name="message" placeholder="What are you building? What are your goals?"></textarea></div>
-            <div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label>Leave this field empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
+            <div class="hp" aria-hidden="true"><label>Leave this field empty<input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></label></div>
             <button type="submit" class="submit">Send Message</button>
             <div class="form-success" id="formSuccess" role="status">
               <div class="check"><svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></div>
-              <div><b>Thanks - message received.</b>We'll be in touch within 6 hours.</div>
+              <div><b>Thanks, message received.</b>We’ll be in touch within 6 hours.</div>
             </div>
           </form>
         </div>
@@ -562,16 +555,16 @@
             <small>Email</small>
             <a id="contactEmail" href="mailto:waldronhq@gmail.com">waldronhq@gmail.com</a>
           </div>
-          <div class="email-block" style="margin-top:12px">
+          <div class="email-block email-block-2">
             <small>Book a 30-min call</small>
-            <a href="https://calendly.com/waldronhq/30min" target="_blank" rel="noreferrer">Pick a time<span class="sr-only"> (opens in a new tab)</span> →</a>
+            <a href="https://calendly.com/waldronhq/30min" target="_blank" rel="noopener noreferrer">Pick a time<span class="sr-only"> (opens in a new tab)</span> →</a>
           </div>
           <p class="trust">We respond to every inquiry within 6 hours. No sales pressure, just an honest conversation about your goals.</p>
           <p class="trust pay-note">Ready to start? Choose a plan in the <button type="button" class="link-btn" data-goto="3">Pricing section</button> and click <b>Get Started</b> or <b>Subscribe</b>. Payment is made upfront through secure Stripe checkout.</p>
           <div class="sla"><span class="pulse" aria-hidden="true"></span>Currently replying within <b>6 hours</b></div>
         </aside>
         <div class="contact-footer">
-          <div>© 2026 Waldron Innovation Network · <a href="./privacy.html">Privacy</a> · <a href="./terms.html">Terms</a></div>
+          <div>© 2026 Waldron Innovation Network · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a></div>
           <div class="tag">Building the web. One small business at a time.</div>
         </div>
       </div>
@@ -581,42 +574,30 @@
 
 </main>
 
-<!-- Tweaks -->
-<div class="tweaks-panel" id="tweaks">
-  <h4>Tweaks</h4>
-  <div class="tweak-row"><label for="tw-accent">Accent color</label><input id="tw-accent" type="color" value="#1E6FFF"></div>
-  <div class="tweak-row"><label for="tw-navy">Primary dark</label><input id="tw-navy" type="color" value="#0A1628"></div>
-  <div class="tweak-row">
-    <label for="tw-transition">Transition style</label>
-    <select id="tw-transition">
-      <option value="unique">Unique per page</option>
-      <option value="fade">Crossfade</option>
-      <option value="slide">Slide</option>
-    </select>
-  </div>
-</div>
-
 </div><!-- /app -->
 
 <!-- Embedded Stripe Checkout modal -->
 <div class="modal" id="checkoutModal" aria-hidden="true">
   <div class="modal-backdrop" data-checkout-close="1"></div>
-  <div class="modal-card" role="dialog" aria-modal="true" aria-label="Checkout">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle" tabindex="-1">
     <div class="modal-head">
       <b id="checkoutTitle">Checkout</b>
-      <button class="modal-x" type="button" data-checkout-close="1" aria-label="Close">✕</button>
+      <button class="modal-x" type="button" data-checkout-close="1" aria-label="Close checkout">✕</button>
     </div>
-    <div class="modal-sub muted" id="checkoutSub">Secure checkout powered by Stripe.</div>
-    <div id="embeddedCheckout"></div>
+    <div id="checkoutBody">
+      <div class="modal-sub muted" id="checkoutSub" role="status">Secure checkout powered by Stripe.</div>
+      <div id="embeddedCheckout"></div>
+      <p class="modal-terms">By paying, you agree to our <a href="/terms" target="_blank" rel="noopener">Terms of Service</a>.</p>
+    </div>
+    <div id="checkoutDone" class="checkout-done" hidden>
+      <div class="check" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></div>
+      <h3 id="checkoutDoneTitle">Thank you. Checkout is complete.</h3>
+      <p id="checkoutDoneText">Stripe will email your receipt. We’ll be in touch within 6 hours to get started.</p>
+      <button class="btn btn-primary" type="button" data-checkout-close="1">Back to the site</button>
+    </div>
   </div>
 </div>
 
-<script src="https://js.stripe.com/v3/" async></script>
-<script>
-  // Set this to your Stripe publishable key (pk_live_...).
-  // This key is okay to be public. Do NOT put your secret key (sk_...) anywhere in this site.
-  window.WIN_STRIPE_PUBLISHABLE_KEY = 'pk_live_51TRFGw2KV2wDniiLUGyRNOGh4WgTJS7Rm0oJSZnJJXmpS96esQNoxfDkdcIyUPPR4GVlFWLq74rJpwCuOwXAacCT00t3lXrUtk';
-</script>
 <script src="./globe-land.js" defer></script>
 <script src="./main.js" defer></script>
 </body>
