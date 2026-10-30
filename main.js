@@ -117,8 +117,9 @@ async function startEmbeddedCheckout(plan){
         headers: {'content-type':'application/json'},
         body: JSON.stringify({ plan }),
       });
-      if (!res.ok) throw new Error(await res.text());
+      if (!res.ok) throw new Error('Checkout is unavailable right now. Please email waldronhq@gmail.com');
       const data = await res.json();
+      if (!data.clientSecret) throw new Error('Checkout is unavailable right now. Please email waldronhq@gmail.com');
       return data.clientSecret;
     }
   });
