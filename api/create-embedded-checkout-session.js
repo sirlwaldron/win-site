@@ -18,6 +18,10 @@ const PLANS = {
   HostingEcommerce: ['STRIPE_PRICE_HOSTING_ECOMMERCE_MONTHLY', 'price_1TUqwL2KV2wDniiLoboCts6d'],
 };
 
+// return_url is built from this fixed allowlist, never from request headers or env vars.
+const RETURN_ORIGINS = ['https://waldronhq.com', 'https://www.waldronhq.com'];
+const DEFAULT_RETURN_ORIGIN = 'https://waldronhq.com';
+
 // Only our own pages may start checkout. Browsers always send Origin on a cross-origin or same-origin POST fetch,
 // so a missing or foreign Origin (curl, another site) is refused.
 function isSameOrigin(req) {
@@ -54,8 +58,7 @@ module.exports = async function handler(req, res) {
     if (!secretKey || !priceId) throw new Error('Checkout is not configured for plan ' + plan);
 
     const stripe = new Stripe(secretKey, { apiVersion: '2026-04-22.dahlia' });
-    const appUrl = process.env.APP_URL || process.env.NEXT_PUBLIC_APP_URL ||
-      `${req.headers['x-forwarded-proto'] === 'http' ? 'http' : 'https'}://${req.headers.host}`;
+    const appUrl = RETURN_ORIGINS.includes(req.headers.origin) ? req.headers.origin : DEFAULT_RETURN_ORIGIN;
 
     // Recurring prices must use subscription mode; one-time prices use payment mode.
     const price = await stripe.prices.retrieve(priceId);
