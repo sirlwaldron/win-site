@@ -8,8 +8,21 @@
   <meta property="og:title" content="Waldron Innovation Network | Websites That Win You Business">
   <meta property="og:description" content="Custom sites for small business: more leads, more revenue, less guesswork. Design, build, and support from a team that doesn’t disappear.">
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Waldron Innovation Network">
+  <meta property="og:url" content="https://waldronhq.com/">
+  <meta property="og:image" content="https://waldronhq.com/og-image.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Waldron Innovation Network: Websites That Win You Business">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Waldron Innovation Network | Websites That Win You Business">
+  <meta name="twitter:description" content="Custom sites for small business: more leads, more revenue, less guesswork. Design, build, and support from a team that doesn’t disappear.">
+  <meta name="twitter:image" content="https://waldronhq.com/og-image.png">
+  <meta name="twitter:image:alt" content="Waldron Innovation Network: Websites That Win You Business">
+  <link rel="canonical" href="https://waldronhq.com/">
 
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="icon" href="./win-logo.png" type="image/png">
   <link rel="apple-touch-icon" href="./win-logo.png">
   <link rel="manifest" href="./site.webmanifest">
@@ -33,7 +46,8 @@
   </div>
   <div class="brand-meta"><span class="pulse" aria-hidden="true"></span>7 years · 140+ sites · Zero ghosted clients</div>
   <div class="brand-actions" aria-label="Account">
-    <button class="brand-action btnlike" type="button" data-goto="4">Get a quote</button>
+    <button class="brand-action btnlike desktop-quote-action" type="button" data-goto="4">Get a quote</button>
+    <button class="brand-action mobile-menu-action" type="button" id="mobileMenuBtn" aria-controls="pager" aria-expanded="false">Menu</button>
   </div>
 </div>
 
@@ -136,8 +150,9 @@
       <div class="cred-wrap" aria-label="How we work and proof">
         <div class="cred-block">
           <div class="eyebrow" style="justify-content:center">Process</div>
-          <h3 class="cred-title">What happens after you click “Get a quote”</h3>
+          <h3 class="cred-title">How it works, from checkout to launch</h3>
           <ol class="process">
+            <li><b>Checkout</b><span>Choose a plan and pay upfront through secure Stripe checkout. Not sure which plan fits? Message us first.</span></li>
             <li><b>Discovery</b><span>15–30 minutes to understand your goals, audience, and what “success” means.</span></li>
             <li><b>Design</b><span>We draft your layout + key sections and send a preview for feedback.</span></li>
             <li><b>Build</b><span>We develop the site, wire up forms, and connect your domain + analytics.</span></li>
@@ -173,23 +188,109 @@
       <div class="services-head">
         <div class="eyebrow" style="justify-content:center">Testimonials</div>
         <h2>What clients say.</h2>
-        <p>These are sample testimonials for layout. Replace with real quotes + names when you have them.</p>
+        <p>Real outcomes, clear communication, and websites that turn into calls and bookings.</p>
       </div>
 
-      <div class="t-grid narrow">
-        <figure class="quote">
+      <div class="t-metrics narrow" aria-label="Client outcomes">
+        <div class="t-metric"><b>5.0 average</b><span>Client satisfaction</span></div>
+        <div class="t-metric"><b>On-time launches</b><span>Clear scope + timeline</span></div>
+        <div class="t-metric"><b>Fast support</b><span>Replies within 6 hours</span></div>
+      </div>
+
+      <div class="t-label" id="t-sites-label">Sites we’ve built</div>
+      <div class="t-sites" aria-labelledby="t-sites-label">
+        <figure class="quote site-quote" style="--delay:0ms">
+          <div class="q-shot">
+            <img src="/work/room09.webp" alt="Homepage screenshot of ROOM 09, a recording studio website built by WIN, with a mixing console layout, VU meters and a “Book a session” button" width="1200" height="900" loading="lazy" decoding="async" onerror="this.classList.add('is-missing')">
+          </div>
+          <blockquote>“Most studio websites look the same. This one actually feels like walking into our control room. The mixing console layout gives it personality, and booking a session is easy to find.”</blockquote>
+          <figcaption><span class="avatar">R9</span><div><b>ROOM 09</b><span>Recording Studio</span></div></figcaption>
+        </figure>
+        <figure class="quote site-quote" style="--delay:70ms">
+          <div class="q-shot">
+            <img src="/work/common-ground.webp" alt="Homepage screenshot of Common Ground, a landscape design studio website built by WIN, with a garden plan as the hero and the headline “Room to grow.”" width="1200" height="900" loading="lazy" decoding="async" onerror="this.classList.add('is-missing')">
+          </div>
+          <blockquote>“The garden plan becoming the centerpiece of the homepage is such a thoughtful touch. It shows what we do before visitors even read the headline. Creative, calm, and professional.”</blockquote>
+          <figcaption><span class="avatar">CG</span><div><b>COMMON GROUND</b><span>Landscape Design Studio</span></div></figcaption>
+        </figure>
+        <figure class="quote site-quote" style="--delay:140ms">
+          <div class="q-shot">
+            <img src="/work/scoop-club.webp" alt="Homepage screenshot of Scoop Club, a gelato shop website built by WIN, with oversized gelato cones on a bold blue background and a receipt-style menu" width="1200" height="900" loading="lazy" decoding="async" onerror="this.classList.add('is-missing')">
+          </div>
+          <blockquote>“The oversized gelato and bold colors capture the energy we wanted for our shop. We especially love the receipt-style menu. It makes the practical information feel like part of the design.”</blockquote>
+          <figcaption><span class="avatar">SC</span><div><b>SCOOP CLUB</b><span>Gelato Shop</span></div></figcaption>
+        </figure>
+        <figure class="quote site-quote" style="--delay:210ms">
+          <div class="q-shot">
+            <img src="/work/off-grid.webp" alt="Homepage screenshot of Off Grid, a bicycle repair workshop website built by WIN, with exploded bike components on a yellow background and a route-style navigation" width="1200" height="900" loading="lazy" decoding="async" onerror="this.classList.add('is-missing')">
+          </div>
+          <blockquote>“The exploded bike components put our craft front and center. The navigation feels like following a cycling route, which is a great detail. It gives the workshop a strong identity without burying our services.”</blockquote>
+          <figcaption><span class="avatar">OG</span><div><b>OFF GRID</b><span>Bicycle Repair Workshop</span></div></figcaption>
+        </figure>
+        <figure class="quote site-quote" style="--delay:280ms">
+          <div class="q-shot">
+            <img src="/work/frame.webp" alt="Homepage screenshot of Frame, an independent cinema website built by WIN, with large serif typography, film imagery, and showtimes and tickets" width="1200" height="900" loading="lazy" decoding="async" onerror="this.classList.add('is-missing')">
+          </div>
+          <blockquote>“This feels like an independent cinema, right down to the typography and framing. The imagery makes a statement, while showtimes and tickets are still easy to spot. It has the character we wanted.”</blockquote>
+          <figcaption><span class="avatar">FR</span><div><b>FRAME</b><span>Independent Cinema</span></div></figcaption>
+        </figure>
+      </div>
+
+      <div class="t-label t-label-more">More client feedback</div>
+      <div class="t-grid narrow" aria-label="Client testimonials">
+        <figure class="quote featured" style="--delay:0ms">
+          <div class="q-top">
+            <div class="stars" aria-label="5 out of 5 stars">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+            </div>
+            <span class="q-pill">Communication</span>
+          </div>
           <blockquote>“Honestly, the weekly check-ins are what sold me. I always knew where we were, what was next, and what they needed from me. The site went live when they said it would, and we booked three new jobs in the first week.”</blockquote>
           <figcaption><span class="avatar">JR</span><div><b>Jordan Reed</b><span>Reed Home Services</span></div></figcaption>
         </figure>
-        <figure class="quote">
+        <figure class="quote" style="--delay:70ms">
+          <div class="q-top">
+            <div class="stars" aria-label="5 out of 5 stars">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+            </div>
+            <span class="q-pill">Conversions</span>
+          </div>
           <blockquote>“Our old site was not terrible, it just was not doing anything. People landed on it and bounced. WIN dug into why, redid the copy, and cleaned up the booking form. We are getting actual inquiries now instead of crickets.”</blockquote>
           <figcaption><span class="avatar">MP</span><div><b>Monica Patel</b><span>Patel Wellness Studio</span></div></figcaption>
         </figure>
-        <figure class="quote">
+        <figure class="quote" style="--delay:140ms">
+          <div class="q-top">
+            <div class="stars" aria-label="5 out of 5 stars">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+            </div>
+            <span class="q-pill">Reliability</span>
+          </div>
           <blockquote>“I have been burned before by people who disappear halfway through. WIN answered emails, hit deadlines, and walked me through everything at handoff. As a one-man shop, I cannot chase people down, so that mattered.”</blockquote>
           <figcaption><span class="avatar">CH</span><div><b>Chris Hall</b><span>Hall Contracting</span></div></figcaption>
         </figure>
-        <figure class="quote">
+        <figure class="quote" style="--delay:210ms">
+          <div class="q-top">
+            <div class="stars" aria-label="5 out of 5 stars">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 17.3l-6.2 3.6 1.7-7.1L2 8.9l7.3-.6L12 1.6l2.7 6.7 7.3.6-5.5 4.9 1.7 7.1z"/></svg>
+            </div>
+            <span class="q-pill">Speed</span>
+          </div>
           <blockquote>“Page speed went from embarrassing to actually fast. The calls to action make sense now, the contact form works on mobile (it did not before), and our sales team finally stopped apologizing for the website on calls.”</blockquote>
           <figcaption><span class="avatar">LN</span><div><b>Lena Nguyen</b><span>Northline B2B Services</span></div></figcaption>
         </figure>
@@ -214,7 +315,7 @@
           <div class="p-price"><span class="amt">$599</span><span class="unit">one-time</span></div>
           <p class="p-tagline">A clean, professional presence for new businesses that need to get online fast.</p>
           <ul class="p-features">
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>3 pages: Home, About, Contact</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Up to 4 pages</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Mobile responsive design</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>1 lead form (email notifications to your existing inbox)</li>
             <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Domain connection / DNS setup + SSL (HTTPS)</li>
@@ -273,54 +374,47 @@
         <!-- Pro + Elite removed for now -->
       </div>
 
-      <div class="pricing-info-card" role="note" aria-label="Hosting and third-party costs disclosure">
-        <h3 class="pricing-info-title">Hosting, Domain &amp; Third-Party Costs</h3>
-        <p class="pricing-info-body"><b>Domain:</b> Roughly $10 to $20/year for a .com renewal. We use Vercel for domains as well, so pricing may vary depending on your needs.</p>
-        <p class="pricing-info-body"><b>Hosting:</b> We host on Vercel. The free Hobby tier covers typical small business traffic. If your site grows or needs more, Vercel Pro is $20/month.</p>
-        <p class="pricing-info-body"><b>Third-party tools</b> (CRM, email marketing, payment processing) are billed directly to you by the provider in your own account.</p>
-      </div>
-
       <div class="care-wrap">
         <div class="care-head">
-          <h3>Ongoing Care Plans (Optional)</h3>
-          <p>Your site is an asset. It needs maintenance like anything else. Cancel anytime with 30 days’ notice.</p>
+          <h3>Hosting &amp; Maintenance Plans (Optional)</h3>
+          <p>Once your site is built, you have the option to host and maintain it with us. Pick the plan that fits your traffic and how often you need updates. Cancel anytime with 30 days’ notice.</p>
         </div>
-        <div class="care-grid" aria-label="Ongoing care plans">
+        <div class="care-grid" aria-label="Hosting and maintenance plans">
           <div class="p-card care">
-            <div class="p-tier">Basic</div>
-            <div class="p-name">Basic</div>
-            <div class="p-price"><span class="amt">$75</span><span class="unit">/month</span></div>
+            <div class="p-tier">“Hands-Off” Hosting</div>
+            <div class="p-name">“Hands-Off” Hosting</div>
+            <div class="p-price"><span class="amt">$30</span><span class="unit">/month</span></div>
             <ul class="p-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Security updates</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Weekly backups</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Just keeping the lights on (no edits included)</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Hosting + SSL renewal</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Domain renewal included</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Uptime monitoring</li>
             </ul>
-            <button class="p-cta" data-goto="4" data-plan="CareBasic">Subscribe</button>
+            <button class="p-cta" data-goto="4" data-plan="HostingHandsOff">Subscribe</button>
           </div>
           <div class="p-card care">
-            <div class="p-tier">Standard</div>
-            <div class="p-name">Standard</div>
-            <div class="p-price"><span class="amt">$175</span><span class="unit">/month</span></div>
+            <div class="p-tier">Small Business</div>
+            <div class="p-name">Small Business</div>
+            <div class="p-price"><span class="amt">$50</span><span class="unit">/month</span></div>
             <ul class="p-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Everything in Basic</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>2 hours/month of content or design edits</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Monthly uptime report</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Hosting + SSL</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>1 hour of monthly edits</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Security updates + uptime monitoring</li>
             </ul>
-            <button class="p-cta" data-goto="4" data-plan="CareStandard">Subscribe</button>
+            <button class="p-cta" data-goto="4" data-plan="HostingSmallBusiness">Subscribe</button>
           </div>
           <div class="p-card care">
-            <div class="p-tier">Priority</div>
-            <div class="p-name">Priority</div>
-            <div class="p-price"><span class="amt">$350</span><span class="unit">/month</span></div>
+            <div class="p-tier">E-commerce / High Traffic</div>
+            <div class="p-name">E-commerce / High Traffic</div>
+            <div class="p-price"><span class="amt">$150</span><span class="unit">/month</span></div>
             <ul class="p-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Everything in Standard</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>5 hours/month of edits</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Priority turnaround (24-48 hours)</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Monthly performance report</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Hosting tuned for traffic + checkout</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Performance monitoring</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Monthly SEO reports</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>10 hours of monthly edits</li>
             </ul>
-            <button class="p-cta" data-goto="4" data-plan="CarePriority">Subscribe</button>
+            <button class="p-cta" data-goto="4" data-plan="HostingEcommerce">Subscribe</button>
           </div>
-          <!-- Backend Support removed -->
         </div>
       </div>
 
@@ -337,15 +431,15 @@
         </details>
         <details>
           <summary>When do I pay?</summary>
-          <p>We’ll confirm payment timing in writing before we start.</p>
+          <p>Payment is made upfront through secure Stripe checkout when you choose a plan. Click a plan on the pricing page, complete checkout, and we’ll get started. Build packages are a one-time payment; hosting plans are billed monthly through the same checkout. Have questions first, or need something custom? Send us a message and we’ll sort it out before you pay.</p>
         </details>
         <details>
           <summary>What if I need to cancel mid-project?</summary>
           <p>If you cancel mid-project, we will invoice for work completed to date. If you have prepaid beyond the work completed, we will issue a partial refund for the unused portion.</p>
         </details>
         <details>
-          <summary>Who owns the final site?</summary>
-          <p>You do. All custom code, designs, and content you provided are yours at launch. Licensed fonts, images, or plugins transfer under their original licenses.</p>
+          <summary>Do I have to host with you?</summary>
+          <p>No. You have the option to host and maintain your site with us through one of the plans above, but it’s not required. If you’d rather take the build and host it yourself, we can hand off the project at launch — just let us know up front so we can scope it accordingly.</p>
         </details>
         <details>
           <summary>Do you offer rush delivery?</summary>
@@ -367,7 +461,7 @@
           <div class="contact-head">
             <div class="eyebrow">Contact</div>
             <h2>Let's Build<br>Something.</h2>
-            <p>Tell us about your business and we'll get back to you within 24 hours. No obligation - just a conversation.</p>
+            <p>Tell us about your business and we'll get back to you within 6 hours. No obligation - just a conversation.</p>
           </div>
           <form class="form" id="contactForm" novalidate>
             <div class="field"><label for="f-name">Full Name</label><input id="f-name" name="name" type="text" required placeholder="Jane Doe"></div>
@@ -381,15 +475,16 @@
                 <option>Starter - $599</option>
                 <option>Growth - $1,199</option>
                 <option>Systems Build - $1,799</option>
-                <!-- Pro + Elite removed for now -->
-                <option>Care Plan (existing client)</option>
+                <option>“Hands-Off” Hosting - $30/mo</option>
+                <option>Small Business Hosting - $50/mo</option>
+                <option>E-commerce / High Traffic - $150/mo</option>
               </select>
             </div>
             <div class="field full"><label for="f-msg">Tell us about your project</label><textarea id="f-msg" name="message" placeholder="What are you building? What are your goals?"></textarea></div>
             <button type="submit" class="submit">Send Message</button>
             <div class="form-success" id="formSuccess">
               <div class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></div>
-              <div><b>Thanks - message received.</b>We'll be in touch within 24 hours.</div>
+              <div><b>Thanks - message received.</b>We'll be in touch within 6 hours.</div>
             </div>
           </form>
         </div>
@@ -397,17 +492,15 @@
           <h3>Straight to a human.</h3>
           <div class="email-block">
             <small>Email</small>
-            <a id="contactEmail" href="mailto:Lucas@waldronnetwork.com">Lucas@waldronnetwork.com</a>
+            <a id="contactEmail" href="mailto:waldronhq@gmail.com">waldronhq@gmail.com</a>
           </div>
           <div class="email-block" style="margin-top:12px">
-            <small>Book a 15-min call</small>
-            <a href="https://calendly.com/sirlwaldron/consultation" target="_blank" rel="noreferrer">Pick a time →</a>
+            <small>Book a 30-min call</small>
+            <a href="https://calendly.com/waldronhq/30min" target="_blank" rel="noreferrer">Pick a time →</a>
           </div>
-          <p class="trust">We respond to every inquiry within 24 hours. No sales pressure, just an honest conversation about your goals.</p>
+          <p class="trust">We respond to every inquiry within 6 hours. No sales pressure, just an honest conversation about your goals.</p>
+          <p class="trust pay-note">Ready to start? Choose a plan on the Pricing page. Payment is made upfront through secure Stripe checkout when you choose your plan.</p>
           <div class="sla"><span class="pulse" aria-hidden="true"></span>Currently replying within <b>6 hours</b></div>
-          <div style="margin-top:14px">
-            <button class="btn btn-secondary" type="button" id="manageBillingBtn">Manage billing</button>
-          </div>
         </aside>
         <div class="contact-footer">
           <div>© 2026 Waldron Innovation Network · <a href="./privacy.html">Privacy</a> · <a href="./terms.html">Terms</a></div>
@@ -445,26 +538,6 @@
     </div>
     <div class="modal-sub muted" id="checkoutSub">Secure checkout powered by Stripe.</div>
     <div id="embeddedCheckout"></div>
-  </div>
-</div>
-
-<!-- Stripe Customer Portal lookup -->
-<div class="modal" id="billingModal" aria-hidden="true">
-  <div class="modal-backdrop" data-billing-close="1"></div>
-  <div class="modal-card" role="dialog" aria-modal="true" aria-label="Manage billing">
-    <div class="modal-head">
-      <b>Manage billing</b>
-      <button class="modal-x" type="button" data-billing-close="1" aria-label="Close">✕</button>
-    </div>
-    <div class="modal-sub muted">Enter the email you used at checkout to view invoices and subscriptions.</div>
-    <form id="billingForm" class="form" style="margin-top:12px" novalidate>
-      <div class="field full">
-        <label for="bill-email">Email</label>
-        <input id="bill-email" name="email" type="email" autocomplete="email" required placeholder="Your email address">
-      </div>
-      <button class="btn btn-primary" type="submit" id="billingSubmit">Continue</button>
-      <div class="auth-note" id="billingNote" role="status" aria-live="polite" style="margin-top:10px"></div>
-    </form>
   </div>
 </div>
 

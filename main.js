@@ -7,7 +7,13 @@ const pgBtns = document.querySelectorAll('.pg-btn');
 const stepBig = document.getElementById('stepBig');
 const stepName = document.getElementById('stepName');
 const brandStripe = document.getElementById('brandStripe');
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 let globeControls = null;
+
+function setMobileMenuOpen(open){
+  document.body.classList.toggle('mobile-menu-open', !!open);
+  if (mobileMenuBtn) mobileMenuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
 
 function applyChromeForPage(idx){
   const dark = pages[idx].dataset.chrome === 'dark';
@@ -86,59 +92,6 @@ window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') closeCheckoutModal();
 });
 
-/* =========== Stripe Customer Portal (email lookup) =========== */
-function openBillingModal(){
-  const m = document.getElementById('billingModal');
-  if (!m) return;
-  const note = document.getElementById('billingNote');
-  if (note) note.textContent = '';
-  const email = document.getElementById('bill-email');
-  if (email) email.value = '';
-  m.classList.add('show');
-  m.setAttribute('aria-hidden', 'false');
-  setTimeout(() => { try { email && email.focus(); } catch(e){} }, 0);
-}
-
-function closeBillingModal(){
-  const m = document.getElementById('billingModal');
-  if (!m) return;
-  m.classList.remove('show');
-  m.setAttribute('aria-hidden', 'true');
-}
-
-document.querySelectorAll('[data-billing-close="1"]').forEach(el => el.addEventListener('click', closeBillingModal));
-
-const manageBtn = document.getElementById('manageBillingBtn');
-if (manageBtn) manageBtn.addEventListener('click', openBillingModal);
-
-const billingForm = document.getElementById('billingForm');
-if (billingForm){
-  billingForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const note = document.getElementById('billingNote');
-    const btn = document.getElementById('billingSubmit');
-    const email = document.getElementById('bill-email')?.value?.trim();
-    if (!email) { if (note) note.textContent = 'Please enter your email.'; return; }
-
-    if (btn) btn.disabled = true;
-    if (note) note.textContent = 'Opening billing portal…';
-
-    try{
-      const res = await fetch('/api/create-portal-session', {
-        method: 'POST',
-        headers: {'content-type':'application/json'},
-        body: JSON.stringify({ email }),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || 'Failed to open portal.');
-      window.location.href = data.url;
-    } catch(err){
-      if (note) note.textContent = (err && err.message) ? err.message : 'Failed to open portal.';
-      if (btn) btn.disabled = false;
-    }
-  });
-}
-
 async function startEmbeddedCheckout(plan){
   if (!window.Stripe) throw new Error('Stripe.js failed to load');
   const pk = window.WIN_STRIPE_PUBLISHABLE_KEY;
@@ -174,14 +127,23 @@ async function startEmbeddedCheckout(plan){
 }
 
 /* =========== Triggers =========== */
-pgBtns.forEach(b => b.addEventListener('click', () => goTo(parseInt(b.dataset.idx,10))));
+pgBtns.forEach(b => b.addEventListener('click', () => {
+  goTo(parseInt(b.dataset.idx,10));
+  setMobileMenuOpen(false);
+}));
 document.getElementById('pgPrev').addEventListener('click', () => goTo(current-1));
 document.getElementById('pgNext').addEventListener('click', () => goTo(current+1));
+if (mobileMenuBtn) {
+  mobileMenuBtn.addEventListener('click', () => {
+    setMobileMenuOpen(!document.body.classList.contains('mobile-menu-open'));
+  });
+}
 
 document.querySelectorAll('[data-goto]').forEach(el => {
   el.addEventListener('click', () => {
     const plan = el.dataset.plan;
     if (plan && el.classList.contains('p-cta')){
+      setMobileMenuOpen(false);
       openCheckoutModal(`Checkout · ${plan}`);
       startEmbeddedCheckout(plan).catch(err => {
         const sub = document.getElementById('checkoutSub');
@@ -207,6 +169,7 @@ document.querySelectorAll('[data-goto]').forEach(el => {
 
 /* =========== Keyboard =========== */
 window.addEventListener('keydown', e => {
+  if (e.key === 'Escape') setMobileMenuOpen(false);
   if (e.target.matches('input,textarea,select')) return;
   if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === 'ArrowRight') { e.preventDefault(); goTo(current+1); }
   else if (e.key === 'ArrowUp' || e.key === 'PageUp' || e.key === 'ArrowLeft') { e.preventDefault(); goTo(current-1); }
@@ -217,7 +180,7 @@ window.addEventListener('keydown', e => {
 // Scrolling should only scroll within the active page.
 
 /* =========== Contact form =========== */
-const CONTACT_EMAIL_TO = 'Lucas@waldronnetwork.com';
+const CONTACT_EMAIL_TO = 'waldronhq@gmail.com';
 // Optional: set to a real endpoint later (Formspree/Netlify/etc). Leave empty to use mailto fallback.
 const CONTACT_FORM_ENDPOINT = '';
 
@@ -265,7 +228,7 @@ document.getElementById('contactForm').addEventListener('submit', async (e) => {
         body: fd
       });
       if (!res.ok) throw new Error('Bad response');
-      showSuccess(`<b>Thanks - message sent.</b>We’ll be in touch within 24 hours.`);
+      showSuccess(`<b>Thanks - message sent.</b>We’ll be in touch within 6 hours.`);
       return;
     } catch(err){
       // Fall back to mailto if endpoint fails (useful during early setup).
@@ -364,43 +327,22 @@ try { window.parent.postMessage({type:'__edit_mode_available'}, '*'); } catch(e)
 
   // Cities (lat, lon, name, size)
   const cities = [
-    {n:'New York', lat:40.7, lon:-74.0, s:1.2},
-    {n:'Washington DC', lat:38.9, lon:-77.0, s:1},
-    {n:'Miami', lat:25.8, lon:-80.2, s:1},
-    {n:'Chicago', lat:41.9, lon:-87.6, s:1},
-    {n:'Denver', lat:39.7, lon:-104.9, s:1},
-    {n:'San Francisco', lat:37.8, lon:-122.4, s:1.1},
-    {n:'Seattle', lat:47.6, lon:-122.3, s:1},
-    {n:'Vancouver', lat:49.3, lon:-123.1, s:0.9},
-    {n:'Montréal', lat:45.5, lon:-73.6, s:0.9},
-    {n:'Mexico City', lat:19.4, lon:-99.1, s:1},
-    {n:'Bogotá', lat:4.6, lon:-74.1, s:0.9},
-    {n:'Lima', lat:-12.0, lon:-77.0, s:0.9},
-    {n:'São Paulo', lat:-23.5, lon:-46.6, s:1.1},
-    {n:'Buenos Aires', lat:-34.6, lon:-58.4, s:1},
-    {n:'London', lat:51.5, lon:-0.1, s:1.2},
-    {n:'Paris', lat:48.9, lon:2.3, s:1},
-    {n:'Berlin', lat:52.5, lon:13.4, s:1},
-    {n:'Madrid', lat:40.4, lon:-3.7, s:0.9},
-    {n:'Rome', lat:41.9, lon:12.5, s:0.9},
-    {n:'Istanbul', lat:41.0, lon:29.0, s:1},
-    {n:'Cairo', lat:30.0, lon:31.2, s:1},
+    // Trimmed set so the globe reads cleaner (less visual crowding).
+    {n:'New York', lat:40.7, lon:-74.0, s:1.15},
+    {n:'San Francisco', lat:37.8, lon:-122.4, s:1.05},
+    {n:'Mexico City', lat:19.4, lon:-99.1, s:0.95},
+    {n:'São Paulo', lat:-23.5, lon:-46.6, s:1.0},
+    {n:'London', lat:51.5, lon:-0.1, s:1.15},
+    {n:'Paris', lat:48.9, lon:2.3, s:0.95},
+    {n:'Cairo', lat:30.0, lon:31.2, s:0.95},
     {n:'Lagos', lat:6.5, lon:3.4, s:0.9},
-    {n:'Nairobi', lat:-1.3, lon:36.8, s:0.9},
-    {n:'Dubai', lat:25.2, lon:55.3, s:1},
-    {n:'Mumbai', lat:19.1, lon:72.9, s:1},
-    {n:'Bangalore', lat:12.97, lon:77.6, s:0.9},
-    {n:'Singapore', lat:1.35, lon:103.8, s:1},
-    {n:'Bangkok', lat:13.75, lon:100.5, s:0.9},
-    {n:'Jakarta', lat:-6.2, lon:106.8, s:0.9},
-    {n:'Shanghai', lat:31.2, lon:121.5, s:1.1},
-    {n:'Beijing', lat:39.9, lon:116.4, s:1},
-    {n:'Hong Kong', lat:22.3, lon:114.2, s:1},
-    {n:'Seoul', lat:37.6, lon:126.9, s:1},
-    {n:'Tokyo', lat:35.7, lon:139.7, s:1.2},
-    {n:'Sydney', lat:-33.9, lon:151.2, s:1},
-    {n:'Auckland', lat:-36.9, lon:174.8, s:0.9},
     {n:'Johannesburg', lat:-26.2, lon:28.0, s:0.9},
+    {n:'Dubai', lat:25.2, lon:55.3, s:0.95},
+    {n:'Mumbai', lat:19.1, lon:72.9, s:0.95},
+    {n:'Singapore', lat:1.35, lon:103.8, s:0.95},
+    {n:'Shanghai', lat:31.2, lon:121.5, s:1.0},
+    {n:'Tokyo', lat:35.7, lon:139.7, s:1.15},
+    {n:'Sydney', lat:-33.9, lon:151.2, s:0.95},
   ];
 
   // Continent outlines, hand-simplified polygons in [lon, lat] pairs.
