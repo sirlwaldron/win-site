@@ -7,10 +7,10 @@ const CONTACT_FORM_ENDPOINT = 'https://formspree.io/f/xaeebgpy';
 
 const SLUGS = ['home','services','testimonials','pricing','contact'];
 const PLAN_NAMES = {
-  Starter: 'Starter',
-  Growth: 'Growth',
+  Starter: 'Starter Build',
+  Growth: 'Growth Build',
   BackendGrowth: 'Systems Build',
-  HostingHandsOff: '“Hands-Off” Hosting',
+  HostingHandsOff: 'Hands-Off Hosting',
   HostingSmallBusiness: 'Small Business Hosting',
   HostingEcommerce: 'E-commerce / High Traffic Hosting',
 };
