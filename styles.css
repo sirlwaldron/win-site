@@ -756,6 +756,52 @@ html.legal-page body{
   #embeddedCheckout{min-height:min(520px, calc(100dvh - 132px))}
 }
 
+/* ================= Pricing: info blocks, who-pays table ================= */
+#p-pricing .pricing-note{margin-top:14px}
+#p-pricing .pricing-note p{margin-top:0}
+#p-pricing .pricing-note b,#p-pricing .info-block b,#p-pricing .care-includes b,#p-pricing .care-foot b{color:var(--ink);font-weight:600}
+#p-pricing .care-includes{margin-top:0;margin-bottom:14px}
+#p-pricing .info-block{margin-top:16px}
+#p-pricing .pricing-muted h4{font-family:"Plus Jakarta Sans",system-ui,sans-serif;font-size:13.5px;font-weight:700;letter-spacing:-.01em;color:var(--ink);margin-top:14px}
+#p-pricing .pricing-muted h4:first-child{margin-top:0}
+#p-pricing .pricing-muted h4 .sub{font-weight:400;color:var(--muted)}
+#p-pricing .info-block h3 + p,#p-pricing .info-block h3 + ul,#p-pricing .info-block h3 + table{margin-top:10px}
+#p-pricing .info-list{list-style:disc;margin:8px 0 0;padding:0 0 0 20px;display:flex;flex-direction:column;gap:6px;font-size:13.5px;line-height:1.55;color:var(--muted)}
+#p-pricing .info-list li::marker{color:var(--accent-strong)}
+#p-pricing .pricing-muted .fine{margin-top:10px;font-size:13px}
+#p-pricing .info-block p + p,#p-pricing .info-block .info-list + p,#p-pricing .info-block table + p,#p-pricing .info-block .info-cols + p{margin-top:12px}
+#p-pricing .info-cols{display:grid;grid-template-columns:1fr 1fr;gap:8px 32px;margin-top:14px}
+#p-pricing .info-cols h4{margin-top:0}
+#p-pricing .care-foot{margin-top:14px;text-align:center;font-size:13.5px;line-height:1.55;color:var(--muted)}
+#p-pricing .p-card.care .p-tagline{display:block;min-height:0;margin-top:10px}
+
+#p-pricing .who-pays{width:100%;border-collapse:collapse;font-size:13.5px;line-height:1.5;margin-top:10px}
+#p-pricing .who-pays thead th{text-align:left;font-family:"JetBrains Mono";font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2);padding:8px 12px;border-bottom:1.5px solid var(--line)}
+#p-pricing .who-pays tbody th,#p-pricing .who-pays tbody td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top;text-align:left;color:var(--muted)}
+#p-pricing .who-pays tbody tr:first-child th,#p-pricing .who-pays tbody tr:first-child td{border-top:0}
+#p-pricing .who-pays tbody th{font-weight:600;color:var(--ink);width:30%}
+#p-pricing .link-btn,.link-btn{background:none;border:0;padding:0;margin:0;font:inherit;color:var(--accent-on-dark);text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.link-btn:hover{color:#fff}
+#p-contact .pay-note b{color:#fff;font-weight:600}
+
+@media (max-width: 640px){
+  #p-pricing .info-cols{grid-template-columns:1fr}
+  #p-pricing .who-pays thead{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  #p-pricing .who-pays,#p-pricing .who-pays tbody,#p-pricing .who-pays tr,#p-pricing .who-pays th,#p-pricing .who-pays td{display:block;width:auto}
+  #p-pricing .who-pays tbody tr{border:1px solid var(--line);border-radius:12px;background:#fff;margin-top:10px;padding:4px 0;overflow:hidden}
+  #p-pricing .who-pays tbody th,#p-pricing .who-pays tbody td{border-top:0;padding:6px 14px}
+  #p-pricing .who-pays tbody th{width:auto;padding-top:10px;font-size:14px}
+  #p-pricing .who-pays tbody tr:first-child th,#p-pricing .who-pays tbody tr:first-child td{border-top:0}
+  #p-pricing .who-pays td::before{content:attr(data-label);display:block;font-family:"JetBrains Mono";font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2)}
+  #p-pricing .who-pays tbody td:last-child{padding-bottom:10px}
+}
+@media (max-width: 420px){
+  /* Hosting plans: show every line so the domain-renewal and edit-hours copy is never cut off */
+  #p-pricing .care-grid .p-features li:nth-child(n+4){display:flex}
+  #p-pricing .care-grid .p-card.care .p-tagline{display:block;font-size:10px;line-height:1.3;margin-top:8px}
+  #p-pricing .care-grid .p-features{margin:8px 0 12px}
+}
+
 /* ================= Accessibility ================= */
 .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .page:focus{outline:none}

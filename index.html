@@ -78,7 +78,7 @@
     <small>Section</small>
     <div class="big" id="stepBig">01</div>
   </div>
-  <div style="opacity:.75">of 05 · <span id="stepName">Home</span></div>
+  <div>of 05 · <span id="stepName">Home</span></div>
 </div>
 
 
@@ -249,7 +249,7 @@
       <div class="pricing-head">
         <div class="eyebrow" style="justify-content:center">Simple, Transparent Pricing</div>
         <h2>No hidden fees.<br>No surprises. Just results.</h2>
-        <p>Project-based, one-time pricing. Domain, hosting, and third-party subscriptions are billed directly to you by the provider.</p>
+        <p>Builds are a one-time price. Hosting plans are optional and bundle hosting, SSL, and domain renewal. If you skip hosting, you own and pay for those accounts yourself. Any paid third-party tool is billed at cost, and we tell you before you buy it.</p>
       </div>
       <div class="pricing-grid">
         <div class="p-card">
@@ -317,21 +317,35 @@
         <!-- Pro + Elite removed for now -->
       </div>
 
+      <div class="pricing-muted pricing-note">
+        <p><b>Stripe fees (Systems Build):</b> Your store runs on your own Stripe account. Stripe's processing fees come out of your sales and go to Stripe, not us. Stripe's standard rate is currently 2.9% + 30¢ per domestic card payment, and Stripe can change it. Zapier or other paid integration plans are billed to you at cost.</p>
+      </div>
+
       <div class="care-wrap">
         <div class="care-head">
           <h3>Hosting &amp; Maintenance Plans (Optional)</h3>
-          <p>Once your site is built, you have the option to host and maintain it with us. Pick the plan that fits your traffic and how often you need updates. Cancel anytime with 30 days’ notice. Notice must be in writing, and billing continues through the notice period.</p>
+          <p>Once your site is built, you can have us host and maintain it. Pick the plan that fits your traffic and how often you need updates.</p>
+        </div>
+        <div class="pricing-muted care-includes">
+          <h4>Every hosting plan includes:</h4>
+          <ul class="info-list">
+            <li>Hosting and SSL (HTTPS) renewal</li>
+            <li><b>Domain renewal for one domain</b>, registered in <b>your name</b>, with renewal paid by us</li>
+            <li>Uptime monitoring</li>
+          </ul>
+          <p class="fine">Domain renewal is included for standard .com, .net, and .org domains. Premium or unusual domain types are billed at cost, and we tell you first.</p>
         </div>
         <div class="care-grid" aria-label="Hosting and maintenance plans">
           <div class="p-card care">
             <div class="p-tier">“Hands-Off” Hosting</div>
             <div class="p-name">“Hands-Off” Hosting</div>
             <div class="p-price"><span class="amt">$30</span><span class="unit">/month</span></div>
+            <p class="p-tagline">Just keeping the lights on.</p>
             <ul class="p-features">
-              <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Just keeping the lights on (no edits included)</li>
               <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Hosting + SSL renewal</li>
               <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Domain renewal included</li>
               <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Uptime monitoring</li>
+              <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>No edits included</li>
             </ul>
             <button class="p-cta" data-goto="4" data-plan="HostingHandsOff">Subscribe</button>
           </div>
@@ -341,6 +355,7 @@
             <div class="p-price"><span class="amt">$50</span><span class="unit">/month</span></div>
             <ul class="p-features">
               <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Hosting + SSL</li>
+              <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Domain renewal included</li>
               <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>1 hour of monthly edits</li>
               <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Security updates + uptime monitoring</li>
             </ul>
@@ -352,6 +367,7 @@
             <div class="p-price"><span class="amt">$150</span><span class="unit">/month</span></div>
             <ul class="p-features">
               <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Hosting tuned for traffic + checkout</li>
+              <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Domain renewal included</li>
               <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Performance monitoring</li>
               <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>Monthly SEO reports</li>
               <li><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>10 hours of monthly edits</li>
@@ -359,34 +375,144 @@
             <button class="p-cta" data-goto="4" data-plan="HostingEcommerce">Subscribe</button>
           </div>
         </div>
+        <p class="care-foot"><b>Cancel anytime with 30 days’ notice.</b> Notice must be in writing, and billing continues through the notice period.</p>
       </div>
 
-      <div class="pricing-muted">
-        <h3>What's Not Included in Any Package</h3>
-        <p>Logo design or brand identity work, professional photography or stock image licensing beyond basic use, ongoing content creation or blog posts, paid ad campaign management. These are available as add-ons - just ask.</p>
+      <div class="pricing-muted info-block">
+        <h3 id="who-pays-h">Who Pays for What</h3>
+        <table class="who-pays" role="table" aria-labelledby="who-pays-h">
+          <thead role="rowgroup"><tr role="row"><th scope="col" role="columnheader"><span class="sr-only">Item</span></th><th scope="col" role="columnheader">You host with us</th><th scope="col" role="columnheader">You host yourself</th></tr></thead>
+          <tbody role="rowgroup">
+            <tr role="row"><th scope="row" role="rowheader">Website hosting + SSL</th><td role="cell" data-label="You host with us">Included in your monthly plan</td><td role="cell" data-label="You host yourself">You set up and pay your own host</td></tr>
+            <tr role="row"><th scope="row" role="rowheader">Domain name</th><td role="cell" data-label="You host with us">Registered in your name. Renewal included in your plan.</td><td role="cell" data-label="You host yourself">Registered in your name. You pay the registrar directly.</td></tr>
+            <tr role="row"><th scope="row" role="rowheader">Business email (Google Workspace)</th><td role="cell" data-label="You host with us">Billed to you by Google</td><td role="cell" data-label="You host yourself">Billed to you by Google</td></tr>
+            <tr role="row"><th scope="row" role="rowheader">Paid plugins, tools, and add-ons</th><td role="cell" data-label="You host with us">Billed at cost</td><td role="cell" data-label="You host yourself">You buy and pay for them directly</td></tr>
+            <tr role="row"><th scope="row" role="rowheader">Stripe processing fees (your store)</th><td role="cell" data-label="You host with us">Paid by you, out of your sales</td><td role="cell" data-label="You host yourself">Paid by you, out of your sales</td></tr>
+            <tr role="row"><th scope="row" role="rowheader">Edits and new work</th><td role="cell" data-label="You host with us">Plan hours, then $50/hr</td><td role="cell" data-label="You host yourself">$50/hr</td></tr>
+          </tbody>
+        </table>
+        <p>If you don't host with us, we hand off the site at launch. You own the hosting and domain accounts and pay them directly. Tell us before the build starts so we scope it correctly.</p>
+      </div>
+
+      <div class="pricing-muted info-block">
+        <h3>Business Email (Optional): Google Workspace</h3>
+        <p>Want you@yourbusiness.com? We set up Google Workspace for you.</p>
+        <ul class="info-list">
+          <li><b>Optional.</b> Your site works fine without it.</li>
+          <li><b>We set it up.</b> We connect your domain, add the email records, and create your first mailboxes. Setup is a one-time fee, quoted before we start.</li>
+          <li><b>You own the account.</b> It is in your name and billed to you by Google. We never resell or mark up Google's price.</li>
+          <li><b>Google's price:</b> About <b>$7 per user per month</b> on an annual plan, or <b>$8.40 per user per month</b> month-to-month (Business Starter). Google sets these prices and can change them. Taxes may apply. See Google's current pricing at workspace.google.com.</li>
+          <li><b>Access.</b> We ask to be added as an admin only during setup, and you can remove us anytime.</li>
+          <li>Hosting plans do not include email hosting. The lead-form notifications in your build go to the inbox you already use.</li>
+        </ul>
+      </div>
+
+      <div class="pricing-muted info-block">
+        <h3>Edits, New Work, and Add-ons</h3>
+        <h4>Edit hours</h4>
+        <ul class="info-list">
+          <li>Plan hours are used month by month. <b>Unused hours don't roll over.</b></li>
+          <li>Hours beyond your plan, and edits on a no-edit plan, are billed at <b>$50/hr</b>. We quote anything over an hour before we start.</li>
+        </ul>
+        <div class="info-cols">
+          <div>
+            <h4>What counts as an edit <span class="sub">(uses your plan hours)</span></h4>
+          <ul class="info-list">
+            <li>Changing text, swapping images, updating hours, prices, staff bios, and contact details</li>
+            <li>Small layout tweaks on existing pages</li>
+            <li>Fixing broken links or small display problems that come from a content change</li>
+            <li>Adding or removing a simple item on an existing page (e.g. a service listing)</li>
+          </ul>
+          </div>
+          <div>
+            <h4>What counts as new work <span class="sub">(quoted separately at $50/hr or a flat price)</span></h4>
+          <ul class="info-list">
+            <li>New pages, new sections, or redesigned layouts</li>
+            <li>New features, forms, integrations, or checkout changes</li>
+            <li>Blog setup or ongoing content writing</li>
+            <li>Logo and brand identity work, photography, ad campaign management</li>
+            <li>Anything that wasn't in your original package</li>
+          </ul>
+          </div>
+        </div>
+        <p><b>Bug fixes vs. edits.</b> Something we built that doesn't work as described is a bug. Bugs in the post-launch window (30 days on Starter, 60 on Growth and Systems Build) are fixed free. After that, bug fixes on a plan with edit hours come out of those hours.</p>
+        <p><b>Third-party paid add-ons</b> are billed at cost to you with no markup, and we ask first. This covers premium plugins and paid integration plans (e.g. Zapier), stock images beyond the free libraries, paid fonts, Google Workspace, and domain types beyond standard .com/.net/.org.</p>
+        <p><b>Rush delivery:</b> 25% of the package price for timelines under the standard window.</p>
+      </div>
+
+      <div class="pricing-muted info-block">
+        <h3>Cancellation, Handoff &amp; Ownership</h3>
+        <ul class="info-list">
+          <li><b>Cancel a hosting plan:</b> 30 days’ written notice. Billing continues through the notice period.</li>
+          <li><b>Handoff:</b> when you cancel, we give you your site files and point your domain wherever you want it. Your domain is already in your name, so there is nothing to “get back.”</li>
+          <li><b>Mid-project cancellation:</b> you get a partial refund of any prepaid amount for work we haven't yet performed. Work already completed is non-refundable.</li>
+        </ul>
+        <div class="info-cols">
+          <div>
+            <h4>You own:</h4>
+          <ul class="info-list">
+            <li>your content (text, logo, photos you supply)</li>
+            <li>your domain name</li>
+            <li>your Google Workspace account, if you have one</li>
+            <li>your final website files once the build is paid in full</li>
+          </ul>
+          </div>
+          <div>
+            <h4>We keep:</h4>
+          <ul class="info-list">
+            <li>our own reusable tools, code libraries, and methods</li>
+            <li>Stock images stay under Unsplash and Pexels licenses</li>
+            <li>We may show the finished site in our portfolio unless you ask us not to</li>
+          </ul>
+          </div>
+        </div>
       </div>
 
       <div class="faq" role="group" aria-label="Good to know">
         <h3>Good to Know</h3>
         <details>
           <summary>What counts as a "revision round"?</summary>
-          <p>One revision round = one batch of change requests submitted together after reviewing a completed design or build stage. Individual edits within that batch don't count separately. Revisions submitted piecemeal over multiple days count as separate rounds.</p>
+          <p>One revision round is one batch of change requests submitted together after reviewing a completed design or build stage. Individual edits within that batch don't count separately. Revisions sent piecemeal over multiple days count as separate rounds.</p>
         </details>
         <details>
           <summary>When do I pay?</summary>
-          <p>Payment is made upfront through secure Stripe checkout when you choose a plan. Click a plan on the pricing page, complete checkout, and we’ll get started. Build packages are a one-time payment; hosting plans are billed monthly through the same checkout. Have questions first, or need something custom? Send us a message and we’ll sort it out before you pay.</p>
-        </details>
-        <details>
-          <summary>What if I need to cancel mid-project?</summary>
-          <p>If you cancel mid-project, you’ll receive a partial refund of any prepaid amount for work we haven’t yet performed. Work completed up to the date of cancellation is non-refundable.</p>
+          <p>Upfront through secure Stripe checkout. Pick your plan in the pricing section above and click <b>Get Started</b> (builds) or <b>Subscribe</b> (hosting plans). Build packages are a one-time payment. Hosting plans bill monthly through the same checkout. Not sure which one fits? Message us first and we'll sort it out before you pay.</p>
         </details>
         <details>
           <summary>Do I have to host with you?</summary>
-          <p>No. You have the option to host and maintain your site with us through one of the plans above, but it’s not required. If you’d rather take the build and host it yourself, we can hand off the project at launch — just let us know up front so we can scope it accordingly.</p>
+          <p>No. If you'd rather host it yourself, we hand off the project at launch. Let us know up front so we can scope it. You'll own your hosting and domain accounts and pay for them directly.</p>
+        </details>
+        <details>
+          <summary>Who pays for the domain?</summary>
+          <p>If you host with us, domain renewal is included in your plan and the domain is registered in your name. If you host yourself, you pay your registrar directly. Either way, you own the domain.</p>
+        </details>
+        <details>
+          <summary>Is business email included?</summary>
+          <p>No. Google Workspace is optional. We set it up, and Google bills you directly, at about $7 per user per month (annual) or $8.40 per user per month (month-to-month).</p>
+        </details>
+        <details>
+          <summary>Do my unused edit hours carry over?</summary>
+          <p>No. Hours reset each month. Extra work is $50/hr.</p>
+        </details>
+        <details>
+          <summary>Who pays Stripe's fees on my online store?</summary>
+          <p>You do. Stripe takes its processing fee from each sale on your own Stripe account.</p>
+        </details>
+        <details>
+          <summary>What if I need to cancel mid-project?</summary>
+          <p>You'll receive a partial refund of any prepaid amount for work we haven't yet performed. Work completed up to the date of cancellation is non-refundable.</p>
+        </details>
+        <details>
+          <summary>What if I cancel hosting?</summary>
+          <p>Send 30 days' written notice. Billing continues through the notice period. We then hand off your site files and your domain.</p>
         </details>
         <details>
           <summary>Do you offer rush delivery?</summary>
           <p>Yes. Rush fee is 25% of the package price for timelines under the standard window.</p>
+        </details>
+        <details>
+          <summary>What's not included in any package?</summary>
+          <p>Logo design or brand identity work, professional photography or stock image licensing beyond basic use, ongoing content creation or blog posts, paid ad campaign management. These are available as add-ons. Just ask.</p>
         </details>
       </div>
     </div>
@@ -441,7 +567,7 @@
             <a href="https://calendly.com/waldronhq/30min" target="_blank" rel="noreferrer">Pick a time<span class="sr-only"> (opens in a new tab)</span> →</a>
           </div>
           <p class="trust">We respond to every inquiry within 6 hours. No sales pressure, just an honest conversation about your goals.</p>
-          <p class="trust pay-note">Ready to start? Choose a plan on the Pricing page. Payment is made upfront through secure Stripe checkout when you choose your plan.</p>
+          <p class="trust pay-note">Ready to start? Choose a plan in the <button type="button" class="link-btn" data-goto="3">Pricing section</button> and click <b>Get Started</b> or <b>Subscribe</b>. Payment is made upfront through secure Stripe checkout.</p>
           <div class="sla"><span class="pulse" aria-hidden="true"></span>Currently replying within <b>6 hours</b></div>
         </aside>
         <div class="contact-footer">
