@@ -820,3 +820,19 @@ h3.t-label{font-weight:400;line-height:inherit;letter-spacing:.14em}
 /* Skip-link and 404 on the standalone pages */
 .legal-footer a{color:var(--accent-strong);text-decoration:underline;text-underline-offset:3px}
 .nf-actions{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap}
+
+/* Pager link to a separate page (AI Services). Not part of the 01-05 section count. */
+.pg-link{position:relative;display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;color:var(--muted);font-size:13px;font-weight:500;letter-spacing:-.005em;min-width:160px;margin-top:6px;border-top:1px solid var(--line-2);border-top-left-radius:0;border-top-right-radius:0;transition:all .2s ease}
+.pg-link .pg-num{font-family:"JetBrains Mono";font-size:11px;color:var(--accent-strong);width:22px}
+.pg-link .pg-new{margin-left:auto;width:6px;height:6px;border-radius:50%;background:var(--accent-strong);box-shadow:0 0 0 3px rgba(30,111,255,.16)}
+.pg-link:hover{color:var(--ink);background:var(--bg-2)}
+.pg-link:focus-visible{outline:3px solid rgba(30,111,255,.55);outline-offset:3px}
+.on-dark .pg-link{color:rgba(255,255,255,.72);border-top-color:rgba(255,255,255,.12)}
+.on-dark .pg-link:hover{color:#fff;background:rgba(255,255,255,.06)}
+.on-dark .pg-link .pg-num{color:var(--accent-on-dark)}
+.on-dark .pg-link .pg-new{background:var(--accent-on-dark);box-shadow:0 0 0 3px rgba(91,155,255,.2)}
+@media (max-width:1180px){
+  .pg-link{min-width:128px;width:128px;height:38px;padding:0 10px;gap:8px;margin-top:4px}
+  .pg-link .pg-label{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+  .pg-link .pg-new{display:none}
+}
