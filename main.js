@@ -247,6 +247,16 @@ document.addEventListener('focusin', e => {
   }
 }
 
+// Links like /?topic=ai#contact (from the AI Services page) preselect the matching plan option.
+{
+  const q = new URLSearchParams(location.search);
+  if (q.get('topic') === 'ai') {
+    const sel = document.getElementById('f-plan');
+    const opt = sel && Array.from(sel.options).find(o => /^AI Receptionist/.test(o.value));
+    if (opt) sel.value = opt.value;
+  }
+}
+
 /* =========== Triggers =========== */
 pgBtns.forEach(b => b.addEventListener('click', () => {
   goTo(parseInt(b.dataset.idx,10));

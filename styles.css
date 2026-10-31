@@ -836,3 +836,97 @@ h3.t-label{font-weight:400;line-height:inherit;letter-spacing:.14em}
   .pg-link .pg-label{font-family:"JetBrains Mono";font-size:11px;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
   .pg-link .pg-new{display:none}
 }
+
+/* =====================================================================
+   Design pass (Oct 31)
+   1. Pager docked into the header on desktop (no overlap with content)
+   2. Stronger hierarchy: featured service + plan emphasis
+   3. One filled primary CTA in the header
+   4. Mobile: shorter hero, featured plan first, compact contact form
+   5. Larger/higher-contrast small labels, looser heading tracking
+   ===================================================================== */
+
+/* ---- 1. Desktop: dock the section nav in the header ---- */
+@media (min-width:1181px){
+  :root{--pg-gutter:0px}
+  .brand-meta{display:none}
+  .pager{
+    top:14px;right:auto;left:50%;transform:translateX(-50%);
+    flex-direction:row;align-items:center;gap:0;
+  }
+  .pager .pg-frame{flex-direction:row;align-items:center;gap:2px;padding:5px;border-radius:14px}
+  .pg-btn{min-width:0;padding:9px 13px;gap:0;font-size:13.5px;border-radius:10px}
+  .pg-btn .pg-num{display:none}
+  .pg-btn .pg-bar{position:absolute;left:13px;right:13px;bottom:4px;height:2px;border-radius:2px;flex:none}
+  .pg-btn .pg-bar::after{transform-origin:left}
+  .pg-link{min-width:0;margin:0 0 0 6px;padding:9px 13px 9px 15px;gap:8px;font-size:13.5px;border-top:0;border-left:1px solid var(--line);border-radius:10px}
+  .on-dark .pg-link{border-left-color:rgba(255,255,255,.14)}
+  .pg-link .pg-num{width:auto;font-size:12px}
+  .pg-link .pg-new{margin-left:2px}
+  .pager-controls{display:none}
+  .page-inner{padding-top:120px}
+  #p-pricing .page-inner{padding-top:100px}
+}
+
+/* ---- 2. Hierarchy ---- */
+.s-card-featured{
+  border:2px solid var(--accent);
+  background:linear-gradient(180deg, rgba(30,111,255,.06), #fff 55%);
+  box-shadow:0 30px 60px -24px rgba(30,111,255,.22), 0 2px 6px rgba(10,22,40,.06);
+}
+.s-card-featured .s-icon{background:var(--accent);color:#fff}
+.s-card-featured h3{font-size:24px}
+@media (min-width:981px){ .s-card-featured{transform:translateY(-8px)} .s-card-featured:hover{transform:translateY(-12px)} }
+.p-card.featured{background:linear-gradient(180deg, rgba(30,111,255,.06), #fff 40%)}
+.p-card.featured .p-price .amt{font-size:46px}
+.p-card.featured .p-name{font-size:30px}
+.p-card:not(.featured):not(.care) .p-price .amt{font-size:34px}
+
+/* ---- 3. Header CTA is a filled primary button ---- */
+.brand-action.desktop-quote-action{background:var(--accent-strong);border-color:var(--accent-strong);color:#fff;font-weight:600;backdrop-filter:none}
+.brand-action.desktop-quote-action:hover{background:#155cdb;border-color:#155cdb;color:#fff;box-shadow:0 8px 20px rgba(30,111,255,.28)}
+.on-dark .brand-action.desktop-quote-action{background:var(--accent-strong);border-color:var(--accent-strong);color:#fff}
+.on-dark .brand-action.desktop-quote-action:hover{background:#155cdb;border-color:#155cdb;color:#fff}
+
+/* ---- 5. Small labels: bigger, darker; headings: looser tracking ---- */
+.brand-action{font-size:12px}
+.eyebrow,.t-label,.legal-kicker,.p-tier{font-size:12px}
+.chip,.tag,.s-num,.pg-count,.swipe-hint,#p-pricing .who-pays thead th{font-size:12px}
+.t-metric span,.contact-side .email-block small,.globe-corner{font-size:11px}
+.p-badge{font-size:11px}
+.s-num,.t-metric span,.swipe-hint,.globe-corner,.pg-btn .pg-num,.pg-count,.brand-meta{color:var(--muted)}
+.on-dark .pg-btn .pg-num,.on-dark .pg-count{color:rgba(255,255,255,.8)}
+.contact-side .email-block small{color:rgba(255,255,255,.72)}
+.hero-trust{font-size:14px;color:var(--muted)}
+h1,h2,h3,h4{letter-spacing:-.012em}
+h1.hero-title{letter-spacing:-.025em}
+.services-head h2,.pricing-head h2,.contact-head h2{letter-spacing:-.02em}
+.p-price .amt{letter-spacing:-.025em}
+.legal-title{letter-spacing:-.03em}
+
+/* ---- 4. Mobile ---- */
+@media (max-width:980px){
+  /* featured plan first */
+  .pricing-grid > .p-card.featured,#p-pricing .pricing-grid > .p-card.featured{order:-1}
+  /* hero: one button, tighter spacing so the globe shows sooner */
+  .hero-secondary{display:none}
+  .hero-kicker{margin-bottom:16px}
+  .hero-sub{margin-top:16px}
+  .hero-ctas{margin-top:22px}
+  .hero-trust{margin-top:12px}
+  .hero-grid{gap:28px}
+  .s-card-featured{transform:none}
+}
+@media (max-width:640px){
+  /* contact: name + business share a row; tighter fields */
+  #p-contact .form{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-top:28px}
+  #p-contact .field{min-width:0}
+  #p-contact .field input,#p-contact .field select,#p-contact .field textarea{width:100%;min-width:0}
+  #p-contact .form > .field:nth-child(3),
+  #p-contact .form > .field:nth-child(4){grid-column:1/-1}
+  #p-contact .field{gap:5px}
+  #p-contact .field input,#p-contact .field select,#p-contact .field textarea{padding:12px 14px}
+  #p-contact .field textarea{min-height:84px}
+  #p-contact .form .submit{margin-top:4px}
+  #p-contact .contact-head p{font-size:16px}
+}

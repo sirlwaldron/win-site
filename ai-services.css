@@ -12,42 +12,42 @@ html.ai-page{scroll-behavior:smooth;scroll-padding-top:84px}
 .ai-brand{display:flex;align-items:center;gap:10px;min-width:0}
 .ai-brand img{display:block;flex:none}
 .ai-nav{display:flex;align-items:center;gap:6px}
-.ai-nav a{font-family:"JetBrains Mono";font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);padding:9px 12px;border-radius:10px;border:1px solid transparent;transition:all .2s ease;white-space:nowrap}
+.ai-nav a{font-family:"JetBrains Mono";font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);padding:9px 12px;border-radius:10px;border:1px solid transparent;transition:all .2s ease;white-space:nowrap}
 .ai-nav a:hover{color:var(--ink);background:var(--bg-2)}
 .ai-nav a[aria-current="page"]{color:var(--accent-strong);background:var(--accent-soft);border-color:rgba(30,111,255,.18)}
-.ai-header-cta{font-family:"JetBrains Mono";font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#fff;background:var(--accent-strong);padding:11px 14px;border-radius:12px;white-space:nowrap;transition:all .2s ease}
+.ai-header-cta{font-family:"JetBrains Mono";font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:#fff;background:var(--accent-strong);padding:11px 14px;border-radius:12px;white-space:nowrap;transition:all .2s ease}
 .ai-header-cta:hover{background:#155cdb;transform:translateY(-1px)}
 
 /* Hero */
 .ai-hero{padding:72px 0 88px;background:radial-gradient(1000px 640px at 88% 0%, rgba(30,111,255,.10), transparent 60%),var(--bg)}
 .ai-hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:64px;align-items:center}
 .ai-hero-grid > div:first-child{container-type:inline-size}
-.ai-title{font-size:clamp(38px,5.2vw,64px);line-height:1.04;font-weight:800;letter-spacing:-.035em;color:var(--navy)}
+.ai-title{font-size:clamp(38px,5.2vw,64px);line-height:1.04;font-weight:800;letter-spacing:-.025em;color:var(--navy)}
 @supports (font-size:1cqw){.ai-title{font-size:clamp(36px,10.4cqw,64px)}}
 .ai-title .mark{position:relative;display:inline}
 .ai-title .dot{margin-left:-.08em}
 .ai-hero .hero-kicker{margin-bottom:24px}
 .ai-hero .hero-sub{max-width:540px}
-.hero-trust{list-style:none;margin:22px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 22px;font-size:13px;color:var(--muted-2)}
+.hero-trust{list-style:none;margin:22px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 22px;font-size:14px;color:var(--muted)}
 .hero-trust li{display:flex;align-items:center;gap:8px}
 .hero-trust li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent-2);opacity:.7}
 
 /* Illustrative call card */
 .call-card{margin:0;background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:var(--shadow-lift);position:relative}
 .call-card::before{content:"";position:absolute;inset:-6% -4%;z-index:-1;border-radius:40px;background:radial-gradient(closest-side, rgba(26,98,232,.14), rgba(26,98,232,0));pointer-events:none}
-.call-top{display:flex;align-items:center;gap:10px;font-family:"JetBrains Mono";font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-2);padding-bottom:14px;border-bottom:1px solid var(--line-2)}
+.call-top{display:flex;align-items:center;gap:10px;font-family:"JetBrains Mono";font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-bottom:14px;border-bottom:1px solid var(--line-2)}
 .call-dot{width:8px;height:8px;border-radius:50%;background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.18)}
-.call-tag{margin-left:auto;border:1px dashed #c3cbd8;border-radius:999px;padding:3px 10px;color:var(--muted);font-size:10px}
+.call-tag{margin-left:auto;border:1px dashed #c3cbd8;border-radius:999px;padding:3px 10px;color:var(--muted);font-size:11px}
 .call-log{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:12px}
 .call-log li{display:flex;flex-direction:column;gap:4px;max-width:88%;padding:12px 14px;border-radius:14px;font-size:14.5px;line-height:1.5}
-.call-log b{font-family:"JetBrains Mono";font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
+.call-log b{font-family:"JetBrains Mono";font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
 .call-log .who-caller{background:var(--bg-2);border:1px solid var(--line);color:var(--ink);align-self:flex-start}
 .call-log .who-caller b{color:var(--muted-2)}
 .call-log .who-ai{background:var(--accent-soft);border:1px solid rgba(30,111,255,.16);color:var(--ink);align-self:flex-end}
 .call-log .who-ai b{color:var(--accent-strong)}
 .call-result{margin-top:16px;display:flex;align-items:center;gap:10px;font-size:13.5px;font-weight:600;color:var(--ink);background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.28);border-radius:12px;padding:11px 14px}
 .call-check{width:20px;height:20px;border-radius:50%;background:#16a34a;color:#fff;display:grid;place-items:center;flex:none}
-.call-card figcaption{margin-top:14px;font-size:12px;color:var(--muted-2);font-family:"JetBrains Mono";letter-spacing:.02em}
+.call-card figcaption{margin-top:14px;font-size:12px;color:var(--muted);font-family:"JetBrains Mono";letter-spacing:.02em}
 
 /* Sections */
 .ai-section{padding:96px 0}
@@ -103,7 +103,7 @@ html.ai-page{scroll-behavior:smooth;scroll-padding-top:84px}
 .ai-cta-in{display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center}
 .ai-cta .eyebrow{color:var(--accent-on-dark)}
 .ai-cta .eyebrow::before{background:var(--accent-on-dark)}
-.ai-cta h2{color:#fff;font-size:clamp(32px,4vw,48px);line-height:1.08;font-weight:800;letter-spacing:-.03em}
+.ai-cta h2{color:#fff;font-size:clamp(32px,4vw,48px);line-height:1.08;font-weight:800;letter-spacing:-.02em}
 .ai-cta p{color:rgba(255,255,255,.78);margin-top:16px;font-size:17px;line-height:1.6;max-width:520px}
 .cta-actions{display:flex;flex-direction:column;gap:12px;align-items:stretch}
 .cta-actions .btn{justify-content:center}
@@ -129,7 +129,7 @@ html.ai-page{scroll-behavior:smooth;scroll-padding-top:84px}
   .ai-nav::-webkit-scrollbar{display:none}
   .ai-brand{flex:1}
   .ai-nav{gap:2px}
-  .ai-nav a{font-size:10px;letter-spacing:.06em;padding:8px 9px}
+  .ai-nav a{font-size:11px;letter-spacing:.04em;padding:8px 8px}
   .brand-name{font-size:13px}
   .ai-hero{padding:40px 0 64px}
   .ai-hero-grid{grid-template-columns:1fr;gap:44px}
