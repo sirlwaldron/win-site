@@ -97,6 +97,7 @@ html.ai-page{scroll-behavior:smooth;scroll-padding-top:84px}
 .plan-note b{color:var(--ink)}
 .plan-note a{color:var(--accent-strong);font-weight:600;text-decoration:underline;text-underline-offset:3px}
 .plan-fine{margin-top:10px;font-size:14px}
+.plan-value{margin-top:14px;font-size:16px;color:var(--ink);font-weight:500}
 .ai-page .info-grid{margin-top:48px}
 
 /* Pricing / details */
